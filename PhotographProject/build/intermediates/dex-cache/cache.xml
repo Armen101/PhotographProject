@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="true"
+        jar="C:\Users\Admin\Desktop\photo-project\user-photograph\PhotographProject\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="caff8e51a24901cfc9cd7e1cf83d84f4cb0c103b">
+        <dex dex="C:\Users\Admin\Desktop\photo-project\user-photograph\PhotographProject\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_91da710722d58d9bfb632ecdd430009ce58fcfe4\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Admin\Desktop\photo-project\user-photograph\PhotographProject\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="4ef4027825e742d4599d6f31b78af13333a53d79">
+        <dex dex="C:\Users\Admin\Desktop\photo-project\user-photograph\PhotographProject\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_789e9c2e05f27f73ad568621fecb587bd61e2977\classes.dex" />
+    </item>
+
+</items>
