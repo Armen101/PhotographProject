@@ -2,67 +2,67 @@
 <items version="2" >
 
     <item
-        is-multidex="true"
-        jar="C:\Users\admin\Desktop\taron\user-photograph\PhotographProject\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
-        jumboMode="true"
+        is-multidex="false"
+        jar="C:\Users\Admin\.android\build-cache\85a54a2718355bab84758dcf9a01849c2893ffbd\output\jars\classes.jar"
+        jumboMode="false"
         optimize="true"
         revision="25.0.3"
-        sha1="caff8e51a24901cfc9cd7e1cf83d84f4cb0c103b">
-        <dex dex="C:\Users\admin\Desktop\taron\user-photograph\PhotographProject\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_4d0960698126a5edf92c064a62035a837a62a0b3\classes.dex" />
+        sha1="da832806828ba407284c0c4b1d87b8f9ed9f2520">
+        <dex dex="C:\Users\Admin\Desktop\photographer\user-photograph\PhotographProject\app\build\intermediates\pre-dexed\debug\classes_7d432fc1660a276e7a7337695e666d8150a04c2e.jar" />
     </item>
     <item
-        is-multidex="true"
-        jar="C:\Users\admin\.android\build-cache\05b80b9b15a80a3689ec0de9f75d92da6032dc8d\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="9cca2818594cc5348806d6662133491e7ea0fa8d">
-        <dex dex="C:\Users\admin\Desktop\taron\user-photograph\PhotographProject\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_d63cbae972f4a5576a776737d00e42890fca5101\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\admin\Desktop\taron\user-photograph\PhotographProject\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="3d943ce2c1d8ea4c5b26e2d717ff161fb6e66b51">
-        <dex dex="C:\Users\admin\Desktop\taron\user-photograph\PhotographProject\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_a0a1c6cae988fde5a06c7017b1c7d091d884d39f\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\admin\.android\build-cache\6f791416f225073145f84e350a53faa42e34fe8d\output\jars\classes.jar"
-        jumboMode="true"
+        is-multidex="false"
+        jar="C:\Users\Admin\.android\build-cache\b867b62cb1734547628d65bf6ff567e90f0bf1b7\output\jars\classes.jar"
+        jumboMode="false"
         optimize="true"
         revision="25.0.3"
         sha1="d4cf6227dd6a2ceff0f7dcf0c324380b7abf2c28">
-        <dex dex="C:\Users\admin\Desktop\taron\user-photograph\PhotographProject\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_db66e7b06af21538eeaedf8fbac49ba5adcb3e82\classes.dex" />
+        <dex dex="C:\Users\Admin\Desktop\photographer\user-photograph\PhotographProject\app\build\intermediates\pre-dexed\debug\classes_758004cdccd76f8ae4109ac7f39310368be432cf.jar" />
     </item>
     <item
-        is-multidex="true"
-        jar="C:\Users\admin\.android\build-cache\675b7a7e12aab6aec2a9a1666d66c6069c07c087\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="95519720620b553f63afc789beba9ad582807f7c">
-        <dex dex="C:\Users\admin\Desktop\taron\user-photograph\PhotographProject\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_d7541fd309dbdab8e84f706da07883e727f5297a\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\admin\.android\build-cache\d60844816d930d5032fd7f616fbeca3a26b7c64f\output\jars\classes.jar"
-        jumboMode="true"
+        is-multidex="false"
+        jar="C:\Users\Admin\.android\build-cache\07f004303c5309e0e37525d6f97269635b6460c3\output\jars\classes.jar"
+        jumboMode="false"
         optimize="true"
         revision="25.0.3"
         sha1="38789e20ace9ab7dbd00554bd2673ab424478d3b">
-        <dex dex="C:\Users\admin\Desktop\taron\user-photograph\PhotographProject\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_d0a75c79d8065f412ba0a206b0884de5d0ee9711\classes.dex" />
+        <dex dex="C:\Users\Admin\Desktop\photographer\user-photograph\PhotographProject\app\build\intermediates\pre-dexed\debug\classes_2057576a1ab50fbf1d5cc8026533868aeec4292a.jar" />
     </item>
     <item
-        is-multidex="true"
-        jar="C:\Users\admin\.android\build-cache\9f76ff0d5286e2d8ebc850dab8131ed8d24a5946\output\jars\classes.jar"
-        jumboMode="true"
+        is-multidex="false"
+        jar="C:\Users\Admin\.android\build-cache\dbcdaa43fc55c7c9b172a1b04b16b5252ca694bf\output\jars\classes.jar"
+        jumboMode="false"
         optimize="true"
         revision="25.0.3"
-        sha1="0c6924cbba8248329a8c58ead6a380efe7eee76e">
-        <dex dex="C:\Users\admin\Desktop\taron\user-photograph\PhotographProject\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_8c2623c9b5ca7b8682bdb686e829efa7f4f7f587\classes.dex" />
+        sha1="8f83a631abfdb790591a720e0cfb5f41329831c3">
+        <dex dex="C:\Users\Admin\Desktop\photographer\user-photograph\PhotographProject\app\build\intermediates\pre-dexed\debug\classes_5c38453637f5d29959b348992752053bacbf906d.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Admin\.android\build-cache\7d0431167cec11b84d866e24b4f1ae91c39116da\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="0a534044236cf81b002604643d23e7ca56bd1ee0">
+        <dex dex="C:\Users\Admin\Desktop\photographer\user-photograph\PhotographProject\app\build\intermediates\pre-dexed\debug\classes_ca767dafb9a8abbf5517e1fda20ced7fbb3686ec.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Admin\.android\build-cache\17707a1e26e75bb9cb08dae785a6f7ab895fc2e3\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="d79c575e1d97b0298746a4c032a0c1dc201c2f82">
+        <dex dex="C:\Users\Admin\Desktop\photographer\user-photograph\PhotographProject\app\build\intermediates\pre-dexed\debug\classes_5bed557f2b67bd447d017fc12f89039c69af9163.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Admin\.android\build-cache\81189e822c333b20c3167eca1db8e2e196c47e14\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="95519720620b553f63afc789beba9ad582807f7c">
+        <dex dex="C:\Users\Admin\Desktop\photographer\user-photograph\PhotographProject\app\build\intermediates\pre-dexed\debug\classes_1987fa297bc5d1680761450616b00194d873a566.jar" />
     </item>
 
 </items>
