@@ -97,6 +97,19 @@
         android:textColor="#ffffff"
         android:text="Sign_in" />
 
+
+    <Button
+        android:id="@+id/btn_example"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/dont_have_sign_up"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="31dp"
+        android:background="#76c67979"
+        android:textColor="#ffffff"
+        android:text="example" />
+
     <TextView
         android:id="@+id/dont_have_sign_up"
         android:layout_width="wrap_content"
