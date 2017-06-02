@@ -1,16 +1,17 @@
-package com.example.student.userphotograph.splash_screen;
+package com.example.student.userphotograph.activityes;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 import com.example.student.userphotograph.R;
-import com.example.student.userphotograph.activityes.MainActivity;
 
-public class SplashScreen extends AppCompatActivity {
+import java.util.logging.LoggingMXBean;
+
+public class SplashScreenActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,8 +30,7 @@ public class SplashScreen extends AppCompatActivity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                finish();
-                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                startActivity();
             }
 
             @Override
@@ -38,5 +38,16 @@ public class SplashScreen extends AppCompatActivity {
 
             }
         });
+    }
+
+    //TODO write
+    private void startActivity() {
+        boolean isLoggedIn = true;
+        finish();
+        if(isLoggedIn) {
+            startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+        } else {
+            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+        }
     }
 }

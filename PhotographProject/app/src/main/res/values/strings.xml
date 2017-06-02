@@ -10,4 +10,10 @@
     <string name="text_email_hint">Email</string>
     <string name="button_reset">RESET PASSWORD</string>
     <string name="button_back">BACK</string>
+    <string name="title_activity_home">HomeActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
 </resources>
