@@ -2,6 +2,15 @@
 <items version="2" >
 
     <item
+        is-multidex="true"
+        jar="C:\Users\Admin\Desktop\photographer\user-photograph\PhotographProject\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="e511c035f62978880aef6fd7f5db6544c4d718a2">
+        <dex dex="C:\Users\Admin\Desktop\photographer\user-photograph\PhotographProject\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_7cb42686bd1436b6e832287623694c1b595efcb2\classes.dex" />
+    </item>
+    <item
         is-multidex="false"
         jar="C:\Users\Admin\.android\build-cache\85a54a2718355bab84758dcf9a01849c2893ffbd\output\jars\classes.jar"
         jumboMode="false"
@@ -54,6 +63,15 @@
         revision="25.0.3"
         sha1="d79c575e1d97b0298746a4c032a0c1dc201c2f82">
         <dex dex="C:\Users\Admin\Desktop\photographer\user-photograph\PhotographProject\app\build\intermediates\pre-dexed\debug\classes_5bed557f2b67bd447d017fc12f89039c69af9163.jar" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Admin\Desktop\photographer\user-photograph\PhotographProject\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="caff8e51a24901cfc9cd7e1cf83d84f4cb0c103b">
+        <dex dex="C:\Users\Admin\Desktop\photographer\user-photograph\PhotographProject\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_dfed758d83577de60b9bd008460b9ff4283e5790\classes.dex" />
     </item>
     <item
         is-multidex="false"
