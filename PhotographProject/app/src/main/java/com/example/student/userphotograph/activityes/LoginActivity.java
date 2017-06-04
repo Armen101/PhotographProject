@@ -1,21 +1,26 @@
 package com.example.student.userphotograph.activityes;
 
-import android.content.Intent;
+
 import android.os.Bundle;
-import android.support.annotation.NonNull;
+
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
+
+import android.util.Log;
+
 
 import com.example.student.userphotograph.R;
+import com.example.student.userphotograph.fragments.ForgotPasswordFragment;
+import com.example.student.userphotograph.fragments.SignInFragment;
+import com.example.student.userphotograph.fragments.SignInSignUpFragment;
+import com.example.student.userphotograph.fragments.SignUpFragment;
 import com.google.firebase.auth.FirebaseAuth;
 
-import static android.R.attr.fragment;
 
-public class LoginActivity extends AppCompatActivity {
+
+public class LoginActivity extends AppCompatActivity implements SignInSignUpFragment.mListener,
+        SignInSignUpFragment.mListenerUp,
+        SignInSignUpFragment.mListenerForgot{
 
     private FirebaseAuth mauth;
 
@@ -23,6 +28,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        replaceFragment(new SignInSignUpFragment());
 
         mauth = FirebaseAuth.getInstance();
 //
@@ -30,6 +36,36 @@ public class LoginActivity extends AppCompatActivity {
 //         getFragmmentManager().gggggggggggg, etc
 //
 //        TODO firebase login functionality.
+    }
+
+    private void replaceFragment(Fragment fragment) {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.containerLogin, fragment)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    @Override
+    public void onClickable() {
+        Log.i("========= ", "in activity");
+        replaceFragment(SignInFragment.newInstance());
+    }
+
+
+    @Override
+    public void onClickableUp() {
+        replaceFragment(SignUpFragment.newInstance());
+    }
+
+    @Override
+    public void onClickableForgot() {
+        replaceFragment(ForgotPasswordFragment.newInstance());
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 
 //    private void signIn() {
