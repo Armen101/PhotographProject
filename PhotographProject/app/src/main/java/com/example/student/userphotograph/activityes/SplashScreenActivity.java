@@ -9,8 +9,6 @@ import android.widget.ImageView;
 
 import com.example.student.userphotograph.R;
 
-import java.util.logging.LoggingMXBean;
-
 public class SplashScreenActivity extends AppCompatActivity {
 
     @Override
@@ -45,7 +43,7 @@ public class SplashScreenActivity extends AppCompatActivity {
         boolean isLoggedIn = true;
         finish();
         if(isLoggedIn) {
-            startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
         } else {
             startActivity(new Intent(getApplicationContext(), LoginActivity.class));
         }

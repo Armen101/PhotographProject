@@ -1,72 +1,55 @@
 package com.example.student.userphotograph.activityes;
 
-
+import android.net.Uri;
 import android.os.Bundle;
-
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 
-import android.util.Log;
-
-
 import com.example.student.userphotograph.R;
-import com.example.student.userphotograph.fragments.ForgotPasswordFragment;
 import com.example.student.userphotograph.fragments.SignInFragment;
-import com.example.student.userphotograph.fragments.SignInSignUpFragment;
 import com.example.student.userphotograph.fragments.SignUpFragment;
-import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
+public class LoginActivity  extends AppCompatActivity implements
+        SignInFragment.OnSignInFragmentListener,
+        SignUpFragment.OnSignUpFragmentListener{
 
-
-public class LoginActivity extends AppCompatActivity implements SignInSignUpFragment.mListener,
-        SignInSignUpFragment.mListenerUp,
-        SignInSignUpFragment.mListenerForgot{
-
-    private FirebaseAuth mauth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        replaceFragment(new SignInSignUpFragment());
+        replaceFragment(SignUpFragment.newInstance());
+    }
 
-        mauth = FirebaseAuth.getInstance();
+    private void replaceFragment(Fragment fragment){
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.containerLogin, fragment)
+                .commit();
+    }
+
+    @Override
+    public void onSignUp(FirebaseUser user) {
+        System.out.println("test");
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
+    }
+
+//        mauth = FirebaseAuth.getInstance();
+//        getSupportFragmentManager()
+//                .beginTransaction()
+//                .add(R.id.containerLogin, SignUpFragment.newInstance())
+//                .commit();
 //
 //        TODO add first (signin signup) fragment;
 //         getFragmmentManager().gggggggggggg, etc
 //
 //        TODO firebase login functionality.
-    }
-
-    private void replaceFragment(Fragment fragment) {
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.containerLogin, fragment)
-                .addToBackStack(null)
-                .commit();
-    }
-
-    @Override
-    public void onClickable() {
-        Log.i("========= ", "in activity");
-        replaceFragment(SignInFragment.newInstance());
-    }
-
-
-    @Override
-    public void onClickableUp() {
-        replaceFragment(SignUpFragment.newInstance());
-    }
-
-    @Override
-    public void onClickableForgot() {
-        replaceFragment(ForgotPasswordFragment.newInstance());
-    }
-
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-    }
+//    }
 
 //    private void signIn() {
 //        Button btnLogin = (Button) findViewById(R.id.sign_in);

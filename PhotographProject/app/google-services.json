@@ -1,35 +1,35 @@
 {
   "project_info": {
-    "project_number": "1008707755427",
-    "firebase_url": "https://photographproject-cf6d7.firebaseio.com",
-    "project_id": "photographproject-cf6d7",
-    "storage_bucket": "photographproject-cf6d7.appspot.com"
+    "project_number": "399052285086",
+    "firebase_url": "https://puapp-e8b3c.firebaseio.com",
+    "project_id": "puapp-e8b3c",
+    "storage_bucket": "puapp-e8b3c.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1008707755427:android:82794a509834ec2c",
+        "mobilesdk_app_id": "1:399052285086:android:82794a509834ec2c",
         "android_client_info": {
           "package_name": "com.example.student.userphotograph"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1008707755427-dr931m1hmlj6tjhfp419078pa09b6jj0.apps.googleusercontent.com",
+          "client_id": "399052285086-nol2f39h751tnjd77i4mdsa9kq714m40.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.student.userphotograph",
-            "certificate_hash": "0365b492c4cb4d065cbfb3b0b8c50267cca97a35"
+            "certificate_hash": "87c263abe7d742dff76de42a3528f1d5c72f3948"
           }
         },
         {
-          "client_id": "1008707755427-2sp2emvjv4f0q1saq83rtnq5ff2ula5f.apps.googleusercontent.com",
+          "client_id": "399052285086-4obshvsghls270tfp6cmmeln2h54775c.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyC1s371E6DikvRn7Lf2Aus9iMwrFaRgWb8"
+          "current_key": "AIzaSyB7w5G_eoU8Pv_Hk48qt11kEB12XbvL9LY"
         }
       ],
       "services": {
@@ -40,7 +40,7 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "1008707755427-2sp2emvjv4f0q1saq83rtnq5ff2ula5f.apps.googleusercontent.com",
+              "client_id": "399052285086-4obshvsghls270tfp6cmmeln2h54775c.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
