@@ -1,4 +1,5 @@
 package com.example.student.userphotograph.fragments;
+
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -17,6 +18,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
 public class SignUpFragment extends BlankFragment implements View.OnClickListener {
 
     private static final String TAG = "======= ";
@@ -31,10 +33,11 @@ public class SignUpFragment extends BlankFragment implements View.OnClickListene
     private EditText etEmail;
     private EditText etPassword;
 
-    public SignUpFragment() {}
+    public SignUpFragment() {
+    }
 
     public static SignUpFragment newInstance() {
-        if(instance == null) instance = new SignUpFragment();
+        if (instance == null) instance = new SignUpFragment();
         return instance;
     }
 
@@ -70,14 +73,15 @@ public class SignUpFragment extends BlankFragment implements View.OnClickListene
 
     private void findViewsSetLIsteners(View rootView) {
         etName = (EditText) rootView.findViewById(R.id.et_name);
-        etLastName = (EditText)rootView.findViewById(R.id.et_last_name);
-        etUserName = (EditText)rootView.findViewById(R.id.et_user_name);
-        etEmail = (EditText)rootView.findViewById(R.id.et_sp_email);
-        etPassword = (EditText)rootView.findViewById(R.id.et_sp_password);
-        Button btnSignUp = (Button)rootView.findViewById(R.id.btn_sign_up);
+        etLastName = (EditText) rootView.findViewById(R.id.et_last_name);
+        etUserName = (EditText) rootView.findViewById(R.id.et_user_name);
+        etEmail = (EditText) rootView.findViewById(R.id.et_sp_email);
+        etPassword = (EditText) rootView.findViewById(R.id.et_sp_password);
+        Button btnSignUp = (Button) rootView.findViewById(R.id.btn_sign_up);
         btnSignUp.setOnClickListener(this);
 
     }
+
     private void createAccount() {
         if (!validateForm()) {
             return;
@@ -123,7 +127,7 @@ public class SignUpFragment extends BlankFragment implements View.OnClickListene
         return valid;
     }
 
-    public void registration (){
+    public void registration() {
         String email = etEmail.getText().toString();
         String password = etPassword.getText().toString();
 
@@ -131,11 +135,10 @@ public class SignUpFragment extends BlankFragment implements View.OnClickListene
                 .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful())
-                        {
+                        if (task.isSuccessful()) {
                             Toast.makeText(getContext(), "Регистрация успешна", Toast.LENGTH_SHORT).show();
-                        }
-                        else Toast.makeText(getContext(), "Регистрация провалена", Toast.LENGTH_SHORT).show();
+                        } else
+                            Toast.makeText(getContext(), "Регистрация провалена", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
@@ -159,7 +162,7 @@ public class SignUpFragment extends BlankFragment implements View.OnClickListene
 
     @Override
     public void onClick(View v) {
-        if(v.getId() == R.id.btn_sign_up) registration();
+        if (v.getId() == R.id.btn_sign_up) registration();
     }
 
     public interface OnSignUpFragmentListener {
