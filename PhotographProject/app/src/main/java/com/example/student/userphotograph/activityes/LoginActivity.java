@@ -10,9 +10,7 @@ import com.example.student.userphotograph.fragments.SignInFragment;
 import com.example.student.userphotograph.fragments.SignUpFragment;
 import com.google.firebase.auth.FirebaseUser;
 
-public class LoginActivity  extends AppCompatActivity implements
-        SignInFragment.OnSignInFragmentListener,
-        SignUpFragment.OnSignUpFragmentListener{
+public class LoginActivity  extends AppCompatActivity{
 
 
     @Override
@@ -29,15 +27,6 @@ public class LoginActivity  extends AppCompatActivity implements
                 .commit();
     }
 
-    @Override
-    public void onSignUp(FirebaseUser user) {
-        System.out.println("test");
-    }
-
-    @Override
-    public void onFragmentInteraction(Uri uri) {
-
-    }
 
 //        mauth = FirebaseAuth.getInstance();
 //        getSupportFragmentManager()

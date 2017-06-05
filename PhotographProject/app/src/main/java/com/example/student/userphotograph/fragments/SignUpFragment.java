@@ -1,10 +1,9 @@
 package com.example.student.userphotograph.fragments;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,23 +17,20 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
-public class SignUpFragment extends BlankFragment implements View.OnClickListener {
+public class SignUpFragment extends Fragment implements View.OnClickListener {
 
-    private static final String TAG = "======= ";
     private FirebaseAuth mAuth;
-    private FirebaseAuth.AuthStateListener mAuthListener;
     private FirebaseUser user;
     private static SignUpFragment instance;
-    private OnSignUpFragmentListener mListener;
     private EditText etName;
-    private EditText etLastName;
-    private EditText etUserName;
     private EditText etEmail;
     private EditText etPassword;
+    private DatabaseReference mRef;
 
-    public SignUpFragment() {
-    }
+    public SignUpFragment() {}
 
     public static SignUpFragment newInstance() {
         if (instance == null) instance = new SignUpFragment();
@@ -46,22 +42,7 @@ public class SignUpFragment extends BlankFragment implements View.OnClickListene
         super.onCreate(savedInstanceState);
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
-      //  mRef = FirebaseDatabase.getInstance().getReference();
-        setAuthStateListener();
-    }
-
-    private void setAuthStateListener() {
-        mAuthListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user != null) {
-                    createAccount();
-                } else {
-                    Log.d(TAG, "user signed_out");
-                }
-            }
-        };
+        mRef = FirebaseDatabase.getInstance().getReference();
     }
 
     @Override
@@ -74,8 +55,6 @@ public class SignUpFragment extends BlankFragment implements View.OnClickListene
 
     private void findViewsSetLIsteners(View rootView) {
         etName = (EditText) rootView.findViewById(R.id.et_name);
-        etLastName = (EditText) rootView.findViewById(R.id.et_last_name);
-        etUserName = (EditText) rootView.findViewById(R.id.et_user_name);
         etEmail = (EditText) rootView.findViewById(R.id.et_sp_email);
         etPassword = (EditText) rootView.findViewById(R.id.et_sp_password);
         Button btnSignUp = (Button) rootView.findViewById(R.id.btn_sign_up);
@@ -83,35 +62,12 @@ public class SignUpFragment extends BlankFragment implements View.OnClickListene
 
     }
 
-    private void createAccount() {
-        if (!validateForm()) {
-            return;
-        }
-        showProgressDialog();
-
-        String email = etEmail.getText().toString();
-        String password = etPassword.getText().toString();
-
-        mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        Log.d(TAG, "createUserWithEmail :onComplete:" + task.isSuccessful());
-
-                        if (!task.isSuccessful()) {
-                            Log.d(TAG, "createUserWithEmail :onComplete: not soccesfull" + task.isSuccessful());
-                        }
-                        hideProgressDialog();
-                    }
-                });
-    }
-
-    private boolean validateForm() {
+    private boolean isValidateForm() {
         boolean valid = true;
 
         String email = etEmail.getText().toString();
         if (TextUtils.isEmpty(email)) {
-            etEmail.setError("Required.");
+            etEmail.setError("Required");
             valid = false;
         } else {
             etEmail.setError(null);
@@ -119,7 +75,7 @@ public class SignUpFragment extends BlankFragment implements View.OnClickListene
 
         String password = etPassword.getText().toString();
         if (TextUtils.isEmpty(password)) {
-            etPassword.setError("Required.");
+            etPassword.setError("Required");
             valid = false;
         } else {
             etPassword.setError(null);
@@ -132,41 +88,23 @@ public class SignUpFragment extends BlankFragment implements View.OnClickListene
         String email = etEmail.getText().toString();
         String password = etPassword.getText().toString();
 
-        mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(getContext(), "Регистрация успешна", Toast.LENGTH_SHORT).show();
-                        } else
-                            Toast.makeText(getContext(), "Регистрация провалена", Toast.LENGTH_SHORT).show();
-                    }
-                });
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnSignUpFragmentListener) {
-            mListener = (OnSignUpFragmentListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
+        if (isValidateForm()) {
+            mAuth.createUserWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                mRef.child(user.getUid()).child("name").setValue(etName.getText().toString());
+                                Toast.makeText(getContext(), "Successful registration", Toast.LENGTH_SHORT).show();
+                            } else
+                                Toast.makeText(getContext(), "Unsuccessful registration", Toast.LENGTH_SHORT).show();
+                        }
+                    });
         }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
     }
 
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.btn_sign_up) registration();
-    }
-
-    public interface OnSignUpFragmentListener {
-        void onSignUp(FirebaseUser user);
     }
 }
