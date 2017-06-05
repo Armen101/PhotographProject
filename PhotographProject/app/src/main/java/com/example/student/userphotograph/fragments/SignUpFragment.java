@@ -46,6 +46,7 @@ public class SignUpFragment extends BlankFragment implements View.OnClickListene
         super.onCreate(savedInstanceState);
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
+      //  mRef = FirebaseDatabase.getInstance().getReference();
         setAuthStateListener();
     }
 
