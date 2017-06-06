@@ -33,11 +33,11 @@
             android:textColorHint="#ffffff">
 
             <EditText
-                android:id="@+id/edit_text_username"
+                android:id="@+id/et_email_sign_in"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:hint="username"
+                android:hint="@string/text_email_hint"
                 android:inputType="textEmailAddress"
                 android:textColor="#ffffff"
                 android:textSize="18sp" />
@@ -52,11 +52,11 @@
             android:textColorHint="#ffffff">
 
             <EditText
-                android:id="@+id/edit_text_password"
+                android:id="@+id/et_password_sign_in"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:hint="password"
+                android:hint="@string/password"
                 android:inputType="textPassword"
                 android:textColor="#ffffff"
                 android:textSize="18sp" />
