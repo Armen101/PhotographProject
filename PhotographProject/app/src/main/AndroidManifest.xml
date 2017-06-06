@@ -17,7 +17,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activityes.SplashScreenActivity">
+        <activity
+            android:name=".activityes.SplashScreenActivity"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -36,7 +38,10 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".activityes.LoginActivity" />
+        <activity
+            android:name=".activityes.LoginActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            />
 
         <activity
             android:name=".activityes.MapsActivity"

@@ -10,8 +10,7 @@ import com.example.student.userphotograph.R;
 
 public class SignInFragment extends Fragment {
 
-    public SignInFragment() {
-    }
+    public SignInFragment() {}
 
     public static SignInFragment newInstance() {
         return new SignInFragment();
