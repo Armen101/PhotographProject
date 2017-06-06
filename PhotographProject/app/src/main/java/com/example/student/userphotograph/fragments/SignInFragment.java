@@ -19,11 +19,8 @@ import com.google.firebase.auth.FirebaseAuth;
 public class SignInFragment extends Fragment implements View.OnClickListener{
 
     private FirebaseAuth mAuth;
-    private FirebaseAuth.AuthStateListener mAuthListener;
-
     private EditText etEmail;
     private EditText etPassword;
-    private Button btnSignIn;
 
     public SignInFragment() {}
 
@@ -34,28 +31,33 @@ public class SignInFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mAuth = FirebaseAuth.getInstance();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView =  inflater.inflate(R.layout.fragment_sign_in, container, false);
-        etEmail = (EditText)rootView.findViewById(R.id.et_email_sign_in);
-        etPassword = (EditText)rootView.findViewById(R.id.et_email_sign_in);
-        btnSignIn = (Button)rootView.findViewById(R.id.sing_in_button);
-        btnSignIn.setOnClickListener(this);
+        findIdAndListeners(rootView);
         return rootView;
     }
 
-    public void signin(String email , String password)
+    private void findIdAndListeners(View rootView) {
+        etEmail = (EditText)rootView.findViewById(R.id.et_si_email);
+        etPassword = (EditText)rootView.findViewById(R.id.et_si_password);
+        Button btnSignIn = (Button) rootView.findViewById(R.id.sing_in_button);
+        btnSignIn.setOnClickListener(this);
+    }
+
+    public void signIn(String email , String password)
     {
         mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()) {
-                    Toast.makeText(getContext(), "Aвторизация успешна", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Seuccessful sign in", Toast.LENGTH_SHORT).show();
                 }else
-                    Toast.makeText(getContext(), "Aвторизация провалена", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Unseuccessful sign in", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -64,7 +66,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener{
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.sing_in_button:{
-                signin(etEmail.getText().toString(),etPassword.getText().toString());
+                signIn(etEmail.getText().toString(),etPassword.getText().toString());
                 break;
             }
         }

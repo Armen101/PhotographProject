@@ -3,21 +3,39 @@
 
     <item
         is-multidex="true"
-        jar="C:\Users\Armen\Desktop\gitRepo\user-photograph\PhotographProject\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jar="C:\Users\HP\.android\build-cache\8dbb9aa64f29251998f7634728252a0e494a6583\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="5c1f80f62ccad560edcd6609fc75f385cf7cb45a">
+        <dex dex="C:\Users\HP\git\user-photograph\PhotographProject\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_eee34645f6032568ccba07662d8808156bc8e095\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\HP\.android\build-cache\d03074f7505bc70f198a49e88b61e0eff71d9780\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="de24d8023e8da79f30bee46b298f606e5e758432">
+        <dex dex="C:\Users\HP\git\user-photograph\PhotographProject\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_d2da1223a883eaba3ef2b7121c19bc64246e0275\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\HP\git\user-photograph\PhotographProject\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="e7dcbc6bc32af11ea95648b47f69376eb917e782">
+        <dex dex="C:\Users\HP\git\user-photograph\PhotographProject\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_8f27dfea8935de371afdf5c4873a8360538a1329\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\HP\git\user-photograph\PhotographProject\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.3"
         sha1="caff8e51a24901cfc9cd7e1cf83d84f4cb0c103b">
-        <dex dex="C:\Users\Armen\Desktop\gitRepo\user-photograph\PhotographProject\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_60a846a7b2c52a2e0bb55c8a5743207298a41c9c\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Armen\Desktop\gitRepo\user-photograph\PhotographProject\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="de1cc29474539d5fcfbe2edc5b0d30ede4ef8d3b">
-        <dex dex="C:\Users\Armen\Desktop\gitRepo\user-photograph\PhotographProject\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_2468364984344ab2fe3235efdbee0d516303d494\classes.dex" />
+        <dex dex="C:\Users\HP\git\user-photograph\PhotographProject\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_2c9804541f930c8e5087e74ff77942418758573b\classes.dex" />
     </item>
 
 </items>
