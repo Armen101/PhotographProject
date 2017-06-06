@@ -5,7 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 
 import com.example.student.userphotograph.R;
-import com.example.student.userphotograph.fragments.SignInFragment;
+import com.example.student.userphotograph.fragments.SignInSignUpFragment;
 
 public class LoginActivity  extends AppCompatActivity{
 
@@ -14,7 +14,7 @@ public class LoginActivity  extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        replaceFragment(SignInFragment.newInstance());
+        replaceFragment(new SignInSignUpFragment());
     }
 
     private void replaceFragment(Fragment fragment){

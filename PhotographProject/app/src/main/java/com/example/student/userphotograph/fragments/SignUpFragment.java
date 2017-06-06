@@ -42,7 +42,7 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
-        mRef = FirebaseDatabase.getInstance().getReference();
+        mRef = FirebaseDatabase.getInstance().getReference().child("photographs");
     }
 
     @Override
@@ -93,9 +93,10 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
                     .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
+
                             if (task.isSuccessful()) {
-                                mRef.child(user.getUid()).child("name").setValue(etName.getText().toString());
                                 Toast.makeText(getContext(), "Successful registration", Toast.LENGTH_SHORT).show();
+                                mRef.child(user.getUid()).child("name").setValue(etName.getText().toString());
                             } else
                                 Toast.makeText(getContext(), "Unsuccessful registration", Toast.LENGTH_SHORT).show();
                         }

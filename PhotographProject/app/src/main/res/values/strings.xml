@@ -20,4 +20,5 @@
     <string name="don_t_have_an_account_sign_up">Don\'t have an account? Sign Up</string>
     <string name="username">username</string>
     <string name="password">password</string>
+    <string name="sign_in">sign in</string>
 </resources>
