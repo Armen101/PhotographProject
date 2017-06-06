@@ -54,10 +54,10 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
     }
 
     private void findViewsSetLIsteners(View rootView) {
-        etName = (EditText) rootView.findViewById(R.id.et_name);
-        etEmail = (EditText) rootView.findViewById(R.id.et_sp_email);
-        etPassword = (EditText) rootView.findViewById(R.id.et_sp_password);
-        Button btnSignUp = (Button) rootView.findViewById(R.id.btn_sign_up);
+        etName = (EditText) rootView.findViewById(R.id.full_name_sign_up);
+        etEmail = (EditText) rootView.findViewById(R.id.email_sign_up);
+        etPassword = (EditText) rootView.findViewById(R.id.password_sign_up);
+        Button btnSignUp = (Button) rootView.findViewById(R.id.buttonSignUp);
         btnSignUp.setOnClickListener(this);
 
     }
@@ -106,6 +106,6 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.btn_sign_up) registration();
+        if (v.getId() == R.id.buttonSignUp) registration();
     }
 }
