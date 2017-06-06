@@ -42,7 +42,7 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
-        mRef = FirebaseDatabase.getInstance().getReference();
+        mRef = FirebaseDatabase.getInstance().getReference().child("photographs");
     }
 
     @Override
