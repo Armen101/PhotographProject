@@ -6,11 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.example.student.userphotograph.R;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 public class SplashScreenActivity extends AppCompatActivity {
 
@@ -31,7 +28,7 @@ public class SplashScreenActivity extends AppCompatActivity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                goToActivity();
+                startActivity();
             }
 
             @Override
@@ -42,16 +39,13 @@ public class SplashScreenActivity extends AppCompatActivity {
     }
 
     //TODO write
-    private void goToActivity() {
-        FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
-        Intent intent;
-        if(user!=null){
-            intent= new Intent(this, HomeActivity.class);
-            Toast.makeText(this, user.getEmail(), Toast.LENGTH_LONG).show();
-        } else {
-            intent = new Intent(this, LoginActivity.class);
-        }
-        startActivity(intent);
+    private void startActivity() {
+        boolean isLoggedIn = true;
         finish();
+        if(isLoggedIn) {
+            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+        } else {
+            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+        }
     }
 }

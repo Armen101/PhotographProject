@@ -3,11 +3,13 @@ package com.example.student.userphotograph.fragments;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.student.userphotograph.R;
@@ -21,6 +23,8 @@ public class SignInFragment extends Fragment implements View.OnClickListener{
     private FirebaseAuth mAuth;
     private EditText etEmail;
     private EditText etPassword;
+    private TextView tvSignUp;
+    private TextView tvForgot;
 
     public SignInFragment() {}
 
@@ -45,8 +49,12 @@ public class SignInFragment extends Fragment implements View.OnClickListener{
     private void findIdAndListeners(View rootView) {
         etEmail = (EditText)rootView.findViewById(R.id.et_si_email);
         etPassword = (EditText)rootView.findViewById(R.id.et_si_password);
+        tvSignUp = (TextView) rootView.findViewById(R.id.dont_have_sign_up);
         Button btnSignIn = (Button) rootView.findViewById(R.id.sing_in_button);
+        tvForgot = (TextView) rootView.findViewById(R.id.tv_forgot_password);
         btnSignIn.setOnClickListener(this);
+        tvSignUp.setOnClickListener(this);
+        tvForgot.setOnClickListener(this);
     }
 
     public void signIn(String email , String password)
@@ -62,11 +70,27 @@ public class SignInFragment extends Fragment implements View.OnClickListener{
         });
     }
 
+    private void addFragment(Fragment fragment){
+
+        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.containerLogin, fragment);
+        ft.addToBackStack(null);
+        ft.commit();
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.sing_in_button:{
                 signIn(etEmail.getText().toString(),etPassword.getText().toString());
+                break;
+            }
+            case R.id.dont_have_sign_up: {
+                addFragment(SignUpFragment.newInstance());
+                break;
+            }
+            case R.id.tv_forgot_password: {
+                addFragment(ForgotPasswordFragment.newInstance());
                 break;
             }
         }

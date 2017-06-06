@@ -5,21 +5,17 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 
 import com.example.student.userphotograph.R;
-import com.example.student.userphotograph.fragments.SignUpFragment;
-import com.google.firebase.auth.FirebaseAuth;
+import com.example.student.userphotograph.fragments.SignInFragment;
 
 public class LoginActivity  extends AppCompatActivity{
 
-    private FirebaseAuth mauth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
-        replaceFragment(SignUpFragment.newInstance());
+        replaceFragment(SignInFragment.newInstance());
     }
-
 
     private void replaceFragment(Fragment fragment){
         getSupportFragmentManager()
@@ -27,6 +23,9 @@ public class LoginActivity  extends AppCompatActivity{
                 .replace(R.id.containerLogin, fragment)
                 .commit();
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
 }
-
-
