@@ -1,7 +1,9 @@
-package com.example.student.userphotograph;
+package com.example.student.userphotograph.activityes;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.example.student.userphotograph.R;
 
 public class SettingsActivity extends AppCompatActivity {
 

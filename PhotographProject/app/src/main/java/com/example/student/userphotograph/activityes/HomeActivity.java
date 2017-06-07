@@ -16,10 +16,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.student.userphotograph.R;
+import com.example.student.userphotograph.fragments.SettingsFragment;
 import com.example.student.userphotograph.service.GPSTracker;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -33,7 +36,9 @@ public class HomeActivity extends AppCompatActivity
         GoogleMap.OnPoiClickListener, View.OnClickListener {
 
     private GoogleMap mMap;
-    double latitude, longitude;
+    private RelativeLayout linearLayout;
+    private double latitude, longitude;
+    private FrameLayout container;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +87,14 @@ public class HomeActivity extends AppCompatActivity
             break;
 
             case R.id.nav_settings: {
+                linearLayout = (RelativeLayout) findViewById(R.id.liner_layout_in_home);
+                container = (FrameLayout)findViewById(R.id.container_home);
+                linearLayout.setVisibility(View.GONE);
+                container.setVisibility(View.VISIBLE);
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.container_home, SettingsFragment.newInstance())
+                        .commit();
             }
             break;
 

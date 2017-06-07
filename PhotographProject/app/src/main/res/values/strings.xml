@@ -21,4 +21,10 @@
     <string name="username">username</string>
     <string name="password">password</string>
     <string name="sign_in">sign in</string>
+    <string name="phone">phone</string>
+    <string name="address">address</string>
+    <string name="name">name</string>
+    <string name="camera_info">camera info</string>
+    <string name="add_avatar">add avatar</string>
+    <string name="save">save</string>
 </resources>

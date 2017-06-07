@@ -62,20 +62,13 @@ public class GPSTracker extends Service implements LocationListener {
         return mlocation;
     }
 
-    public void onLocationChanged(Location location) {
-    }
+    public void onLocationChanged(Location location) {}
 
-    public void onStatusChanged(String provider, int status, Bundle extras) {
+    public void onStatusChanged(String provider, int status, Bundle extras) {}
 
-    }
+    public void onProviderEnabled(String provider) {}
 
-    public void onProviderEnabled(String provider) {
-
-    }
-
-    public void onProviderDisabled(String provider) {
-
-    }
+    public void onProviderDisabled(String provider) {}
 
     public IBinder onBind(Intent intent) {
 

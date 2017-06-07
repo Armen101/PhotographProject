@@ -9,6 +9,7 @@
     tools:openDrawer="start">
 
     <LinearLayout
+
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -16,10 +17,10 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize">
-
         </LinearLayout>
 
         <RelativeLayout
+            android:id="@+id/liner_layout_in_home"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -42,8 +43,15 @@
                 android:layout_centerInParent="true"
                 android:src="@drawable/mylocation" />
         </RelativeLayout>
-
+        <FrameLayout
+            android:id="@+id/container_home"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </FrameLayout>
     </LinearLayout>
+
+
 
     <include
         layout="@layout/app_bar_home"
@@ -58,6 +66,5 @@
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header_home"
         app:menu="@menu/activity_home_drawer" />
-
 
 </android.support.v4.widget.DrawerLayout>
