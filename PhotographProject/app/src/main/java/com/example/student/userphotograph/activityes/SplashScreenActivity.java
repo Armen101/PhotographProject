@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.example.student.userphotograph.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -43,7 +42,7 @@ public class SplashScreenActivity extends AppCompatActivity {
 //            intent= new Intent(this, HomeActivity.class);
 //            Toast.makeText(this, user.getEmail(), Toast.LENGTH_LONG).show();
 //        } else {
-            intent = new Intent(this, LoginActivity.class);
+            intent = new Intent(this, DeatailTaskActivity.class);
        // }
         startActivity(intent);
         finish();

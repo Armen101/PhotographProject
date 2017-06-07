@@ -3,12 +3,12 @@
 
     <item
         is-multidex="true"
-        jar="C:\Users\HP\Desktop\git\user-photograph\PhotographProject\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jar="C:\Users\HP\.android\build-cache\0544010f8e0731b03da297691dea0efbfe246b4d\output\jars\classes.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.3"
-        sha1="27498db65616c50849379f80894fc62716953641">
-        <dex dex="C:\Users\HP\Desktop\git\user-photograph\PhotographProject\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_eb207801e33aafa8db5f048b375212d31d44cc54\classes.dex" />
+        sha1="c76f6507a42aec274953e882bf3c49a570843ef5">
+        <dex dex="C:\Users\HP\Desktop\git\user-photograph\PhotographProject\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_58ccfcda7b0e3f10bcfed8b60265bd98eb6b01fc\classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -18,6 +18,42 @@
         revision="25.0.3"
         sha1="caff8e51a24901cfc9cd7e1cf83d84f4cb0c103b">
         <dex dex="C:\Users\HP\Desktop\git\user-photograph\PhotographProject\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_e721e8993c943d3d157826305971097e2edf86eb\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\HP\.android\build-cache\8a5d35e333962751192571a1e8141c90fff1ec5f\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="3dbaff65d26258306561d545f88d6712ac41dd46">
+        <dex dex="C:\Users\HP\Desktop\git\user-photograph\PhotographProject\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_3c4e417393af9da647b139303f561941230aa157\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\HP\Desktop\git\user-photograph\PhotographProject\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="9ed0dbbc5ce5d6d45be6015a0e6d4adaf8723487">
+        <dex dex="C:\Users\HP\Desktop\git\user-photograph\PhotographProject\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_eb207801e33aafa8db5f048b375212d31d44cc54\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\HP\.gradle\caches\modules-2\files-2.1\com.squareup.picasso\picasso\2.5.2\7446d06ec8d4f7ffcc53f1da37c95f200dcb9387\picasso-2.5.2.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="7446d06ec8d4f7ffcc53f1da37c95f200dcb9387">
+        <dex dex="C:\Users\HP\Desktop\git\user-photograph\PhotographProject\app\build\intermediates\transforms\dex\debug\folders\1000\10\picasso-2.5.2_71213672e948e1ded945112dbe899a7d05ecdd4a\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\HP\.android\build-cache\1b26f630be4777bde0ff43e73f53d4d288f0eb29\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="ba4defc8cb4ed5b90b8ef71602722cdeebe507cd">
+        <dex dex="C:\Users\HP\Desktop\git\user-photograph\PhotographProject\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_9e3393e771a9faa0b863c2a492ca08cb69dcdfb1\classes.dex" />
     </item>
 
 </items>
