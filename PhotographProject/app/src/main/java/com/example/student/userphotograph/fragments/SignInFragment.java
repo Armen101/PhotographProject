@@ -1,5 +1,6 @@
 package com.example.student.userphotograph.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.student.userphotograph.R;
+import com.example.student.userphotograph.activityes.HomeActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -64,6 +66,8 @@ public class SignInFragment extends Fragment implements View.OnClickListener{
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()) {
                     Toast.makeText(getContext(), "Seuccessful sign in", Toast.LENGTH_SHORT).show();
+                    Intent goToHomeActivity = new Intent(getContext(), HomeActivity.class);
+                    startActivity(goToHomeActivity);
                 }else
                     Toast.makeText(getContext(), "Unseuccessful sign in", Toast.LENGTH_SHORT).show();
             }

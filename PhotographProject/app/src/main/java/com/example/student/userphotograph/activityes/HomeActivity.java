@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.GravityCompat;
@@ -13,7 +14,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -33,8 +33,6 @@ public class HomeActivity extends AppCompatActivity
         GoogleMap.OnPoiClickListener, View.OnClickListener {
 
     private GoogleMap mMap;
-    private GPSTracker gpsTracker;
-    private Location mlocation;
     double latitude, longitude;
 
     @Override
@@ -75,7 +73,7 @@ public class HomeActivity extends AppCompatActivity
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.nav_map: {
                 Intent mapIntent = new Intent(this, MapsActivity.class);
@@ -125,8 +123,8 @@ public class HomeActivity extends AppCompatActivity
 
     @Override
     public void onClick(View v) {
-        gpsTracker = new GPSTracker(getApplicationContext());
-        mlocation = gpsTracker.getLocation();
+        GPSTracker gpsTracker = new GPSTracker(getApplicationContext());
+        Location mlocation = gpsTracker.getLocation();
 
         if (mlocation == null) {
             Intent i = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
