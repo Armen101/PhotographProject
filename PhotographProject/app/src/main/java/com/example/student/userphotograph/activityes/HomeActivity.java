@@ -9,6 +9,7 @@ import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -18,10 +19,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.student.userphotograph.R;
+import com.example.student.userphotograph.fragments.GMapFragment;
 import com.example.student.userphotograph.fragments.SettingsFragment;
 import com.example.student.userphotograph.service.GPSTracker;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -32,18 +35,14 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.PointOfInterest;
 
 public class HomeActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback,
-        GoogleMap.OnPoiClickListener, View.OnClickListener {
+        implements NavigationView.OnNavigationItemSelectedListener{
 
-    private GoogleMap mMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        ImageView imgMyLocation = (ImageView) findViewById(R.id.my_location_home);
-        imgMyLocation.setOnClickListener(this);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -57,9 +56,6 @@ public class HomeActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
 
     }
 
@@ -78,13 +74,12 @@ public class HomeActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.nav_map: {
-                Intent mapIntent = new Intent(this, MapsActivity.class);
-                startActivity(mapIntent);
+                replaceFragment(GMapFragment.newInstance());
             }
             break;
 
             case R.id.nav_settings: {
-                RelativeLayout linearLayout = (RelativeLayout) findViewById(R.id.liner_layout_in_home);
+                LinearLayout linearLayout = (LinearLayout) findViewById(R.id.liner_layout_in_home);
                 FrameLayout container = (FrameLayout) findViewById(R.id.container_home);
                 linearLayout.setVisibility(View.GONE);
                 container.setVisibility(View.VISIBLE);
@@ -109,43 +104,11 @@ public class HomeActivity extends AppCompatActivity
         return true;
     }
 
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
 
-        mMap = googleMap;
-        mMap.setOnPoiClickListener(this);
-
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-            return;
-        }
-        mMap.setMyLocationEnabled(true);
-        mMap.getUiSettings().setMyLocationButtonEnabled(false);
-    }
-
-    @Override
-    public void onPoiClick(PointOfInterest poi) {
-        Toast.makeText(getApplicationContext(), poi.name, Toast.LENGTH_SHORT).show();
-    }
-
-
-    @Override
-    public void onClick(View v) {
-        GPSTracker gpsTracker = new GPSTracker(getApplicationContext());
-        Location mlocation = gpsTracker.getLocation();
-
-        if (mlocation == null) {
-            Intent i = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-            startActivity(i);
-        } else {
-            double latitude = mlocation.getLatitude();
-            double longitude = mlocation.getLongitude();
-
-            LatLng myLocation = new LatLng(latitude, longitude);
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(myLocation));
-            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myLocation, 15));
-        }
+    private void replaceFragment(Fragment fragment){
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.container_home, fragment)
+                .commit();
     }
 }

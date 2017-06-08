@@ -42,9 +42,6 @@
         <activity
             android:name=".activityes.LoginActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".activityes.MapsActivity"
-            android:label="@string/title_activity_maps" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

@@ -43,7 +43,7 @@ public class SplashScreenActivity extends AppCompatActivity {
             intent= new Intent(this, HomeActivity.class);
             Toast.makeText(this, user.getEmail(), Toast.LENGTH_LONG).show();
         } else {
-            intent = new Intent(this, LoginActivity.class);
+            intent = new Intent(this, HomeActivity.class);
         }
         startActivity(intent);
         finish();
