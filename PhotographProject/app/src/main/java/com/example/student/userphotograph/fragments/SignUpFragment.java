@@ -61,26 +61,24 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
         etPassword = (EditText) rootView.findViewById(R.id.password_sign_up);
         Button btnSignUp = (Button) rootView.findViewById(R.id.buttonSignUp);
         btnSignUp.setOnClickListener(this);
-
     }
 
     private boolean isValidateForm() {
         boolean valid = true;
 
-        String email = etEmail.getText().toString();
-        if (TextUtils.isEmpty(email)) {
+        if (TextUtils.isEmpty(etEmail.getText().toString())) {
             etEmail.setError("Required");
             valid = false;
-        } else {
-            etEmail.setError(null);
         }
 
-        String password = etPassword.getText().toString();
-        if (TextUtils.isEmpty(password)) {
+        if (TextUtils.isEmpty(etPassword.getText().toString())) {
             etPassword.setError("Required");
             valid = false;
-        } else {
-            etPassword.setError(null);
+        }
+
+        if (TextUtils.isEmpty(etName.getText().toString())) {
+            etName.setError("Required");
+            valid = false;
         }
 
         return valid;

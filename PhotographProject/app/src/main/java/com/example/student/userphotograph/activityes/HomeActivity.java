@@ -36,9 +36,6 @@ public class HomeActivity extends AppCompatActivity
         GoogleMap.OnPoiClickListener, View.OnClickListener {
 
     private GoogleMap mMap;
-    private RelativeLayout linearLayout;
-    private double latitude, longitude;
-    private FrameLayout container;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,8 +84,8 @@ public class HomeActivity extends AppCompatActivity
             break;
 
             case R.id.nav_settings: {
-                linearLayout = (RelativeLayout) findViewById(R.id.liner_layout_in_home);
-                container = (FrameLayout)findViewById(R.id.container_home);
+                RelativeLayout linearLayout = (RelativeLayout) findViewById(R.id.liner_layout_in_home);
+                FrameLayout container = (FrameLayout) findViewById(R.id.container_home);
                 linearLayout.setVisibility(View.GONE);
                 container.setVisibility(View.VISIBLE);
                 getSupportFragmentManager()
@@ -143,8 +140,8 @@ public class HomeActivity extends AppCompatActivity
             Intent i = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
             startActivity(i);
         } else {
-            latitude = mlocation.getLatitude();
-            longitude = mlocation.getLongitude();
+            double latitude = mlocation.getLatitude();
+            double longitude = mlocation.getLongitude();
 
             LatLng myLocation = new LatLng(latitude, longitude);
             mMap.moveCamera(CameraUpdateFactory.newLatLng(myLocation));
