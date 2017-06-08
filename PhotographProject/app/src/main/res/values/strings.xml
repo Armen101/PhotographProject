@@ -27,4 +27,6 @@
     <string name="camera_info">camera info</string>
     <string name="add_avatar">add avatar</string>
     <string name="save">save</string>
+    <string name="minimum_password" />
+    <string name="auth_failed" />
 </resources>

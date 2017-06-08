@@ -36,16 +36,17 @@ public class SplashScreenActivity extends AppCompatActivity {
         });
     }
 
-    private void goToActivity() {
+    private void goToActivity() {finish();
         FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
         Intent intent;
         if(user != null){
             intent= new Intent(this, HomeActivity.class);
             Toast.makeText(this, user.getEmail(), Toast.LENGTH_LONG).show();
         } else {
-            intent = new Intent(this, HomeActivity.class);
+            intent = new Intent(this, LoginActivity.class);
         }
-        startActivity(intent);
         finish();
+        startActivity(intent);
+
     }
 }
