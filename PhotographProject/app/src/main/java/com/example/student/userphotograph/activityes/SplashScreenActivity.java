@@ -36,7 +36,8 @@ public class SplashScreenActivity extends AppCompatActivity {
         });
     }
 
-    private void goToActivity() {finish();
+    private void goToActivity() {
+        finish();
         FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
         Intent intent;
         if(user != null){
@@ -47,6 +48,5 @@ public class SplashScreenActivity extends AppCompatActivity {
         }
         finish();
         startActivity(intent);
-
     }
 }
