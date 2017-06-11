@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.student.userphotograph.R;
+import com.example.student.userphotograph.models.Picture;
 import com.example.student.userphotograph.utilityes.MyAdapter;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -55,6 +56,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     private RecyclerView mRecyclerView;
     private Button mAddImg;
     private MyAdapter mAdapter;
+    private DatabaseReference mDatabaseGalleryRef;
 
 //    private FirebaseRecyclerAdapter<Image, MviewHolder> adapter(Query query){
 //        return new FirebaseRecyclerAdapter<Image, MviewHolder>(
@@ -81,10 +83,11 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseUser mUser = mAuth.getCurrentUser();
         mDatabaseRef = FirebaseDatabase.getInstance().getReference().child("photographs").child(mUser.getUid());
+        mDatabaseGalleryRef = mDatabaseRef.child("gallery");
         writeWithFbDb();
         StorageReference mStorageRef = FirebaseStorage.getInstance().getReference();
         mStorageAvatarRef = mStorageRef.child("photographs").child("avatar").child(mUser.getUid());
-        mStorageGalleryRef = mStorageRef.child("photographs").child("gallery").child(mUser.getUid());
+        mStorageGalleryRef = mStorageRef.child("photographs").child(mUser.getUid());
         downloadImageAndSetGallery(mStorageAvatarRef);
         mAdapter = new MyAdapter(mStorageGalleryRef, mUriList);
     }
@@ -99,6 +102,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         mPhone = (EditText) rootView.findViewById(R.id.et_st_phone);
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view_gallery);
         mAddImg = (Button)rootView.findViewById(R.id.btn_st_add);
+        mAddImg.setOnClickListener(this);
         recyclerViewActions();
 
         mAvatar = (ImageView) rootView.findViewById(R.id.st_avatar);
@@ -122,11 +126,11 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
                 break;
             }
             case R.id.st_avatar: {
-                actionPic(true);
+                actionPic(REQUEST_AVATAR_ACTION_PICK);
                 break;
             }
             case R.id.btn_st_add: {
-                actionPic(false);
+                actionPic(REQUEST_GALLERY_ACTION_PICK);
                 break;
             }
         }
@@ -185,21 +189,23 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
 
         if(requestCode == REQUEST_GALLERY_ACTION_PICK && resultCode == RESULT_OK){
             final Uri uri = data.getData();
-            mUriList.add(uri);
+
+
             mStorageGalleryRef.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-
+                    Picture picture = new Picture("title", uri);
+                    mDatabaseRef.child("gallery").child(uri.getLastPathSegment()).setValue(picture.toString());
+                    mStorageGalleryRef.child(uri.getLastPathSegment()).putFile(uri);
                 }
             });
         }
     }
-    
-    public void actionPic(Boolean isAvatar) {
+
+    public void actionPic(int requestCode) {
         Intent actionPick = new Intent(Intent.ACTION_GET_CONTENT);
         actionPick.setType("image/*");
-        if(isAvatar)startActivityForResult(actionPick, REQUEST_AVATAR_ACTION_PICK);
-        else startActivityForResult(actionPick, REQUEST_GALLERY_ACTION_PICK);
+        startActivityForResult(actionPick, requestCode);
     }
 
     public void downloadImageAndSetGallery(StorageReference ref) {
