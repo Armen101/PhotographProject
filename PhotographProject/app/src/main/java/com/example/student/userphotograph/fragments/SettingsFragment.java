@@ -2,6 +2,8 @@ package com.example.student.userphotograph.fragments;
 
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -17,12 +19,14 @@ import android.widget.Toast;
 
 import com.example.student.userphotograph.R;
 import com.example.student.userphotograph.utilityes.MyAdapter;
-import com.example.student.userphotograph.utilityes.SettingsHelper;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -32,6 +36,10 @@ import java.util.ArrayList;
 import static android.app.Activity.RESULT_OK;
 
 public class SettingsFragment extends Fragment implements View.OnClickListener {
+
+
+    public static final int REQUEST_AVATAR_ACTION_PICK = 100;
+    public static final int REQUEST_GALLERY_ACTION_PICK = 101;
 
     private EditText mName;
     private EditText mAddress;
@@ -45,7 +53,6 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     private StorageReference mStorageAvatarRef;
     private StorageReference mStorageGalleryRef;
     private RecyclerView mRecyclerView;
-    private SettingsHelper mHelper;
     private Button mAddImg;
     private MyAdapter mAdapter;
 
@@ -73,15 +80,12 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseUser mUser = mAuth.getCurrentUser();
-        mHelper = new SettingsHelper();
-
-
-
         mDatabaseRef = FirebaseDatabase.getInstance().getReference().child("photographs").child(mUser.getUid());
+        writeWithFbDb();
         StorageReference mStorageRef = FirebaseStorage.getInstance().getReference();
         mStorageAvatarRef = mStorageRef.child("photographs").child("avatar").child(mUser.getUid());
         mStorageGalleryRef = mStorageRef.child("photographs").child("gallery").child(mUser.getUid());
-        mHelper.downloadImageAndSetGallery(mStorageAvatarRef);
+        downloadImageAndSetGallery(mStorageAvatarRef);
         mAdapter = new MyAdapter(mStorageGalleryRef, mUriList);
     }
 
@@ -118,16 +122,13 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
                 break;
             }
             case R.id.st_avatar: {
-                mHelper.actionPic(getActivity(), true);
+                actionPic(true);
                 break;
-
             }
             case R.id.btn_st_add: {
-                mHelper.actionPic(getActivity(), false);
+                actionPic(false);
                 break;
-
             }
-
         }
     }
 
@@ -141,21 +142,39 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         Toast.makeText(getContext(), "Successfull saveing dates", Toast.LENGTH_SHORT).show();
     }
 
-//    private void writeWithFbDb() {
-//        mDatabaseRef.child("name").setValue(mName.getText().toString());
-//        mDatabaseRef.child("address").setValue(mAddress.getText().toString());
-//        mDatabaseRef.child("cameraInfo").setValue(mCameraInfo.getText().toString());
-//        mDatabaseRef.child("phone").setValue(mPhone.getText().toString());
-//        Toast.makeText(getContext(), "Successfull saveing dates", Toast.LENGTH_SHORT).show();
-//    }
+    private void writeWithFbDb() {
+
+        mDatabaseRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                String name = dataSnapshot.child("name").getValue(String.class);
+                String address = dataSnapshot.child("address").getValue(String.class);
+                String cameraInfo = dataSnapshot.child("cameraInfo").getValue(String.class);
+                String phone = dataSnapshot.child("phone").getValue(String.class);
+
+                mName.setText(name);
+                mAddress.setText(address);
+                mCameraInfo.setText(cameraInfo);
+                mPhone.setText(phone);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {}
+        });
+
+
+
+
+        Toast.makeText(getContext(), "Successfull saveing dates", Toast.LENGTH_SHORT).show();
+    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode == SettingsHelper.REQUEST_AVATAR_ACTION_PICK && resultCode == RESULT_OK){
+        if(requestCode == REQUEST_AVATAR_ACTION_PICK && resultCode == RESULT_OK){
             final Uri uri = data.getData();
-            mUriList.add(uri);
             mStorageAvatarRef.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -164,20 +183,33 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
             });
         }
 
-        if(requestCode == SettingsHelper.REQUEST_GALLERY_ACTION_PICK && resultCode == RESULT_OK){
+        if(requestCode == REQUEST_GALLERY_ACTION_PICK && resultCode == RESULT_OK){
             final Uri uri = data.getData();
             mUriList.add(uri);
             mStorageGalleryRef.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    //mRecyclerView.setAdapter(new MyAdapter(mStorageGalleryRef,mUriList));
-                    mAdapter.notifyDataSetChanged();
-
-
 
                 }
             });
         }
+    }
+    
+    public void actionPic(Boolean isAvatar) {
+        Intent actionPick = new Intent(Intent.ACTION_GET_CONTENT);
+        actionPick.setType("image/*");
+        if(isAvatar)startActivityForResult(actionPick, REQUEST_AVATAR_ACTION_PICK);
+        else startActivityForResult(actionPick, REQUEST_GALLERY_ACTION_PICK);
+    }
+
+    public void downloadImageAndSetGallery(StorageReference ref) {
+        ref.getBytes(1024 * 1024).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+            @Override
+            public void onSuccess(byte[] bytes) {
+                Bitmap  bitmap = BitmapFactory.decodeByteArray(bytes,0,bytes.length);
+                mAvatar.setImageBitmap(bitmap);
+            }
+        });
     }
 
 }
