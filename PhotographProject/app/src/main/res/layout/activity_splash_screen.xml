@@ -6,11 +6,11 @@
     android:layout_height="match_parent"
     tools:context="com.example.student.userphotograph.activityes.SplashScreenActivity">
 
-    <ImageView
+    <pl.droidsonroids.gif.GifImageView
         android:id="@+id/splash_screen"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/cartoon_birds_blue_flying_animation_clipart"
+        android:src="@drawable/splash_screen"
         tools:ignore="ContentDescription" />
 
 </FrameLayout>
