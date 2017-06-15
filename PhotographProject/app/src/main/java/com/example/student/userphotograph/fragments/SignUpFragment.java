@@ -25,7 +25,7 @@ import com.google.firebase.database.FirebaseDatabase;
 public class SignUpFragment extends Fragment implements View.OnClickListener {
 
     private FirebaseAuth mAuth;
-    private FirebaseUser user;
+    private FirebaseUser mUser;
     private static SignUpFragment instance;
     private EditText etName;
     private EditText etEmail;
@@ -43,7 +43,6 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mAuth = FirebaseAuth.getInstance();
-        user = mAuth.getCurrentUser();
         mRef = FirebaseDatabase.getInstance().getReference().child("photographs");
     }
 
@@ -96,7 +95,8 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
                             if (task.isSuccessful()) {
                                 Toast.makeText(getContext(), "Successful registration", Toast.LENGTH_SHORT).show();
 
-                                mRef.child(user.getUid()).child("name").setValue(etName.getText().toString());
+                                mUser = mAuth.getCurrentUser();
+                                mRef.child(mUser.getUid()).child("name").setValue(etName.getText().toString());
 
                                 Intent goToHomeActivity = new Intent(getContext(), HomeActivity.class);
                                 startActivity(goToHomeActivity);

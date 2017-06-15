@@ -3,30 +3,30 @@
 
     <item
         is-multidex="true"
-        jar="C:\Users\HP\.android\build-cache\4452c0d4461926be3cf99afe342bf2882bcb0645\output\jars\classes.jar"
+        jar="C:\Users\Armen\.gradle\caches\modules-2\files-2.1\com.github.bumptech.glide\glide\3.7.0\9e9eeaf9948ee4d6c3ab354e8dc14368f16994a4\glide-3.7.0.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.3"
-        sha1="d9f58e509a3ff5b601c11ab5ec588c96f9eb82b2">
-        <dex dex="C:\Users\HP\Desktop\githab\user-photograph\PhotographProject\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_70694a839d749821d8d07a78b57d4e2f45566779\classes.dex" />
+        sha1="9e9eeaf9948ee4d6c3ab354e8dc14368f16994a4">
+        <dex dex="C:\Users\Armen\Desktop\gitPhotograph\PhotographProject\PhotographProject\app\build\intermediates\transforms\dex\debug\folders\1000\10\glide-3.7.0_95e98b1d2eb89120cf6bc05f343581d5917ba107\classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="C:\Users\HP\Desktop\githab\user-photograph\PhotographProject\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jar="C:\Users\Armen\Desktop\gitPhotograph\PhotographProject\PhotographProject\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.3"
         sha1="3be78ebc2706b2e1fe2f12d5726887a92d6c183b">
-        <dex dex="C:\Users\HP\Desktop\githab\user-photograph\PhotographProject\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_97a0613589c3713a87b01e332dfd80f7b682214e\classes.dex" />
+        <dex dex="C:\Users\Armen\Desktop\gitPhotograph\PhotographProject\PhotographProject\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_31e8b13a68c29c2d8e498ad55cbcb0793b3d95f6\classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="C:\Users\HP\Desktop\githab\user-photograph\PhotographProject\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jar="C:\Users\Armen\Desktop\gitPhotograph\PhotographProject\PhotographProject\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.3"
-        sha1="88e6d12904fd727684d7d9ea1b48562647aa27e9">
-        <dex dex="C:\Users\HP\Desktop\githab\user-photograph\PhotographProject\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_3d884f018634de6c6ec5a8b972f1e350d809195f\classes.dex" />
+        sha1="1b7de01355d17e7b11ab7de5350a2290f87ef386">
+        <dex dex="C:\Users\Armen\Desktop\gitPhotograph\PhotographProject\PhotographProject\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_ae0736e58b39183d1a65484b12a21c9e134fac8e\classes.dex" />
     </item>
 
 </items>

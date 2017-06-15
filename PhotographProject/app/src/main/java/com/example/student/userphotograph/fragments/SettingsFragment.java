@@ -1,17 +1,20 @@
 package com.example.student.userphotograph.fragments;
 
 
+import android.app.ProgressDialog;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -19,7 +22,7 @@ import android.widget.Toast;
 
 import com.example.student.userphotograph.R;
 import com.example.student.userphotograph.models.Picture;
-import com.example.student.userphotograph.utilityes.MyAdapter;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -29,47 +32,35 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import java.util.ArrayList;
+import java.io.IOException;
 
 import static android.app.Activity.RESULT_OK;
+import static com.example.student.userphotograph.utilityes.Constants.REQUEST_AVATAR_CHOOSE_PICK;
+import static com.example.student.userphotograph.utilityes.Constants.REQUEST_GALLERY_CHOOSE_PICK;
+import static com.example.student.userphotograph.utilityes.Constants.STORAGE_PATH_UPLOADS;
 
 public class SettingsFragment extends Fragment implements View.OnClickListener {
-
-
-    public static final int REQUEST_AVATAR_ACTION_PICK = 100;
-    public static final int REQUEST_GALLERY_ACTION_PICK = 101;
 
     private EditText mName;
     private EditText mAddress;
     private EditText mCameraInfo;
     private EditText mPhone;
+    private EditText mNamePhoto;
 
-    private ArrayList<Uri> mUriList;
 
     private DatabaseReference mDatabaseRef;
     private ImageView mAvatar;
     private StorageReference mStorageAvatarRef;
     private StorageReference mStorageGalleryRef;
-    private RecyclerView mRecyclerView;
-    private Button mAddImg;
-    private MyAdapter mAdapter;
     private DatabaseReference mDatabaseGalleryRef;
+    private Uri filePath;
+    private ImageView mImage;
 
-//    private FirebaseRecyclerAdapter<Image, MviewHolder> adapter(Query query){
-//        return new FirebaseRecyclerAdapter<Image, MviewHolder>(
-//                Image.class,
-//                R.layout.content_grid_layout,
-//                MviewHolder.class,
-//                query) {
-//            @Override
-//            protected void populateViewHolder(MviewHolder viewHolder, Image model, int position) {
-//
-//            }
-//        };
-//    }
+
 
     public SettingsFragment() {}
 
@@ -80,17 +71,25 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseUser mUser = mAuth.getCurrentUser();
+
         mDatabaseRef = FirebaseDatabase.getInstance().getReference().child("photographs").child(mUser.getUid());
         mDatabaseGalleryRef = mDatabaseRef.child("gallery");
+
         writeWithFbDb();
+
         StorageReference mStorageRef = FirebaseStorage.getInstance().getReference();
         mStorageAvatarRef = mStorageRef.child("photographs").child("avatar").child(mUser.getUid());
         mStorageGalleryRef = mStorageRef.child("photographs").child(mUser.getUid());
+
+
+
         downloadImageAndSetGallery(mStorageAvatarRef);
-        mAdapter = new MyAdapter(mStorageGalleryRef, mUriList);
     }
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -100,42 +99,56 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         mAddress = (EditText) rootView.findViewById(R.id.et_st_address);
         mCameraInfo = (EditText) rootView.findViewById(R.id.st_camera_info);
         mPhone = (EditText) rootView.findViewById(R.id.et_st_phone);
-        mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view_gallery);
-        mAddImg = (Button)rootView.findViewById(R.id.btn_st_add);
-        mAddImg.setOnClickListener(this);
-        recyclerViewActions();
+
+        Button mSave = (Button) rootView.findViewById(R.id.btn_st_save_info);
+        Button mChoosePhoto = (Button)rootView.findViewById(R.id.btn_st_choose_photo);
+        Button mUploadPhoto = (Button) rootView.findViewById(R.id.btn_st_upload_phote);
+
+        mUploadPhoto.setOnClickListener(this);
+        mChoosePhoto.setOnClickListener(this);
+        mSave.setOnClickListener(this);
+
+        mImage = (ImageView)rootView.findViewById(R.id.img_gallery);
+        mNamePhoto = (EditText)rootView.findViewById(R.id.st_name_photo);
 
         mAvatar = (ImageView) rootView.findViewById(R.id.st_avatar);
         mAvatar.setOnClickListener(this);
-        Button mSave = (Button) rootView.findViewById(R.id.btn_st_save);
-        mSave.setOnClickListener(this);
+
+        replaceFragment();
         return rootView;
     }
 
-    private void recyclerViewActions() {
-        mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(),3));
-        mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setAdapter(new MyAdapter(mStorageGalleryRef, mUriList));
-    }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.btn_st_save: {
+            case R.id.btn_st_save_info: {
                 saveInFbDb();
                 break;
             }
             case R.id.st_avatar: {
-                actionPic(REQUEST_AVATAR_ACTION_PICK);
+                choosePic(REQUEST_AVATAR_CHOOSE_PICK);
                 break;
             }
-            case R.id.btn_st_add: {
-                actionPic(REQUEST_GALLERY_ACTION_PICK);
+            case R.id.btn_st_upload_phote: {
+                mNamePhoto.setVisibility(View.GONE);
+                mNamePhoto.setText("");
+                uploadFile();
+                break;
+            }
+            case R.id.btn_st_choose_photo: {
+                mNamePhoto.setVisibility(View.VISIBLE);
+                choosePic(REQUEST_GALLERY_CHOOSE_PICK);
                 break;
             }
         }
     }
 
+    private void replaceFragment(){
+        getFragmentManager().beginTransaction()
+                .replace(R.id.container_gallery_fragment, new GalleryFragment())
+                .commit();
+    }
 
 
     private void saveInFbDb() {
@@ -177,7 +190,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode == REQUEST_AVATAR_ACTION_PICK && resultCode == RESULT_OK){
+        if(requestCode == REQUEST_AVATAR_CHOOSE_PICK && resultCode == RESULT_OK){
             final Uri uri = data.getData();
             mStorageAvatarRef.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
@@ -187,25 +200,76 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
             });
         }
 
-        if(requestCode == REQUEST_GALLERY_ACTION_PICK && resultCode == RESULT_OK){
-            final Uri uri = data.getData();
-
-
-            mStorageGalleryRef.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    Picture picture = new Picture("title", uri);
-                    mDatabaseRef.child("gallery").child(uri.getLastPathSegment()).setValue(picture.toString());
-                    mStorageGalleryRef.child(uri.getLastPathSegment()).putFile(uri);
-                }
-            });
+        if (requestCode == REQUEST_GALLERY_CHOOSE_PICK && resultCode == RESULT_OK && data.getData() != null) {
+            filePath = data.getData();
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), filePath);
+                mImage.setImageBitmap(bitmap);
+                replaceFragment();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
-    public void actionPic(int requestCode) {
-        Intent actionPick = new Intent(Intent.ACTION_GET_CONTENT);
-        actionPick.setType("image/*");
-        startActivityForResult(actionPick, requestCode);
+    /*
+     We will rename the file to a unique name
+     as if we upload the file with same name
+     then files would be overwritten.
+     So after renaming the file the extension should remain the same.
+     So inside MainActivity.java create a method getFileExtension()
+     and it will return as the extension of the selected file by taking Uri object.
+     */
+    public String getFileExtension(Uri uri) {
+        ContentResolver cR = getActivity().getContentResolver();
+        MimeTypeMap mime = MimeTypeMap.getSingleton();
+        return mime.getExtensionFromMimeType(cR.getType(uri));
+    }
+
+    private void uploadFile() {
+        if (filePath != null) {
+            final ProgressDialog progressDialog = new ProgressDialog(getContext());
+            progressDialog.setTitle("Uploading");
+            progressDialog.show();
+            StorageReference sRef = mStorageGalleryRef.child(STORAGE_PATH_UPLOADS + System.currentTimeMillis() + "." + getFileExtension(filePath));
+
+            sRef.putFile(filePath)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            progressDialog.dismiss();
+                            Toast.makeText(getContext().getApplicationContext(), "File Uploaded ", Toast.LENGTH_LONG).show();
+
+                            @SuppressWarnings("VisibleForTests")
+                            Picture picture = new Picture(mNamePhoto.getText().toString().trim(), taskSnapshot.getDownloadUrl().toString());
+                            String uploadId = mDatabaseGalleryRef.push().getKey();
+                            mDatabaseGalleryRef.child(uploadId).setValue(picture);
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception exception) {
+                            progressDialog.dismiss();
+                            Toast.makeText(getContext().getApplicationContext(), exception.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    })
+                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                            @SuppressWarnings("VisibleForTests")
+                            double progress = (100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
+                            progressDialog.setMessage("Uploaded " + ((int) progress) + "%...");
+                        }
+                    });
+        } else {
+            Toast.makeText(getContext().getApplicationContext(), "Warning !!!, null file ", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public void choosePic(int requestCode) {
+        Intent choosePicIntent = new Intent(Intent.ACTION_GET_CONTENT);
+        choosePicIntent.setType("image/*");
+        startActivityForResult(choosePicIntent, requestCode);
     }
 
     public void downloadImageAndSetGallery(StorageReference ref) {
@@ -217,5 +281,4 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
             }
         });
     }
-
 }

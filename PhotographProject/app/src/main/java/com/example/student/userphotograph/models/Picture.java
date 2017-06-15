@@ -5,9 +5,12 @@ import android.net.Uri;
 public class Picture {
 
     private String title;
-    private Uri imageUri;
+    private String imageUri;
 
-    public Picture(String title, Uri imageUri) {
+    public Picture() {
+    }
+
+    public Picture(String title, String imageUri) {
         this.title = title;
         this.imageUri = imageUri;
     }
@@ -20,11 +23,11 @@ public class Picture {
         this.title = title;
     }
 
-    public Uri getImageUri() {
+    public String getImageUri() {
         return imageUri;
     }
 
-    public void setImageUri(Uri imageUri) {
+    public void setImageUri(String imageUri) {
         this.imageUri = imageUri;
     }
 }
