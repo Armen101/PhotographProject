@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/signinsignup"
     tools:context="com.example.student.userphotograph.fragments.SignInSignUpFragment">
 
 
@@ -10,17 +11,17 @@
         android:id="@+id/choose_sign_in"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerInParent="true"
-        android:text="@string/sign_in" />
+        android:text="@string/sign_in"
+        android:layout_above="@+id/choose_sign_up"
+        android:layout_centerHorizontal="true" />
 
     <Button
         android:id="@+id/choose_sign_up"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/choose_sign_in"
-        android:layout_alignRight="@+id/choose_sign_in"
-        android:layout_below="@+id/choose_sign_in"
-        android:text="@string/sign_up" />
+        android:text="@string/sign_up"
+        android:layout_alignParentBottom="true"
+        android:layout_alignLeft="@+id/choose_sign_in"
+        android:layout_alignStart="@+id/choose_sign_in" />
 
 </RelativeLayout>

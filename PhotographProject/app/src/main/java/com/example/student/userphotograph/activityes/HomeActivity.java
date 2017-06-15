@@ -1,5 +1,6 @@
 package com.example.student.userphotograph.activityes;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -10,20 +11,26 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 import com.example.student.userphotograph.R;
 import com.example.student.userphotograph.fragments.GMapFragment;
 import com.example.student.userphotograph.fragments.SettingsFragment;
+import com.example.student.userphotograph.fragments.SignInFragment;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class HomeActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener{
+        implements NavigationView.OnNavigationItemSelectedListener {
 
+
+    private FirebaseAuth mauth;
+    private Button btnSignIn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -69,6 +76,11 @@ public class HomeActivity extends AppCompatActivity
             break;
 
             case R.id.nav_log_out: {
+                FirebaseAuth.getInstance().signOut();
+                finish();
+                Intent i = new Intent(this, LoginActivity.class);
+                i.putExtra("log_out", false);
+                startActivity(i);
             }
             break;
         }
@@ -79,7 +91,7 @@ public class HomeActivity extends AppCompatActivity
     }
 
 
-    private void replaceFragment(Fragment fragment){
+    private void replaceFragment(Fragment fragment) {
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.container_home, fragment)

@@ -61,8 +61,8 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     private ImageView mImage;
 
 
-
-    public SettingsFragment() {}
+    public SettingsFragment() {
+    }
 
     public static SettingsFragment newInstance() {
         return new SettingsFragment();
@@ -85,10 +85,8 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         mStorageGalleryRef = mStorageRef.child("photographs").child(mUser.getUid());
 
 
-
         downloadImageAndSetGallery(mStorageAvatarRef);
     }
-
 
 
     @Override
@@ -101,15 +99,15 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         mPhone = (EditText) rootView.findViewById(R.id.et_st_phone);
 
         Button mSave = (Button) rootView.findViewById(R.id.btn_st_save_info);
-        Button mChoosePhoto = (Button)rootView.findViewById(R.id.btn_st_choose_photo);
+        Button mChoosePhoto = (Button) rootView.findViewById(R.id.btn_st_choose_photo);
         Button mUploadPhoto = (Button) rootView.findViewById(R.id.btn_st_upload_phote);
 
         mUploadPhoto.setOnClickListener(this);
         mChoosePhoto.setOnClickListener(this);
         mSave.setOnClickListener(this);
 
-        mImage = (ImageView)rootView.findViewById(R.id.img_gallery);
-        mNamePhoto = (EditText)rootView.findViewById(R.id.st_name_photo);
+        mImage = (ImageView) rootView.findViewById(R.id.img_gallery);
+        mNamePhoto = (EditText) rootView.findViewById(R.id.st_name_photo);
 
         mAvatar = (ImageView) rootView.findViewById(R.id.st_avatar);
         mAvatar.setOnClickListener(this);
@@ -144,7 +142,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-    private void replaceFragment(){
+    private void replaceFragment() {
         getFragmentManager().beginTransaction()
                 .replace(R.id.container_gallery_fragment, new GalleryFragment())
                 .commit();
@@ -177,10 +175,9 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
             }
 
             @Override
-            public void onCancelled(DatabaseError error) {}
+            public void onCancelled(DatabaseError error) {
+            }
         });
-
-
 
 
         Toast.makeText(getContext(), "Successfull saveing dates", Toast.LENGTH_SHORT).show();
@@ -190,7 +187,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode == REQUEST_AVATAR_CHOOSE_PICK && resultCode == RESULT_OK){
+        if (requestCode == REQUEST_AVATAR_CHOOSE_PICK && resultCode == RESULT_OK) {
             final Uri uri = data.getData();
             mStorageAvatarRef.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
@@ -262,7 +259,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
                         }
                     });
         } else {
-            Toast.makeText(getContext().getApplicationContext(), "Warning !!!, null file ", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext().getApplicationContext(), "Warning !!!, Error file ", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -276,7 +273,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         ref.getBytes(1024 * 1024).addOnSuccessListener(new OnSuccessListener<byte[]>() {
             @Override
             public void onSuccess(byte[] bytes) {
-                Bitmap  bitmap = BitmapFactory.decodeByteArray(bytes,0,bytes.length);
+                Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
                 mAvatar.setImageBitmap(bitmap);
             }
         });

@@ -71,19 +71,19 @@ public class ForgotPasswordFragment extends Fragment implements View.OnClickList
 
                 String email = etEmail.getText().toString().trim();
                 if(email.isEmpty()){
-                    Toast.makeText(getContext(), "email is a null", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Email is a empty", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if (TextUtils.isEmpty(email)) {
-                    Toast.makeText(getContext(), "Enter your registered email id", Toast.LENGTH_SHORT).show();
-                }
+//                if (TextUtils.isEmpty(email)) {
+//                    Toast.makeText(getContext(), "Enter your registered email id", Toast.LENGTH_SHORT).show();
+//                }
 
                 progressBar.setVisibility(View.VISIBLE);
                 mAuth.sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if(task.isSuccessful()){
-                            Toast.makeText(getContext(), "", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), "Reset password send email", Toast.LENGTH_SHORT).show();
                             Fragment fragment = SignInFragment.newInstance();
                             FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                             ft.replace(R.id.containerLogin, fragment);

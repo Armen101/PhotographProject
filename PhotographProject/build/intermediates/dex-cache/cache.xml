@@ -3,30 +3,48 @@
 
     <item
         is-multidex="true"
-        jar="C:\Users\Armen\.gradle\caches\modules-2\files-2.1\com.github.bumptech.glide\glide\3.7.0\9e9eeaf9948ee4d6c3ab354e8dc14368f16994a4\glide-3.7.0.jar"
+        jar="C:\Users\Student\Desktop\git\PhotographProject\PhotographProject\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="42950df5fb5166392f48ee2df06c663a883d6b01">
+        <dex dex="C:\Users\Student\Desktop\git\PhotographProject\PhotographProject\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_4cd2c4e1afc52b37affe6e7ea448b134ef84f683\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Student\.android\build-cache\54f57842f750f5dfc761407ce74804ff91e26be4\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="c76f6507a42aec274953e882bf3c49a570843ef5">
+        <dex dex="C:\Users\Student\Desktop\git\PhotographProject\PhotographProject\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_3417aa17e341aa4e882651a5dbeed10f02691685\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Student\.android\build-cache\a46d1852ef73ad9e3cd94960d21cfbd8783b2a71\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="d9f58e509a3ff5b601c11ab5ec588c96f9eb82b2">
+        <dex dex="C:\Users\Student\Desktop\git\PhotographProject\PhotographProject\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_af11c954e3919b6f8197c1fb500cfc1285f46e34\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Student\.gradle\caches\modules-2\files-2.1\com.github.bumptech.glide\glide\3.7.0\9e9eeaf9948ee4d6c3ab354e8dc14368f16994a4\glide-3.7.0.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.3"
         sha1="9e9eeaf9948ee4d6c3ab354e8dc14368f16994a4">
-        <dex dex="C:\Users\Armen\Desktop\gitPhotograph\PhotographProject\PhotographProject\app\build\intermediates\transforms\dex\debug\folders\1000\10\glide-3.7.0_95e98b1d2eb89120cf6bc05f343581d5917ba107\classes.dex" />
+        <dex dex="C:\Users\Student\Desktop\git\PhotographProject\PhotographProject\app\build\intermediates\transforms\dex\debug\folders\1000\10\glide-3.7.0_62b39e7fe4b4ec06ee13c035087ecb5eca0c06a3\classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="C:\Users\Armen\Desktop\gitPhotograph\PhotographProject\PhotographProject\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jar="C:\Users\Student\Desktop\git\PhotographProject\PhotographProject\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.3"
         sha1="3be78ebc2706b2e1fe2f12d5726887a92d6c183b">
-        <dex dex="C:\Users\Armen\Desktop\gitPhotograph\PhotographProject\PhotographProject\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_31e8b13a68c29c2d8e498ad55cbcb0793b3d95f6\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Armen\Desktop\gitPhotograph\PhotographProject\PhotographProject\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="1b7de01355d17e7b11ab7de5350a2290f87ef386">
-        <dex dex="C:\Users\Armen\Desktop\gitPhotograph\PhotographProject\PhotographProject\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_ae0736e58b39183d1a65484b12a21c9e134fac8e\classes.dex" />
+        <dex dex="C:\Users\Student\Desktop\git\PhotographProject\PhotographProject\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_b98ccbadd9b17ba05e28ad54184f4965c57b33d9\classes.dex" />
     </item>
 
 </items>

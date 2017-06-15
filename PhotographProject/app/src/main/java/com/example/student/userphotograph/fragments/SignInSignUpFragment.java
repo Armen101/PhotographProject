@@ -13,7 +13,9 @@ public class SignInSignUpFragment extends Fragment implements View.OnClickListen
 
     public SignInSignUpFragment() {
     }
-
+    public static SignInSignUpFragment newInstance() {
+        return new SignInSignUpFragment();
+    }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -20,15 +20,17 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class SignInFragment extends Fragment implements View.OnClickListener{
+public class SignInFragment extends Fragment implements View.OnClickListener {
 
     private FirebaseAuth mAuth;
     private EditText etEmail;
     private EditText etPassword;
     private TextView tvSignUp;
     private TextView tvForgot;
+    private Button btnSignIn;
 
-    public SignInFragment() {}
+    public SignInFragment() {
+    }
 
     public static SignInFragment newInstance() {
         return new SignInFragment();
@@ -43,38 +45,42 @@ public class SignInFragment extends Fragment implements View.OnClickListener{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView =  inflater.inflate(R.layout.fragment_sign_in, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_sign_in, container, false);
         findIdAndListeners(rootView);
+        btnSignIn.setClickable(true);
         return rootView;
     }
 
     private void findIdAndListeners(View rootView) {
-        etEmail = (EditText)rootView.findViewById(R.id.et_si_email);
-        etPassword = (EditText)rootView.findViewById(R.id.et_si_password);
+        etEmail = (EditText) rootView.findViewById(R.id.et_si_email);
+        etPassword = (EditText) rootView.findViewById(R.id.et_si_password);
         tvSignUp = (TextView) rootView.findViewById(R.id.dont_have_sign_up);
-        Button btnSignIn = (Button) rootView.findViewById(R.id.sing_in_button);
+        btnSignIn = (Button) rootView.findViewById(R.id.sign_in_button);
         tvForgot = (TextView) rootView.findViewById(R.id.tv_forgot_password);
         btnSignIn.setOnClickListener(this);
         tvSignUp.setOnClickListener(this);
         tvForgot.setOnClickListener(this);
     }
 
-    public void signIn(String email , String password)
-    {
-        mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+    public void signIn(String email, String password) {
+        if (email.isEmpty() || password.isEmpty()) {
+            Toast.makeText(getContext(), "invalid email or password", Toast.LENGTH_SHORT).show();
+        }
+        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful()) {
+                if (task.isSuccessful()) {
                     Toast.makeText(getContext(), "Seuccessful sign in", Toast.LENGTH_SHORT).show();
                     Intent goToHomeActivity = new Intent(getContext(), HomeActivity.class);
                     startActivity(goToHomeActivity);
-                }else
-                    Toast.makeText(getContext(), "Unseuccessful sign in", Toast.LENGTH_SHORT).show();
+                } else
+                    btnSignIn.setClickable(true);
+                Toast.makeText(getContext(), "Unseuccessful sign in", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    private void addFragment(Fragment fragment){
+    private void addFragment(Fragment fragment) {
 
         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.containerLogin, fragment);
@@ -84,9 +90,10 @@ public class SignInFragment extends Fragment implements View.OnClickListener{
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.sing_in_button:{
-                signIn(etEmail.getText().toString(),etPassword.getText().toString());
+        switch (v.getId()) {
+            case R.id.sign_in_button: {
+                btnSignIn.setClickable(false);
+                signIn(etEmail.getText().toString(), etPassword.getText().toString());
                 break;
             }
             case R.id.dont_have_sign_up: {

@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#D18130"
+    android:background="@drawable/signin"
     android:orientation="vertical"
     tools:context="com.example.student.userphotograph.fragments.SignInFragment">
 
@@ -73,20 +73,18 @@
                 android:id="@+id/tv_forgot_password"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
                 android:layout_gravity="right"
                 android:text="Forgot password?"
-                android:layout_alignParentRight="true"
                 android:textColor="#ffffff"
                 android:textSize="18sp" />
 
             <Button
-                android:id="@+id/sing_in_button"
+                android:id="@+id/sign_in_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="#D18130"
                 android:layout_centerInParent="true"
                 android:text="Sign in"
-                android:textColor="#ffffff"
                 android:textSize="16sp" />
         </RelativeLayout>
 
