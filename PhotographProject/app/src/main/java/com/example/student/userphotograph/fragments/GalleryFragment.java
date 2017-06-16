@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -48,7 +49,7 @@ public class GalleryFragment extends Fragment {
 
         FirebaseRecyclerAdapter<Picture, MyViewHolder> adapter;
 
-        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 1));
         recyclerView.setHasFixedSize(true);
 
         adapter = new FirebaseRecyclerAdapter<Picture, MyViewHolder>(
@@ -60,9 +61,11 @@ public class GalleryFragment extends Fragment {
             @Override
             protected void populateViewHolder(MyViewHolder viewHolder, Picture model, int position) {
 
+                viewHolder.tvGallery.setText(model.getTitle());
                 Glide.with(getActivity())
                         .load(model.getImageUri())
                         .into(viewHolder.imgGallery);
+
 
             }
         };
@@ -74,10 +77,10 @@ public class GalleryFragment extends Fragment {
     private static class MyViewHolder extends RecyclerView.ViewHolder {
 
         ImageView imgGallery;
-
+        TextView tvGallery;
         public MyViewHolder(View view) {
             super(view);
-
+            tvGallery = (TextView) view.findViewById(R.id.tv_image_gallery);
             imgGallery = (ImageView) view.findViewById(R.id.gallery_img);
         }
     }
