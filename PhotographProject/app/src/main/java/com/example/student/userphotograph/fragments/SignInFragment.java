@@ -65,19 +65,22 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
     public void signIn(String email, String password) {
         if (email.isEmpty() || password.isEmpty()) {
             Toast.makeText(getContext(), "invalid email or password", Toast.LENGTH_SHORT).show();
+            btnSignIn.setClickable(true);
+        } else if (!email.isEmpty() && !password.isEmpty()){
+            mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (task.isSuccessful()) {
+                        btnSignIn.setClickable(false);
+                        Toast.makeText(getContext(), "Seuccessful sign in", Toast.LENGTH_SHORT).show();
+                        Intent goToHomeActivity = new Intent(getContext(), HomeActivity.class);
+                        startActivity(goToHomeActivity);
+                    } else
+                        btnSignIn.setClickable(true);
+                    Toast.makeText(getContext(), "Unseuccessful sign in", Toast.LENGTH_SHORT).show();
+                }
+            });
         }
-        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()) {
-                    Toast.makeText(getContext(), "Seuccessful sign in", Toast.LENGTH_SHORT).show();
-                    Intent goToHomeActivity = new Intent(getContext(), HomeActivity.class);
-                    startActivity(goToHomeActivity);
-                } else
-                    btnSignIn.setClickable(true);
-                Toast.makeText(getContext(), "Unseuccessful sign in", Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
     private void addFragment(Fragment fragment) {

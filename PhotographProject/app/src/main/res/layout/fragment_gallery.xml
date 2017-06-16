@@ -5,8 +5,15 @@
     tools:context="com.example.student.userphotograph.fragments.GalleryFragment">
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_view_gallery"
+        android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="match_parent">
+
+    </android.support.v7.widget.RecyclerView>
+
+    <ImageView
+        android:id="@+id/gallery_img"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent" />
 
 </FrameLayout>
