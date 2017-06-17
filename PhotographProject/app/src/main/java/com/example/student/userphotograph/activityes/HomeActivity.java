@@ -13,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.example.student.userphotograph.R;
 import com.example.student.userphotograph.fragments.GMapFragment;
@@ -22,10 +23,6 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
-
-    private FirebaseAuth mauth;
-    private Button btnSignIn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +69,7 @@ public class HomeActivity extends AppCompatActivity
             break;
 
             case R.id.nav_about: {
+
             }
             break;
 
@@ -89,7 +87,6 @@ public class HomeActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
 
     private void replaceFragment(Fragment fragment) {
         getSupportFragmentManager()

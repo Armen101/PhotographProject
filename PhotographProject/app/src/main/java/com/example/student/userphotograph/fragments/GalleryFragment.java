@@ -1,7 +1,6 @@
 package com.example.student.userphotograph.fragments;
 
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -11,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.student.userphotograph.R;
@@ -25,14 +23,12 @@ import com.google.firebase.database.FirebaseDatabase;
 public class GalleryFragment extends Fragment {
 
 
-    private DatabaseReference mDatabaseRef;
     private DatabaseReference mDatabaseGalleryRef;
-
-    public GalleryFragment() {
-    }
+    private static GalleryFragment instance;
 
     public static GalleryFragment newInstance() {
-        return new GalleryFragment();
+        if(instance == null) instance = new GalleryFragment();
+        return instance;
     }
 
     @Override
@@ -42,42 +38,43 @@ public class GalleryFragment extends Fragment {
 
         FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        mDatabaseRef = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference mDatabaseRef = FirebaseDatabase.getInstance().getReference();
+        assert mUser != null;
         mDatabaseGalleryRef = mDatabaseRef.child("photographs").child(mUser.getUid()).child("gallery");
 
         RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
-
-        FirebaseRecyclerAdapter<Picture, MyViewHolder> adapter;
-
-        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 1));
+        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
         recyclerView.setHasFixedSize(true);
+        onCreateFirebaseRecyclerAdapter(recyclerView);
 
-        adapter = new FirebaseRecyclerAdapter<Picture, MyViewHolder>(
+        return rootView;
+    }
+
+    private void onCreateFirebaseRecyclerAdapter(RecyclerView recyclerView) {
+
+        FirebaseRecyclerAdapter<Picture, MyViewHolder> adapter = new FirebaseRecyclerAdapter<Picture, MyViewHolder>(
                 Picture.class,
-                R.layout.fragment_gallery,
+                R.layout.layout_images,
                 MyViewHolder.class,
                 mDatabaseGalleryRef
         ) {
             @Override
             protected void populateViewHolder(MyViewHolder viewHolder, Picture model, int position) {
-
                 viewHolder.tvGallery.setText(model.getTitle());
                 Glide.with(getActivity())
                         .load(model.getImageUri())
                         .into(viewHolder.imgGallery);
-
-
             }
         };
 
         recyclerView.setAdapter(adapter);
-        return rootView;
     }
 
     private static class MyViewHolder extends RecyclerView.ViewHolder {
 
         ImageView imgGallery;
         TextView tvGallery;
+
         public MyViewHolder(View view) {
             super(view);
             tvGallery = (TextView) view.findViewById(R.id.tv_image_gallery);

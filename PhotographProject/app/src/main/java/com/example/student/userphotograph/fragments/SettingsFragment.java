@@ -20,6 +20,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.student.userphotograph.R;
 import com.example.student.userphotograph.models.Picture;
 import com.example.student.userphotograph.utilityes.Constants;
@@ -32,7 +33,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -41,9 +41,6 @@ import com.google.firebase.storage.UploadTask;
 import java.io.IOException;
 
 import static android.app.Activity.RESULT_OK;
-import static com.example.student.userphotograph.utilityes.Constants.REQUEST_AVATAR_CHOOSE_PICK;
-import static com.example.student.userphotograph.utilityes.Constants.REQUEST_GALLERY_CHOOSE_PICK;
-import static com.example.student.userphotograph.utilityes.Constants.STORAGE_PATH_UPLOADS;
 
 public class SettingsFragment extends Fragment implements View.OnClickListener {
 
@@ -54,14 +51,10 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     private EditText mNamePhoto;
     private ImageView mAvatar;
 
-    private Uri filePath;
+    private Uri mFilePath;
     private ImageView mImage;
 
-    private FirebaseAuth mAuth;
-    private FirebaseUser mUser;
-
     private DatabaseReference mDatabaseRef;
-    private StorageReference mStorageRef;
 
     private DatabaseReference mDatabaseGalleryRef;
     private StorageReference mStorageAvatarRef;
@@ -81,44 +74,47 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
 
         findViewById(rootView);
 
-        mAuth = FirebaseAuth.getInstance();
-        mUser = mAuth.getCurrentUser();
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        FirebaseUser user = auth.getCurrentUser();
 
-        mDatabaseRef = FirebaseDatabase.getInstance().getReference().child("photographs").child(mUser.getUid());
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference().child("photographs").child(user.getUid());
         mDatabaseGalleryRef = mDatabaseRef.child("gallery");
 
-        mStorageRef = FirebaseStorage.getInstance().getReference();
-        mStorageAvatarRef = mStorageRef.child("photographs").child("avatar").child(mUser.getUid());
-        mStorageGalleryRef = mStorageRef.child("photographs").child("gallery").child(mUser.getUid());
+        StorageReference mStorageRef = FirebaseStorage.getInstance().getReference();
+        mStorageAvatarRef = mStorageRef.child("photographs").child("avatar").child(user.getUid());
+        mStorageGalleryRef = mStorageRef.child("photographs").child("gallery").child(user.getUid());
+
+        getFragmentManager().beginTransaction()
+                .replace(R.id.container_gallery_fragment, GalleryFragment.newInstance())
+                .commit();
 
         writeWithFbDb();
-        replaceFragment();
         downloadImageAndSetGallery(mStorageAvatarRef);
-
         return rootView;
     }
 
     private void findViewById(View rootView) {
+
         mName = (EditText) rootView.findViewById(R.id.et_st_name);
         mAddress = (EditText) rootView.findViewById(R.id.et_st_address);
         mCameraInfo = (EditText) rootView.findViewById(R.id.st_camera_info);
         mPhone = (EditText) rootView.findViewById(R.id.et_st_phone);
         mAvatar = (ImageView) rootView.findViewById(R.id.st_avatar);
-
-        Button mSave = (Button) rootView.findViewById(R.id.btn_st_save_info);
-        Button mChoosePhoto = (Button) rootView.findViewById(R.id.btn_st_choose_photo);
-        Button mUploadPhoto = (Button) rootView.findViewById(R.id.btn_st_upload_phote);
-
         mImage = (ImageView) rootView.findViewById(R.id.img_gallery);
         mNamePhoto = (EditText) rootView.findViewById(R.id.st_name_photo);
 
-        mUploadPhoto.setOnClickListener(this);
-        mChoosePhoto.setOnClickListener(this);
-        mSave.setOnClickListener(this);
+        Button saveAllInfo = (Button) rootView.findViewById(R.id.btn_st_save_info);
+        Button choosePhoto = (Button) rootView.findViewById(R.id.btn_st_choose_photo);
+        Button uploadPhoto = (Button) rootView.findViewById(R.id.btn_st_upload_phote);
+
+        uploadPhoto.setOnClickListener(this);
+        choosePhoto.setOnClickListener(this);
+        saveAllInfo.setOnClickListener(this);
         mAvatar.setOnClickListener(this);
     }
 
     private void saveInFbDb() {
+
         mDatabaseRef.child("name").setValue(mName.getText().toString());
         mDatabaseRef.child("address").setValue(mAddress.getText().toString());
         mDatabaseRef.child("cameraInfo").setValue(mCameraInfo.getText().toString());
@@ -144,16 +140,8 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
             }
 
             @Override
-            public void onCancelled(DatabaseError error) {
-            }
+            public void onCancelled(DatabaseError error) {}
         });
-
-    }
-
-    private void replaceFragment() {
-        getFragmentManager().beginTransaction()
-                .replace(R.id.container_gallery_fragment, new GalleryFragment())
-                .commit();
     }
 
     @Override
@@ -168,11 +156,13 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
                 break;
             }
             case R.id.btn_st_upload_phote: {
+                mNamePhoto.setVisibility(View.GONE);
                 mNamePhoto.setText(mNamePhoto.getText().toString());
                 uploadFile();
                 break;
             }
             case R.id.btn_st_choose_photo: {
+                mNamePhoto.setVisibility(View.VISIBLE);
                 choosePic(Constants.REQUEST_GALLERY_CHOOSE_PICK);
                 break;
             }
@@ -186,19 +176,19 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     }
 
     public String getFileExtension(Uri uri) {
-        ContentResolver cR = getActivity().getContentResolver();
-        MimeTypeMap mime = MimeTypeMap.getSingleton();
-        return mime.getExtensionFromMimeType(cR.getType(uri));
+        ContentResolver contentResolver = getActivity().getContentResolver();
+        MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
+        return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
     }
 
     private void uploadFile() {
-        if (filePath != null) {
+        if (mFilePath != null) {
             final ProgressDialog progressDialog = new ProgressDialog(getContext());
             progressDialog.setTitle("Uploading");
             progressDialog.show();
-            StorageReference sRef = mStorageGalleryRef.child(Constants.STORAGE_PATH_UPLOADS + System.currentTimeMillis() + "." + getFileExtension(filePath));
+            StorageReference sRef = mStorageGalleryRef.child(Constants.STORAGE_PATH_UPLOADS + System.currentTimeMillis() + "." + getFileExtension(mFilePath));
 
-            sRef.putFile(filePath)
+            sRef.putFile(mFilePath)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -239,6 +229,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
                         mAvatar.setImageBitmap(bitmap);
                     }
                 });
+
     }
 
     @Override
@@ -256,11 +247,10 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         }
 
         if (requestCode == Constants.REQUEST_GALLERY_CHOOSE_PICK && resultCode == RESULT_OK && data.getData() != null) {
-            filePath = data.getData();
+            mFilePath = data.getData();
             try {
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), filePath);
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), mFilePath);
                 mImage.setImageBitmap(bitmap);
-                replaceFragment();
             } catch (IOException e) {
                 e.printStackTrace();
             }
