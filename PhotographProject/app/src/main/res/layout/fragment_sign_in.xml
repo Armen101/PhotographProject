@@ -2,8 +2,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/signin"
+    android:background="@drawable/drow002"
     android:orientation="vertical"
+    android:padding="20dp"
     tools:context="com.example.student.userphotograph.fragments.SignInFragment">
 
     <RelativeLayout
@@ -17,7 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:src="@drawable/logo_sign_in" />
+             />
     </RelativeLayout>
 
     <LinearLayout
@@ -76,7 +77,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_gravity="right"
                 android:text="Forgot password?"
-                android:textColor="#ffffff"
+                android:textColor="@color/colorRed"
                 android:textSize="18sp" />
 
             <Button
@@ -84,8 +85,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:text="Sign in"
-                android:textSize="16sp" />
+                android:text="@string/sign_in"
+                android:textStyle="bold"
+                android:textColor="@color/colorRed"
+                android:background="@android:color/transparent"
+                android:textSize="24sp" />
         </RelativeLayout>
 
     </LinearLayout>
@@ -102,9 +106,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity=""
             android:text="@string/don_t_have_an_account_sign_up"
-            android:textColor="#ffffff"
+            android:textColor="@color/colorRed"
             android:textSize="18sp" />
     </LinearLayout>
-
 
 </LinearLayout>

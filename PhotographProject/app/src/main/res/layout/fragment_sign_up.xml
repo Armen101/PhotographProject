@@ -4,14 +4,14 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/signup"
+        android:padding="20dp"
+        android:background="@drawable/drow001"
         tools:context="com.example.student.userphotograph.fragments.SignUpFragment">
 
         <ImageView
             android:id="@+id/logo_sign_up"
             android:layout_width="70dp"
             android:layout_height="70dp"
-            android:src="@drawable/logo_sign_up"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="40dp" />
@@ -83,6 +83,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
             android:text="@string/sign_up"
+            android:textSize="24dp"
+            android:textStyle="bold"
+            android:textColor="@color/colorRed"
+            android:background="@android:color/transparent"
             android:layout_below="@+id/passwordLayout"
             android:layout_centerHorizontal="true" />
 
