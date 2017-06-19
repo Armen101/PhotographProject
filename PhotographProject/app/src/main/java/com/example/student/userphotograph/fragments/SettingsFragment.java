@@ -69,7 +69,6 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     private ImageView mAddImg;
     private LinearLayout mCooseFileLayout;
     private StorageReference mStorageRef;
-    private DrawerLayout drawer;
 
     public SettingsFragment() {
     }
