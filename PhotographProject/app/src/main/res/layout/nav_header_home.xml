@@ -10,22 +10,22 @@
 
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/image_view"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:paddingTop="@dimen/nav_header_vertical_spacing"
+        android:layout_gravity="center"
         android:src="@drawable/navigation_launcher_web" />
 
     <TextView
-        android:id="@+id/textView_name_lastname"
+        android:id="@+id/tv_name_last_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Name Last name"/>
+        android:text="Name Last name" />
 
     <TextView
-        android:id="@+id/textView_email"
+        android:id="@+id/tv_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

@@ -32,7 +32,7 @@ public class GMapFragment extends Fragment implements OnMapReadyCallback,
         GoogleMap.OnPoiClickListener, View.OnClickListener {
 
     private GoogleMap mMap;
-    private double latitude, longitude;
+    private double mLatitude, mLongitude;
 
     public GMapFragment(){
 
@@ -96,10 +96,10 @@ public class GMapFragment extends Fragment implements OnMapReadyCallback,
             Intent i = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
             startActivity(i);
         } else {
-            latitude = mlocation.getLatitude();
-            longitude = mlocation.getLongitude();
+            mLatitude = mlocation.getLatitude();
+            mLongitude = mlocation.getLongitude();
 
-            LatLng myLocation = new LatLng(latitude, longitude);
+            LatLng myLocation = new LatLng(mLatitude, mLongitude);
             mMap.moveCamera(CameraUpdateFactory.newLatLng(myLocation));
             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myLocation, 15));
         }

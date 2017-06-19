@@ -34,7 +34,7 @@
             android:textColorHint="#ffffff">
 
             <EditText
-                android:id="@+id/et_si_email"
+                android:id="@+id/et_sign_in_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -53,7 +53,7 @@
             android:textColorHint="#ffffff">
 
             <EditText
-                android:id="@+id/et_si_password"
+                android:id="@+id/et_sign_in_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"

@@ -30,10 +30,10 @@ public class SignInSignUpFragment extends Fragment implements View.OnClickListen
     }
 
     private void findViewsSetListeners(View rootView) {
-        Button signIn = (Button) rootView.findViewById(R.id.choose_sign_in);
-        Button signUp = (Button) rootView.findViewById(R.id.choose_sign_up);
-        signIn.setOnClickListener(this);
-        signUp.setOnClickListener(this);
+        Button mSignIn = (Button) rootView.findViewById(R.id.choose_sign_in);
+        Button mSignUp = (Button) rootView.findViewById(R.id.choose_sign_up);
+        mSignIn.setOnClickListener(this);
+        mSignUp.setOnClickListener(this);
     }
 
 

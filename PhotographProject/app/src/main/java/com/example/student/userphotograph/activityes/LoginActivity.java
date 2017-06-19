@@ -51,8 +51,8 @@ public class LoginActivity extends AppCompatActivity {
 
     private void signIn() {
         Button btnLogin = (Button) findViewById(R.id.sign_in_button);
-        final EditText imputemail = (EditText) findViewById(R.id.et_si_email);
-        final EditText imputpassword = (EditText) findViewById(R.id.et_si_password);
+        final EditText imputemail = (EditText) findViewById(R.id.et_sign_in_email);
+        final EditText imputpassword = (EditText) findViewById(R.id.et_sign_in_password);
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

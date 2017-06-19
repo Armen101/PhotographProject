@@ -26,10 +26,10 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
 
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
+    private EditText mNameEd;
+    private EditText mEmailEd;
+    private EditText mPasswordEd;
     private static SignUpFragment instance;
-    private EditText etName;
-    private EditText etEmail;
-    private EditText etPassword;
     private DatabaseReference mRef;
 
     public SignUpFragment() {}
@@ -55,28 +55,28 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
     }
 
     private void findViewsSetLIsteners(View rootView) {
-        etName = (EditText) rootView.findViewById(R.id.full_name_sign_up);
-        etEmail = (EditText) rootView.findViewById(R.id.email_sign_up);
-        etPassword = (EditText) rootView.findViewById(R.id.password_sign_up);
-        Button btnSignUp = (Button) rootView.findViewById(R.id.buttonSignUp);
-        btnSignUp.setOnClickListener(this);
+        mNameEd = (EditText) rootView.findViewById(R.id.full_name_sign_up);
+        mEmailEd = (EditText) rootView.findViewById(R.id.email_sign_up);
+        mPasswordEd = (EditText) rootView.findViewById(R.id.password_sign_up);
+        Button mSignUpBtn = (Button) rootView.findViewById(R.id.button_sign_up);
+        mSignUpBtn.setOnClickListener(this);
     }
 
     private boolean isValidateForm() {
         boolean valid = true;
 
-        if (TextUtils.isEmpty(etEmail.getText().toString())) {
-            etEmail.setError("Required");
+        if (TextUtils.isEmpty(mEmailEd.getText().toString())) {
+            mEmailEd.setError("Required");
             valid = false;
         }
 
-        if (TextUtils.isEmpty(etPassword.getText().toString())) {
-            etPassword.setError("Required");
+        if (TextUtils.isEmpty(mPasswordEd.getText().toString())) {
+            mPasswordEd.setError("Required");
             valid = false;
         }
 
-        if (TextUtils.isEmpty(etName.getText().toString())) {
-            etName.setError("Required");
+        if (TextUtils.isEmpty(mNameEd.getText().toString())) {
+            mNameEd.setError("Required");
             valid = false;
         }
 
@@ -84,8 +84,8 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
     }
 
     public void registration() {
-        String email = etEmail.getText().toString();
-        String password = etPassword.getText().toString();
+        String email = mEmailEd.getText().toString();
+        String password = mPasswordEd.getText().toString();
 
         if (isValidateForm()) {
             mAuth.createUserWithEmailAndPassword(email, password)
@@ -96,7 +96,7 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
                                 Toast.makeText(getContext(), "Successful registration", Toast.LENGTH_SHORT).show();
 
                                 mUser = mAuth.getCurrentUser();
-                                mRef.child(mUser.getUid()).child("name").setValue(etName.getText().toString());
+                                mRef.child(mUser.getUid()).child("name").setValue(mNameEd.getText().toString());
 
                                 Intent goToHomeActivity = new Intent(getContext(), HomeActivity.class);
                                 startActivity(goToHomeActivity);
@@ -109,6 +109,6 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.buttonSignUp) registration();
+        if (v.getId() == R.id.button_sign_up) registration();
     }
 }

@@ -23,11 +23,9 @@ import com.google.firebase.auth.FirebaseAuth;
 public class SignInFragment extends Fragment implements View.OnClickListener {
 
     private FirebaseAuth mAuth;
-    private EditText etEmail;
-    private EditText etPassword;
-    private TextView tvSignUp;
-    private TextView tvForgot;
-    private Button btnSignIn;
+    private EditText mEmailEd;
+    private EditText mPasswordEd;
+    private Button mSignInbtn;
 
     public SignInFragment() {
     }
@@ -47,36 +45,36 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_sign_in, container, false);
         findIdAndListeners(rootView);
-        btnSignIn.setClickable(true);
+        mSignInbtn.setClickable(true);
         return rootView;
     }
 
     private void findIdAndListeners(View rootView) {
-        etEmail = (EditText) rootView.findViewById(R.id.et_si_email);
-        etPassword = (EditText) rootView.findViewById(R.id.et_si_password);
-        tvSignUp = (TextView) rootView.findViewById(R.id.dont_have_sign_up);
-        btnSignIn = (Button) rootView.findViewById(R.id.sign_in_button);
-        tvForgot = (TextView) rootView.findViewById(R.id.tv_forgot_password);
-        btnSignIn.setOnClickListener(this);
-        tvSignUp.setOnClickListener(this);
-        tvForgot.setOnClickListener(this);
+        mEmailEd = (EditText) rootView.findViewById(R.id.et_sign_in_email);
+        mPasswordEd = (EditText) rootView.findViewById(R.id.et_sign_in_password);
+        TextView mForgotTv = (TextView) rootView.findViewById(R.id.tv_forgot_password);
+        TextView mSignUpTv = (TextView) rootView.findViewById(R.id.dont_have_sign_up);
+        mSignInbtn = (Button) rootView.findViewById(R.id.sign_in_button);
+        mSignInbtn.setOnClickListener(this);
+        mForgotTv.setOnClickListener(this);
+        mSignUpTv.setOnClickListener(this);
     }
 
     public void signIn(String email, String password) {
         if (email.isEmpty() || password.isEmpty()) {
             Toast.makeText(getContext(), "invalid email or password", Toast.LENGTH_SHORT).show();
-            btnSignIn.setClickable(true);
+            mSignInbtn.setClickable(true);
         } else if (!email.isEmpty() && !password.isEmpty()){
             mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
-                        btnSignIn.setClickable(false);
+                        mSignInbtn.setClickable(false);
                         Toast.makeText(getContext(), "Seuccessful sign in", Toast.LENGTH_SHORT).show();
                         Intent goToHomeActivity = new Intent(getContext(), HomeActivity.class);
                         startActivity(goToHomeActivity);
                     } else
-                        btnSignIn.setClickable(true);
+                        mSignInbtn.setClickable(true);
                     Toast.makeText(getContext(), "Unseuccessful sign in", Toast.LENGTH_SHORT).show();
                 }
             });
@@ -95,8 +93,8 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.sign_in_button: {
-                btnSignIn.setClickable(false);
-                signIn(etEmail.getText().toString(), etPassword.getText().toString());
+                mSignInbtn.setClickable(false);
+                signIn(mEmailEd.getText().toString(), mPasswordEd.getText().toString());
                 break;
             }
             case R.id.dont_have_sign_up: {

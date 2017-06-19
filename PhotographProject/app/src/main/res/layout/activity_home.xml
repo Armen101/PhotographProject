@@ -9,25 +9,16 @@
     tools:openDrawer="start">
 
     <LinearLayout
-        android:id="@+id/liner_layout_in_home"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize">
-        </LinearLayout>
-
-        
         <FrameLayout
             android:id="@+id/container_home"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-        </FrameLayout>
+            android:layout_height="match_parent" />
 
     </LinearLayout>
-
 
 
     <include
@@ -36,7 +27,7 @@
         android:layout_height="match_parent" />
 
     <android.support.design.widget.NavigationView
-        android:id="@+id/nav_view"
+        android:id="@+id/navigation_view"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"

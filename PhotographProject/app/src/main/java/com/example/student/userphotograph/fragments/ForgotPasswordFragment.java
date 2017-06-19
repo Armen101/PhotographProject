@@ -26,18 +26,14 @@ public class ForgotPasswordFragment extends Fragment implements View.OnClickList
 
     private EditText etEmail;
     private ProgressBar progressBar;
-    private Button btnReset;
 
     private FirebaseAuth mAuth;
 
     public ForgotPasswordFragment() {
-        // Required empty public constructor
     }
 
     public static ForgotPasswordFragment newInstance() {
-        ForgotPasswordFragment fragment = new ForgotPasswordFragment();
-
-        return fragment;
+        return new ForgotPasswordFragment();
     }
 
     @Override
@@ -56,29 +52,26 @@ public class ForgotPasswordFragment extends Fragment implements View.OnClickList
     }
 
     private void findIdAndListeners(View rootView){
-        etEmail = (EditText) rootView.findViewById(R.id.et_email);
-        btnReset = (Button) rootView.findViewById(R.id.btn_reset);
         progressBar = (ProgressBar) rootView.findViewById(R.id.progressbar);
+        etEmail = (EditText) rootView.findViewById(R.id.et_email);
 
+        Button btnReset = (Button) rootView.findViewById(R.id.btn_reset);
         btnReset.setOnClickListener(this);
-
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_reset: {
-
                 String email = etEmail.getText().toString().trim();
+
                 if(email.isEmpty()){
                     Toast.makeText(getContext(), "Email is a empty", Toast.LENGTH_SHORT).show();
                     return;
                 }
-//                if (TextUtils.isEmpty(email)) {
-//                    Toast.makeText(getContext(), "Enter your registered email id", Toast.LENGTH_SHORT).show();
-//                }
 
                 progressBar.setVisibility(View.VISIBLE);
+
                 mAuth.sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {

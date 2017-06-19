@@ -11,8 +11,11 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +23,7 @@ import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -59,11 +63,13 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     private ImageView mImage;
 
     private DatabaseReference mDatabaseRef;
-
-
     private StorageReference mStorageAvatarRef;
     private StorageReference mStorageGalleryRef;
     private DatabaseReference mDatabaseGalleryRef;
+    private ImageView mAddImg;
+    private LinearLayout mCooseFileLayout;
+    private StorageReference mStorageRef;
+    private DrawerLayout drawer;
 
     public SettingsFragment() {
     }
@@ -80,9 +86,9 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         findViewById(rootView);
 
         FirebaseAuth auth = FirebaseAuth.getInstance();
-        FirebaseUser user = auth.getCurrentUser();
+        FirebaseUser mUser = auth.getCurrentUser();
 
-        mDatabaseRef = FirebaseDatabase.getInstance().getReference().child("photographs").child(user.getUid());
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference().child("photographs").child(mUser.getUid());
         mDatabaseGalleryRef = mDatabaseRef.child("gallery");
 
         RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
@@ -90,34 +96,45 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         recyclerView.setHasFixedSize(true);
         onCreateFirebaseRecyclerAdapter(recyclerView);
 
-        StorageReference mStorageRef = FirebaseStorage.getInstance().getReference();
-        mStorageAvatarRef = mStorageRef.child("photographs").child("avatar").child(user.getUid());
-        mStorageGalleryRef = mStorageRef.child("photographs").child("gallery").child(user.getUid());
+        mStorageRef = FirebaseStorage.getInstance().getReference();
+        mStorageAvatarRef = mStorageRef.child("photographs").child("avatar").child(mUser.getUid());
+        mStorageGalleryRef = mStorageRef.child("photographs").child("gallery").child(mUser.getUid());
 
 
         writeWithFbDb();
         downloadImageAndSetGallery(mStorageAvatarRef);
         return rootView;
     }
+
     private void onCreateFirebaseRecyclerAdapter(RecyclerView recyclerView) {
 
-        FirebaseRecyclerAdapter<Picture, MyViewHolder> adapter = new FirebaseRecyclerAdapter<Picture, MyViewHolder>(
+        final FirebaseRecyclerAdapter<Picture, MyViewHolder> adapter = new FirebaseRecyclerAdapter<Picture, MyViewHolder>(
                 Picture.class,
                 R.layout.layout_images,
                 MyViewHolder.class,
                 mDatabaseGalleryRef
         ) {
             @Override
-            protected void populateViewHolder(MyViewHolder viewHolder, Picture model, int position) {
+            protected void populateViewHolder(MyViewHolder viewHolder, Picture model, final int position) {
                 viewHolder.tvGallery.setText(model.getTitle());
                 Glide.with(getActivity())
                         .load(model.getImageUri())
                         .into(viewHolder.imgGallery);
+
+                viewHolder.imgGallery.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+                        getRef(position).removeValue();
+                        notifyDataSetChanged();
+                        return true;
+                    }
+                });
             }
         };
 
         recyclerView.setAdapter(adapter);
     }
+
 
     private static class MyViewHolder extends RecyclerView.ViewHolder {
 
@@ -130,6 +147,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
             imgGallery = (ImageView) view.findViewById(R.id.gallery_img);
         }
     }
+
     private void findViewById(View rootView) {
 
         mName = (EditText) rootView.findViewById(R.id.et_st_name);
@@ -139,6 +157,8 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         mAvatar = (ImageView) rootView.findViewById(R.id.st_avatar);
         mImage = (ImageView) rootView.findViewById(R.id.img_gallery);
         mNamePhoto = (EditText) rootView.findViewById(R.id.st_name_photo);
+        mAddImg = (ImageView) rootView.findViewById(R.id.add_image);
+        mCooseFileLayout = (LinearLayout) rootView.findViewById(R.id.choose_file_layout);
 
         Button saveAllInfo = (Button) rootView.findViewById(R.id.btn_st_save_info);
         Button choosePhoto = (Button) rootView.findViewById(R.id.btn_st_choose_photo);
@@ -148,6 +168,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         choosePhoto.setOnClickListener(this);
         saveAllInfo.setOnClickListener(this);
         mAvatar.setOnClickListener(this);
+        mAddImg.setOnClickListener(this);
     }
 
     private void saveInFbDb() {
@@ -177,7 +198,8 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
             }
 
             @Override
-            public void onCancelled(DatabaseError error) {}
+            public void onCancelled(DatabaseError error) {
+            }
         });
     }
 
@@ -201,6 +223,12 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
             case R.id.btn_st_choose_photo: {
                 mNamePhoto.setVisibility(View.VISIBLE);
                 choosePic(Constants.REQUEST_GALLERY_CHOOSE_PICK);
+                break;
+            }
+            case R.id.add_image: {
+                if (mCooseFileLayout.getVisibility() == View.VISIBLE) {
+                    mCooseFileLayout.setVisibility(View.GONE);
+                } else mCooseFileLayout.setVisibility(View.VISIBLE);
                 break;
             }
         }
@@ -259,14 +287,13 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     }
 
     public void downloadImageAndSetGallery(StorageReference ref) {
-         ref.getBytes(1024 * 1024).addOnSuccessListener(new OnSuccessListener<byte[]>() {
-                    @Override
-                    public void onSuccess(byte[] bytes) {
-                        Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                        mAvatar.setImageBitmap(bitmap);
-                    }
-                });
-
+        ref.getBytes(1024 * 1024).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+            @Override
+            public void onSuccess(byte[] bytes) {
+                Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                mAvatar.setImageBitmap(bitmap);
+            }
+        });
     }
 
     @Override
