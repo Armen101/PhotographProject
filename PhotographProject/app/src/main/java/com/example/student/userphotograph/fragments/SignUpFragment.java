@@ -32,7 +32,8 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
     private static SignUpFragment instance;
     private DatabaseReference mRef;
 
-    public SignUpFragment() {}
+    public SignUpFragment() {
+    }
 
     public static SignUpFragment newInstance() {
         if (instance == null) instance = new SignUpFragment();

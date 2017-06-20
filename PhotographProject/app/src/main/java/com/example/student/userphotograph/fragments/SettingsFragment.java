@@ -5,17 +5,13 @@ import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +27,7 @@ import com.bumptech.glide.Glide;
 import com.example.student.userphotograph.R;
 import com.example.student.userphotograph.models.Picture;
 import com.example.student.userphotograph.utilityes.Constants;
+import com.example.student.userphotograph.utilityes.DownloadAvatar;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -63,13 +60,12 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     private ImageView mImage;
 
     private DatabaseReference mDatabaseRef;
+    private DatabaseReference mDatabaseGalleryRef;
+    private StorageReference mStorageRef;
     private StorageReference mStorageAvatarRef;
     private StorageReference mStorageGalleryRef;
-    private DatabaseReference mDatabaseGalleryRef;
     private ImageView mAddImg;
     private LinearLayout mCooseFileLayout;
-    private StorageReference mStorageRef;
-    private DrawerLayout drawer;
 
     public SettingsFragment() {
     }
@@ -84,26 +80,39 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         View rootView = inflater.inflate(R.layout.fragment_settings, container, false);
 
         findViewById(rootView);
-
-        FirebaseAuth auth = FirebaseAuth.getInstance();
-        FirebaseUser mUser = auth.getCurrentUser();
-
-        mDatabaseRef = FirebaseDatabase.getInstance().getReference().child("photographs").child(mUser.getUid());
-        mDatabaseGalleryRef = mDatabaseRef.child("gallery");
+        firebaseRef();
 
         RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
         recyclerView.setHasFixedSize(true);
         onCreateFirebaseRecyclerAdapter(recyclerView);
 
-        mStorageRef = FirebaseStorage.getInstance().getReference();
-        mStorageAvatarRef = mStorageRef.child("photographs").child("avatar").child(mUser.getUid());
-        mStorageGalleryRef = mStorageRef.child("photographs").child("gallery").child(mUser.getUid());
-
-
         writeWithFbDb();
-        downloadImageAndSetGallery(mStorageAvatarRef);
+        DownloadAvatar.downloadImageAndSetAvatar(mStorageAvatarRef, mAvatar);
         return rootView;
+    }
+
+    private void findViewById(View rootView) {
+
+        mName = (EditText) rootView.findViewById(R.id.et_st_name);
+        mAddress = (EditText) rootView.findViewById(R.id.et_st_address);
+        mCameraInfo = (EditText) rootView.findViewById(R.id.st_camera_info);
+        mPhone = (EditText) rootView.findViewById(R.id.et_st_phone);
+        mAvatar = (ImageView) rootView.findViewById(R.id.st_avatar);
+        mImage = (ImageView) rootView.findViewById(R.id.img_gallery);
+        mNamePhoto = (EditText) rootView.findViewById(R.id.st_name_photo);
+        mAddImg = (ImageView) rootView.findViewById(R.id.add_image);
+        mCooseFileLayout = (LinearLayout) rootView.findViewById(R.id.choose_file_layout);
+
+        Button saveAllInfo = (Button) rootView.findViewById(R.id.btn_st_save_info);
+        Button choosePhoto = (Button) rootView.findViewById(R.id.btn_st_choose_photo);
+        Button uploadPhoto = (Button) rootView.findViewById(R.id.btn_st_upload_phote);
+
+        uploadPhoto.setOnClickListener(this);
+        choosePhoto.setOnClickListener(this);
+        saveAllInfo.setOnClickListener(this);
+        mAvatar.setOnClickListener(this);
+        mAddImg.setOnClickListener(this);
     }
 
     private void onCreateFirebaseRecyclerAdapter(RecyclerView recyclerView) {
@@ -135,7 +144,6 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         recyclerView.setAdapter(adapter);
     }
 
-
     private static class MyViewHolder extends RecyclerView.ViewHolder {
 
         ImageView imgGallery;
@@ -148,36 +156,16 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-    private void findViewById(View rootView) {
+    private void firebaseRef() {
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        FirebaseUser mUser = auth.getCurrentUser();
 
-        mName = (EditText) rootView.findViewById(R.id.et_st_name);
-        mAddress = (EditText) rootView.findViewById(R.id.et_st_address);
-        mCameraInfo = (EditText) rootView.findViewById(R.id.st_camera_info);
-        mPhone = (EditText) rootView.findViewById(R.id.et_st_phone);
-        mAvatar = (ImageView) rootView.findViewById(R.id.st_avatar);
-        mImage = (ImageView) rootView.findViewById(R.id.img_gallery);
-        mNamePhoto = (EditText) rootView.findViewById(R.id.st_name_photo);
-        mAddImg = (ImageView) rootView.findViewById(R.id.add_image);
-        mCooseFileLayout = (LinearLayout) rootView.findViewById(R.id.choose_file_layout);
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference().child("photographs").child(mUser.getUid());
+        mDatabaseGalleryRef = mDatabaseRef.child("gallery");
 
-        Button saveAllInfo = (Button) rootView.findViewById(R.id.btn_st_save_info);
-        Button choosePhoto = (Button) rootView.findViewById(R.id.btn_st_choose_photo);
-        Button uploadPhoto = (Button) rootView.findViewById(R.id.btn_st_upload_phote);
-
-        uploadPhoto.setOnClickListener(this);
-        choosePhoto.setOnClickListener(this);
-        saveAllInfo.setOnClickListener(this);
-        mAvatar.setOnClickListener(this);
-        mAddImg.setOnClickListener(this);
-    }
-
-    private void saveInFbDb() {
-
-        mDatabaseRef.child("name").setValue(mName.getText().toString());
-        mDatabaseRef.child("address").setValue(mAddress.getText().toString());
-        mDatabaseRef.child("cameraInfo").setValue(mCameraInfo.getText().toString());
-        mDatabaseRef.child("phone").setValue(mPhone.getText().toString());
-        Toast.makeText(getContext(), "Successfull saveing dates", Toast.LENGTH_SHORT).show();
+        mStorageRef = FirebaseStorage.getInstance().getReference();
+        mStorageAvatarRef = mStorageRef.child("photographs").child("avatar").child(mUser.getUid());
+        mStorageGalleryRef = mStorageRef.child("photographs").child("gallery").child(mUser.getUid());
     }
 
     private void writeWithFbDb() {
@@ -201,6 +189,15 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
             public void onCancelled(DatabaseError error) {
             }
         });
+    }
+
+    private void saveInFbDb() {
+
+        mDatabaseRef.child("name").setValue(mName.getText().toString());
+        mDatabaseRef.child("address").setValue(mAddress.getText().toString());
+        mDatabaseRef.child("cameraInfo").setValue(mCameraInfo.getText().toString());
+        mDatabaseRef.child("phone").setValue(mPhone.getText().toString());
+        Toast.makeText(getContext(), "Successfull saveing dates", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -234,13 +231,13 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-    public void choosePic(int requestCode) {
+    private void choosePic(int requestCode) {
         Intent choosePicIntent = new Intent(Intent.ACTION_GET_CONTENT);
         choosePicIntent.setType("image/*");
         startActivityForResult(choosePicIntent, requestCode);
     }
 
-    public String getFileExtension(Uri uri) {
+    private String getFileExtension(Uri uri) {
         ContentResolver contentResolver = getActivity().getContentResolver();
         MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
         return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
@@ -258,7 +255,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             progressDialog.dismiss();
-                            Toast.makeText(getContext().getApplicationContext(), "File Uploaded ", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getContext(), "File Uploaded ", Toast.LENGTH_LONG).show();
 
                             @SuppressWarnings("VisibleForTests")
                             Picture picture = new Picture(mNamePhoto.getText().toString().trim(), taskSnapshot.getDownloadUrl().toString());
@@ -282,23 +279,12 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
                         }
                     });
         } else {
-            Toast.makeText(getContext().getApplicationContext(), "Warning !!!, Error file ", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), "Warning !!!, Error file ", Toast.LENGTH_LONG).show();
         }
-    }
-
-    public void downloadImageAndSetGallery(StorageReference ref) {
-        ref.getBytes(1024 * 1024).addOnSuccessListener(new OnSuccessListener<byte[]>() {
-            @Override
-            public void onSuccess(byte[] bytes) {
-                Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                mAvatar.setImageBitmap(bitmap);
-            }
-        });
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == Constants.REQUEST_AVATAR_CHOOSE_PICK && resultCode == RESULT_OK) {
             final Uri uri = data.getData();
@@ -309,6 +295,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
                 }
             });
         }
+        super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == Constants.REQUEST_GALLERY_CHOOSE_PICK && resultCode == RESULT_OK && data.getData() != null) {
             mFilePath = data.getData();

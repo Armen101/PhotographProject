@@ -13,9 +13,11 @@ public class SignInSignUpFragment extends Fragment implements View.OnClickListen
 
     public SignInSignUpFragment() {
     }
+
     public static SignInSignUpFragment newInstance() {
         return new SignInSignUpFragment();
     }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,19 +41,19 @@ public class SignInSignUpFragment extends Fragment implements View.OnClickListen
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.choose_sign_in:{
+        switch (v.getId()) {
+            case R.id.choose_sign_in: {
                 replaceFragment(SignInFragment.newInstance());
                 break;
             }
-            case R.id.choose_sign_up:{
+            case R.id.choose_sign_up: {
                 replaceFragment(SignUpFragment.newInstance());
                 break;
             }
         }
     }
 
-    private  void replaceFragment(Fragment fragment){
+    private void replaceFragment(Fragment fragment) {
         getFragmentManager().beginTransaction()
                 .replace(R.id.containerLogin, fragment)
                 .addToBackStack(null)

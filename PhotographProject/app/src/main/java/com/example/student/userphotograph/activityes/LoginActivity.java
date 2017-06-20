@@ -1,5 +1,6 @@
 package com.example.student.userphotograph.activityes;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -19,6 +20,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -28,6 +32,10 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                .setDefaultFontPath("choco_cooky.ttf")
+                .build());
 
         boolean logOut = getIntent().getBooleanExtra("log_out", true);
         mauth = FirebaseAuth.getInstance();
@@ -43,6 +51,10 @@ public class LoginActivity extends AppCompatActivity {
                 .commit();
     }
 
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
 
     @Override
     public void onBackPressed() {
