@@ -61,11 +61,12 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
 
     private DatabaseReference mDatabaseRef;
     private DatabaseReference mDatabaseGalleryRef;
-    private StorageReference mStorageRef;
     private StorageReference mStorageAvatarRef;
     private StorageReference mStorageGalleryRef;
     private ImageView mAddImg;
     private LinearLayout mCooseFileLayout;
+
+    private StorageReference mStorageRef;
 
     public SettingsFragment() {
     }
