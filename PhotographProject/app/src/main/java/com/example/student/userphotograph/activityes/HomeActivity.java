@@ -1,5 +1,6 @@
 package com.example.student.userphotograph.activityes;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -15,6 +16,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -59,6 +61,8 @@ public class HomeActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
                 .setDefaultFontPath("choco_cooky.ttf")
@@ -121,8 +125,11 @@ public class HomeActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else {
+        } else if (getSupportFragmentManager().findFragmentById(R.id.container_home) != null) {
             super.onBackPressed();
+            if (getSupportFragmentManager().findFragmentById(R.id.container_home) == null){
+                finish();
+            }
         }
     }
 
@@ -146,11 +153,14 @@ public class HomeActivity extends AppCompatActivity
             break;
 
             case R.id.nav_log_out: {
+                ProgressDialog mProgressDialog = new ProgressDialog(HomeActivity.this);
+                mProgressDialog.show();
                 FirebaseAuth.getInstance().signOut();
                 finish();
                 Intent i = new Intent(this, LoginActivity.class);
                 i.putExtra("log_out", false);
                 startActivity(i);
+                mProgressDialog.dismiss();
             }
             break;
         }
@@ -164,17 +174,19 @@ public class HomeActivity extends AppCompatActivity
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.container_home, fragment)
+                .addToBackStack(null)
                 .commit();
     }
 
     @Override
     public void onDrawerSlide(View drawerView, float slideOffset) {
-        DownloadAvatar.downloadImageAndSetAvatar(mStorageAvatarRef, mNavDrawerAvatar);
         invalidateOptionsMenu();
     }
 
     @Override
     public void onDrawerOpened(View drawerView) {
+        DownloadAvatar.downloadImageAndSetAvatar(mStorageAvatarRef, mNavDrawerAvatar);
+        invalidateOptionsMenu();
     }
 
     @Override

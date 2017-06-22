@@ -1,5 +1,6 @@
 package com.example.student.userphotograph.fragments;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -61,21 +62,28 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
     }
 
     public void signIn(String email, String password) {
+        final ProgressDialog mProgressDialog = new ProgressDialog(getContext());
+        mProgressDialog.show();
         if (email.isEmpty() || password.isEmpty()) {
+            mProgressDialog.dismiss();
             Toast.makeText(getContext(), "invalid email or password", Toast.LENGTH_SHORT).show();
             mSignInbtn.setClickable(true);
-        } else if (!email.isEmpty() && !password.isEmpty()){
+        } else if (!email.isEmpty() && !password.isEmpty()) {
             mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
-                        mSignInbtn.setClickable(false);
+                        mProgressDialog.dismiss();
                         Toast.makeText(getContext(), "Seuccessful sign in", Toast.LENGTH_SHORT).show();
+                        mSignInbtn.setClickable(true);
                         Intent goToHomeActivity = new Intent(getContext(), HomeActivity.class);
                         startActivity(goToHomeActivity);
-                    } else
+                        getActivity().finish();
+                    } else {
                         mSignInbtn.setClickable(true);
-                    Toast.makeText(getContext(), "Unseuccessful sign in", Toast.LENGTH_SHORT).show();
+                        mProgressDialog.dismiss();
+                        Toast.makeText(getContext(), "Unseuccessful sign in", Toast.LENGTH_SHORT).show();
+                    }
                 }
             });
         }
@@ -84,7 +92,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
     private void addFragment(Fragment fragment) {
 
         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.containerLogin, fragment);
+        ft.replace(R.id.container_login, fragment);
         ft.addToBackStack(null);
         ft.commit();
     }

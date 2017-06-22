@@ -1,5 +1,6 @@
 package com.example.student.userphotograph.fragments;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -89,11 +90,14 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
         String password = mPasswordEd.getText().toString();
 
         if (isValidateForm()) {
+            final ProgressDialog mProgressDialog = new ProgressDialog(getContext());
+            mProgressDialog.show();
             mAuth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
+                                mProgressDialog.dismiss();
                                 Toast.makeText(getContext(), "Successful registration", Toast.LENGTH_SHORT).show();
 
                                 mUser = mAuth.getCurrentUser();
@@ -102,6 +106,7 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
                                 Intent goToHomeActivity = new Intent(getContext(), HomeActivity.class);
                                 startActivity(goToHomeActivity);
                             } else
+                                mProgressDialog.dismiss();
                                 Toast.makeText(getContext(), "Unsuccessful registration", Toast.LENGTH_SHORT).show();
                         }
                     });

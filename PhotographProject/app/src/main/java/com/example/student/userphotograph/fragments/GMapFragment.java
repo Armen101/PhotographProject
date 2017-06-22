@@ -25,17 +25,12 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.PointOfInterest;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class GMapFragment extends Fragment implements OnMapReadyCallback,
         GoogleMap.OnPoiClickListener, View.OnClickListener {
 
     private GoogleMap mMap;
-    private double mLatitude, mLongitude;
 
     public GMapFragment(){
-
     }
 
      public static GMapFragment newInstance() {
@@ -46,15 +41,12 @@ public class GMapFragment extends Fragment implements OnMapReadyCallback,
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-
         View rootView = inflater.inflate(R.layout.fragment_map, container, false);
-
 
         ImageView imgMyLocation = (ImageView) rootView.findViewById(R.id.my_location_map);
         imgMyLocation.setOnClickListener(this);
 
         return rootView;
-
     }
 
     @Override
@@ -83,7 +75,7 @@ public class GMapFragment extends Fragment implements OnMapReadyCallback,
 
     @Override
     public void onPoiClick(PointOfInterest poi) {
-        Toast.makeText(getActivity().getApplicationContext(), poi.name, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), poi.name, Toast.LENGTH_SHORT).show();
     }
 
 
@@ -96,8 +88,8 @@ public class GMapFragment extends Fragment implements OnMapReadyCallback,
             Intent i = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
             startActivity(i);
         } else {
-            mLatitude = mlocation.getLatitude();
-            mLongitude = mlocation.getLongitude();
+            double mLatitude = mlocation.getLatitude();
+            double mLongitude = mlocation.getLongitude();
 
             LatLng myLocation = new LatLng(mLatitude, mLongitude);
             mMap.moveCamera(CameraUpdateFactory.newLatLng(myLocation));

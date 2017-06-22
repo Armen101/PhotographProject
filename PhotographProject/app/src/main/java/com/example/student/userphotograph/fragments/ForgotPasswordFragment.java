@@ -1,13 +1,9 @@
 package com.example.student.userphotograph.fragments;
 
-import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -79,7 +75,7 @@ public class ForgotPasswordFragment extends Fragment implements View.OnClickList
                             Toast.makeText(getContext(), "Reset password send email", Toast.LENGTH_SHORT).show();
                             Fragment fragment = SignInFragment.newInstance();
                             FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                            ft.replace(R.id.containerLogin, fragment);
+                            ft.replace(R.id.container_login, fragment);
                             ft.addToBackStack(null);
                             ft.commit();
                         }else {

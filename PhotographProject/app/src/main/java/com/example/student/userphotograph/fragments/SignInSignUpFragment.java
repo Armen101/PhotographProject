@@ -55,7 +55,7 @@ public class SignInSignUpFragment extends Fragment implements View.OnClickListen
 
     private void replaceFragment(Fragment fragment) {
         getFragmentManager().beginTransaction()
-                .replace(R.id.containerLogin, fragment)
+                .replace(R.id.container_login, fragment)
                 .addToBackStack(null)
                 .commit();
     }

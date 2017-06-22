@@ -5,16 +5,20 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.student.userphotograph.R;
+import com.example.student.userphotograph.fragments.ForgotPasswordFragment;
 import com.example.student.userphotograph.fragments.SignInFragment;
 import com.example.student.userphotograph.fragments.SignInSignUpFragment;
+import com.example.student.userphotograph.fragments.SignUpFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -33,6 +37,8 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
                 .setDefaultFontPath("choco_cooky.ttf")
                 .build());
@@ -45,8 +51,9 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void replaceFragment(Fragment fragment) {
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.containerLogin, fragment)
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.container_login, fragment)
                 .addToBackStack(null)
                 .commit();
     }
@@ -58,50 +65,13 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-    }
-
-    private void signIn() {
-        Button btnLogin = (Button) findViewById(R.id.sign_in_button);
-        final EditText imputemail = (EditText) findViewById(R.id.et_sign_in_email);
-        final EditText imputpassword = (EditText) findViewById(R.id.et_sign_in_password);
-        btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String email = imputemail.getText().toString();
-                final String password1 = imputpassword.getText().toString();
-
-                if (TextUtils.isEmpty(email)) {
-                    Toast.makeText(getApplicationContext(), "Enter email address!", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                if (TextUtils.isEmpty(password1)) {
-                    Toast.makeText(getApplicationContext(), "Enter password!", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                mauth.signInWithEmailAndPassword(email, password1)
-                        .addOnCompleteListener(com.example.student.userphotograph.activityes.LoginActivity.this, new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-
-                                if (!task.isSuccessful()) {
-                                    if (imputpassword.length() < 6) {
-                                        imputpassword.setError(getString(R.string.minimum_password));
-                                    } else {
-                                        Toast.makeText(com.example.student.userphotograph.activityes.LoginActivity.this, getString(R.string.auth_failed), Toast.LENGTH_LONG).show();
-                                    }
-                                } else {
-                                    Intent intent = new Intent(com.example.student.userphotograph.activityes.LoginActivity.this, HomeActivity.class);
-                                    startActivity(intent);
-                                    finish();
-                                }
-                            }
-                        });
-
+        Fragment mFragment = getSupportFragmentManager().findFragmentById(R.id.container_login);
+        if (mFragment != null) {
+            super.onBackPressed();
+            if (mFragment == null) {
+                finish();
             }
-        });
+        }
     }
 }
 

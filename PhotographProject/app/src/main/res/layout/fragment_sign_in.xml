@@ -17,8 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-             />
+            android:layout_centerVertical="true" />
     </RelativeLayout>
 
     <LinearLayout
@@ -85,11 +84,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:text="@string/sign_in"
-                android:textStyle="bold"
-                android:textColor="@color/colorRed"
                 android:background="@android:color/transparent"
-                android:textSize="24sp" />
+                android:text="@string/sign_in"
+                android:textColor="@color/colorRed"
+                android:textSize="24sp"
+                android:textStyle="bold" />
         </RelativeLayout>
 
     </LinearLayout>
