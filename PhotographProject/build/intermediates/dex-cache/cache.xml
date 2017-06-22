@@ -8,6 +8,7 @@
         optimize="true"
         revision="25.0.3"
 <<<<<<< HEAD
+<<<<<<< HEAD
         sha1="8387f4c07a807eafabe7d8cd73a142f54cecf375">
         <dex dex="C:\Users\Admin\Desktop\gitphotographer\PhotographProject\PhotographProject\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_e26dff1c2c4d62d5d2fd7a00bd6a22365b1dc231\classes.dex" />
     </item>
@@ -19,6 +20,10 @@
         revision="25.0.3"
         sha1="51518e8e8f97c314a243d9def0ded91d385b6a1e">
         <dex dex="C:\Users\Admin\Desktop\gitphotographer\PhotographProject\PhotographProject\app\build\intermediates\pre-dexed\debug\classes_d5130287a9263295e72af93aa35aae9289c4d14b.jar" />
+=======
+        sha1="3c433e48557e476290f45fb6cb568d1a103c9978">
+        <dex dex="C:\Users\Armen\Desktop\PhotographApp\PhotographProject\PhotographProject\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_13c4de1e900450985194a618b02784ee23acbf3a\classes.dex" />
+>>>>>>> d6e6e781423d483bf6e29446377765b43fdd0f06
 =======
         sha1="3c433e48557e476290f45fb6cb568d1a103c9978">
         <dex dex="C:\Users\Armen\Desktop\PhotographApp\PhotographProject\PhotographProject\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_13c4de1e900450985194a618b02784ee23acbf3a\classes.dex" />
