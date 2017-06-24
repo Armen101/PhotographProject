@@ -6,9 +6,11 @@ import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
@@ -27,7 +29,9 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.student.userphotograph.R;
+import com.example.student.userphotograph.activityes.HomeActivity;
 import com.example.student.userphotograph.models.Picture;
+import com.example.student.userphotograph.service.GPSTracker;
 import com.example.student.userphotograph.utilityes.Constants;
 import com.example.student.userphotograph.utilityes.DownloadAvatar;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -180,12 +184,15 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseUser mUser = auth.getCurrentUser();
 
+        assert mUser != null;
         mDatabaseRef = FirebaseDatabase.getInstance().getReference().child("photographs").child(mUser.getUid());
         mDatabaseGalleryRef = mDatabaseRef.child("gallery");
 
         mStorageRef = FirebaseStorage.getInstance().getReference();
         mStorageAvatarRef = mStorageRef.child("photographs").child("avatar").child(mUser.getUid());
         mStorageGalleryRef = mStorageRef.child("photographs").child("gallery").child(mUser.getUid());
+        mDatabaseRef.child("uid").setValue(mUser.getUid());
+        mDatabaseRef.child("email").setValue(mUser.getEmail());
     }
 
     private void writeWithFbDb() {

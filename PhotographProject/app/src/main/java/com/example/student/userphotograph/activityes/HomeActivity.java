@@ -78,6 +78,7 @@ public class HomeActivity extends AppCompatActivity
         toggle.syncState();
 
         replaceFragment(SettingsFragment.newInstance());
+
     }
 
     private void findViewById() {
@@ -97,6 +98,8 @@ public class HomeActivity extends AppCompatActivity
     }
 
     private void writeFbDb() {
+
+
 
         FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
         mDatabaseRef = FirebaseDatabase.getInstance().getReference().child("photographs").child(mUser.getUid());

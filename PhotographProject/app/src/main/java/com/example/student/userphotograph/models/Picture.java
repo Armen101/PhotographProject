@@ -1,7 +1,5 @@
 package com.example.student.userphotograph.models;
 
-import android.net.Uri;
-
 public class Picture {
 
     private String title;

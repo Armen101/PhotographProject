@@ -20,7 +20,6 @@ public class SplashScreenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 
-        startService(new Intent(this, LocationService.class));
 
         ImageView splashScreen = (ImageView) findViewById(R.id.splash_screen);
         Animation animation = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.animation);
@@ -37,6 +36,7 @@ public class SplashScreenActivity extends AppCompatActivity {
             @Override
             public void onAnimationRepeat(Animation animation) {}
         });
+        startService(new Intent(this, LocationService.class));
     }
 
     private void goToActivity() {
