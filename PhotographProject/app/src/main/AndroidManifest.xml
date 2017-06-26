@@ -22,7 +22,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <service android:name=".service.LocationService"/>
+        <service android:name=".service.LocationService"
+                 android:enabled="true"/>
         <activity
             android:name=".activityes.SplashScreenActivity"
             android:theme="@style/AppTheme.NoActionBar">

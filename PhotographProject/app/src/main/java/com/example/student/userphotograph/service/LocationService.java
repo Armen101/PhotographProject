@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -17,12 +16,14 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+
 public class LocationService extends Service {
 
     private LocationManager mLocationManager;
     private LocationListener mLocationListener;
     private DatabaseReference mLatRef;
     private DatabaseReference mLngRef;
+    private Location oldLocation;
 
     @Nullable
     @Override
@@ -33,24 +34,21 @@ public class LocationService extends Service {
     @SuppressWarnings("MissingPermission")
     @Override
     public void onCreate() {
-
-        Log.i("=== ", "service onCreate()");
-
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         assert user != null;
         DatabaseReference mDatabaseRef = FirebaseDatabase.getInstance().getReference()
                 .child("photographs").child(user.getUid());
         mLatRef = mDatabaseRef.child("latitude");
         mLngRef = mDatabaseRef.child("longitude");
-        mLngRef = mDatabaseRef.child("time");
 
         mLocationListener = new LocationListener() {
             @Override
-            public void onLocationChanged(Location location) {
-                Log.i("=== ", "onLocationChanged");
-
-                mLatRef.setValue(String.valueOf(location.getLatitude()));
-                mLngRef.setValue(location.getLongitude());
+            public void onLocationChanged(Location newLocation) {
+                if(oldLocation != newLocation){
+                    mLatRef.setValue(String.valueOf(newLocation.getLatitude()));
+                    mLngRef.setValue(newLocation.getLongitude());
+                    oldLocation = newLocation;
+                }
             }
 
             @Override
@@ -71,10 +69,14 @@ public class LocationService extends Service {
         };
         mLocationManager = (LocationManager) getApplicationContext().getSystemService(LOCATION_SERVICE);
         mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
-                2000,
+                300000,
                 0, mLocationListener);
     }
 
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        return START_REDELIVER_INTENT;
+    }
 
     @Override
     public void onDestroy() {

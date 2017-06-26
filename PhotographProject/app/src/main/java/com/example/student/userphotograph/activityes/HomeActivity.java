@@ -47,10 +47,7 @@ public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, DrawerLayout.DrawerListener {
 
     private StorageReference mStorageAvatarRef;
-    private StorageReference mStorageRef;
-    private DatabaseReference mDatabaseRef;
     private DrawerLayout mDrawer;
-    private NavigationView navigationView;
     private ImageView mNavDrawerAvatar;
     private TextView mLastName;
     private TextView mEmail;
@@ -67,16 +64,7 @@ public class HomeActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                ActivityCompat.requestPermissions(
-                        this,
-                        new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION},
-                        10);
-            }
-        }
+        responsePermissionGranted();
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
@@ -98,6 +86,19 @@ public class HomeActivity extends AppCompatActivity
 
     }
 
+    private void responsePermissionGranted() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                ActivityCompat.requestPermissions(
+                        this,
+                        new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION},
+                        10);
+            }
+        }
+    }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
         if(requestCode == 10 &&
@@ -106,15 +107,14 @@ public class HomeActivity extends AppCompatActivity
                  && grantResults[1] == PackageManager.PERMISSION_GRANTED)
         {
             Toast.makeText(this, "Permissions is disable", Toast.LENGTH_LONG).show();
-        } else
-            {
+        } else {
                Toast.makeText(this, "Permissions is enabled", Toast.LENGTH_LONG).show();
             }
        }
 
     private void findViewById() {
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        navigationView = (NavigationView) findViewById(R.id.navigation_view);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
 
         View header = navigationView.getHeaderView(0);
 
@@ -130,8 +130,8 @@ public class HomeActivity extends AppCompatActivity
 
     private void writeFbDb() {
         FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
-        mDatabaseRef = FirebaseDatabase.getInstance().getReference().child("photographs").child(mUser.getUid());
-        mStorageRef = FirebaseStorage.getInstance().getReference();
+        DatabaseReference mDatabaseRef = FirebaseDatabase.getInstance().getReference().child("photographs").child(mUser.getUid());
+        StorageReference mStorageRef = FirebaseStorage.getInstance().getReference();
         mStorageAvatarRef = mStorageRef.child("photographs").child("avatar").child(mUser.getUid());
 
         DownloadAvatar.downloadImageAndSetAvatar(mStorageAvatarRef, mNavDrawerAvatar);
