@@ -6,13 +6,12 @@ import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -29,9 +28,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.student.userphotograph.R;
-import com.example.student.userphotograph.activityes.HomeActivity;
-import com.example.student.userphotograph.models.Picture;
-import com.example.student.userphotograph.service.GPSTracker;
+import com.example.student.userphotograph.models.Pictures;
 import com.example.student.userphotograph.utilityes.Constants;
 import com.example.student.userphotograph.utilityes.DownloadAvatar;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -50,6 +47,9 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.IOException;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -67,13 +67,13 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
 
     private DatabaseReference mDatabaseRef;
     private DatabaseReference mDatabaseGalleryRef;
+    private StorageReference mStorageRef;
     private StorageReference mStorageAvatarRef;
     private StorageReference mStorageGalleryRef;
     private ImageView mAddImg;
-    private LinearLayout mCooseFileLayout;
 
-    private StorageReference mStorageRef;
-    private LinearLayout mAvatarLayout;
+    private LinearLayout mCooseFileLayout;
+    private List<Pictures> imagi;
 
     public SettingsFragment() {
     }
@@ -90,6 +90,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         findViewById(rootView);
         firebaseRef();
 
+        imagi = new ArrayList<>();
         RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
         recyclerView.setHasFixedSize(true);
@@ -111,7 +112,6 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         mNamePhoto = (EditText) rootView.findViewById(R.id.st_name_photo);
         mAddImg = (ImageView) rootView.findViewById(R.id.add_image);
         mCooseFileLayout = (LinearLayout) rootView.findViewById(R.id.choose_file_layout);
-        mAvatarLayout = (LinearLayout) rootView.findViewById(R.id.avatarl_layout);
 
         Button saveAllInfo = (Button) rootView.findViewById(R.id.btn_st_save_info);
         Button choosePhoto = (Button) rootView.findViewById(R.id.btn_st_choose_photo);
@@ -126,18 +126,34 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
 
     private void onCreateFirebaseRecyclerAdapter(RecyclerView recyclerView) {
 
-        final FirebaseRecyclerAdapter<Picture, MyViewHolder> adapter = new FirebaseRecyclerAdapter<Picture, MyViewHolder>(
-                Picture.class,
+        final FirebaseRecyclerAdapter<Pictures, MyViewHolder> adapter = new FirebaseRecyclerAdapter<Pictures, MyViewHolder>(
+                Pictures.class,
                 R.layout.layout_images,
                 MyViewHolder.class,
                 mDatabaseGalleryRef
         ) {
             @Override
-            protected void populateViewHolder(MyViewHolder viewHolder, Picture model, final int position) {
+            protected void populateViewHolder(MyViewHolder viewHolder, Pictures model, final int position) {
                 viewHolder.tvGallery.setText(model.getTitle());
                 Glide.with(getActivity())
                         .load(model.getImageUri())
                         .into(viewHolder.imgGallery);
+
+                imagi.add(model);
+
+                viewHolder.imgGallery.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("images", (Serializable) imagi);
+                        bundle.putInt("position", position);
+
+                        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                        SlideshowDialogFragment newFragment = SlideshowDialogFragment.newInstance();
+                        newFragment.setArguments(bundle);
+                        newFragment.show(ft, "slideshow");
+                    }
+                });
 
                 viewHolder.imgGallery.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
@@ -257,15 +273,16 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
                     mCooseFileLayout.setVisibility(View.GONE);
                     if (getResources().getDisplayMetrics().widthPixels > getResources().getDisplayMetrics().
                             heightPixels) {
-                        mAvatarLayout.setVisibility(View.VISIBLE);
+                        mCameraInfo.setVisibility(View.VISIBLE);
+                        mAddress.setVisibility(View.VISIBLE);
                     }
                 } else {
                     mCooseFileLayout.setVisibility(View.VISIBLE);
                     if (getResources().getDisplayMetrics().widthPixels > getResources().getDisplayMetrics().
                             heightPixels) {
-                        mAvatarLayout.setVisibility(View.GONE);
+                        mCameraInfo.setVisibility(View.GONE);
+                        mAddress.setVisibility(View.GONE);
                     }
-
                 }
                 break;
             }
@@ -301,7 +318,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
                             Toast.makeText(getContext(), "File Uploaded ", Toast.LENGTH_LONG).show();
 
                             @SuppressWarnings("VisibleForTests")
-                            Picture picture = new Picture(mNamePhoto.getText().toString().trim(), taskSnapshot.getDownloadUrl().toString());
+                            Pictures picture = new Pictures(mNamePhoto.getText().toString().trim(), taskSnapshot.getDownloadUrl().toString());
                             String uploadId = mDatabaseGalleryRef.push().getKey();
                             mDatabaseGalleryRef.child(uploadId).setValue(picture);
                         }
@@ -321,6 +338,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
                             progressDialog.setMessage("Uploaded " + ((int) progress) + "%...");
                         }
                     });
+
         } else {
             Toast.makeText(getContext(), "Warning !!!, Error file ", Toast.LENGTH_LONG).show();
             mNamePhoto.setText("");

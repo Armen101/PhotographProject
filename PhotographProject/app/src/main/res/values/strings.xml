@@ -27,4 +27,7 @@
     <string name="save">save</string>
     <string name="minimum_password" />
     <string name="auth_failed" />
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

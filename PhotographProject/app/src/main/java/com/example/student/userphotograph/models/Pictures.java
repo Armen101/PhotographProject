@@ -1,14 +1,14 @@
 package com.example.student.userphotograph.models;
 
-public class Picture {
+public class Pictures {
 
     private String title;
     private String imageUri;
 
-    public Picture() {
+    public Pictures() {
     }
 
-    public Picture(String title, String imageUri) {
+    public Pictures(String title, String imageUri) {
         this.title = title;
         this.imageUri = imageUri;
     }
