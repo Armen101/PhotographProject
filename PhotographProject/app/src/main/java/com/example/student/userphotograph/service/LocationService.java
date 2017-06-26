@@ -1,9 +1,7 @@
 package com.example.student.userphotograph.service;
 
-import android.Manifest;
 import android.app.Service;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -11,7 +9,7 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -19,13 +17,12 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.concurrent.TimeUnit;
-
-
 public class LocationService extends Service {
 
     private LocationManager mLocationManager;
     private LocationListener mLocationListener;
+    private DatabaseReference mLatRef;
+    private DatabaseReference mLngRef;
 
     @Nullable
     @Override
@@ -36,22 +33,24 @@ public class LocationService extends Service {
     @SuppressWarnings("MissingPermission")
     @Override
     public void onCreate() {
-        initLocationListener();
-    }
 
-    private void initLocationListener() {
+        Log.i("=== ", "service onCreate()");
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        assert user != null;
+        DatabaseReference mDatabaseRef = FirebaseDatabase.getInstance().getReference()
+                .child("photographs").child(user.getUid());
+        mLatRef = mDatabaseRef.child("latitude");
+        mLngRef = mDatabaseRef.child("longitude");
+        mLngRef = mDatabaseRef.child("time");
+
         mLocationListener = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                assert user != null;
-                DatabaseReference mDatabaseRef = FirebaseDatabase.getInstance().getReference()
-                        .child("photographs").child(user.getUid());
-                DatabaseReference mLatRef = mDatabaseRef.child("latitude");
-                DatabaseReference mLngRef = mDatabaseRef.child("longitude");
+                Log.i("=== ", "onLocationChanged");
 
-                mLatRef.push().setValue(location.getLatitude());
-                mLngRef.push().setValue(location.getLongitude());
+                mLatRef.setValue(String.valueOf(location.getLatitude()));
+                mLngRef.setValue(location.getLongitude());
             }
 
             @Override
@@ -66,19 +65,16 @@ public class LocationService extends Service {
             public void onProviderDisabled(String provider) {
                 Toast.makeText(LocationService.this, "enable GPS", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             }
         };
-
-        mLocationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return;
-        }
+        mLocationManager = (LocationManager) getApplicationContext().getSystemService(LOCATION_SERVICE);
         mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
-                TimeUnit.MINUTES.toMinutes(30),
+                2000,
                 0, mLocationListener);
     }
+
 
     @Override
     public void onDestroy() {

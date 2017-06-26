@@ -67,10 +67,8 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
 
     private DatabaseReference mDatabaseRef;
     private DatabaseReference mDatabaseGalleryRef;
-    private StorageReference mStorageRef;
     private StorageReference mStorageAvatarRef;
     private StorageReference mStorageGalleryRef;
-    private ImageView mAddImg;
 
     private LinearLayout mCooseFileLayout;
     private List<Pictures> imagi;
@@ -110,7 +108,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         mAvatar = (ImageView) rootView.findViewById(R.id.st_avatar);
         mImage = (ImageView) rootView.findViewById(R.id.img_gallery);
         mNamePhoto = (EditText) rootView.findViewById(R.id.st_name_photo);
-        mAddImg = (ImageView) rootView.findViewById(R.id.add_image);
+        ImageView mAddImg = (ImageView) rootView.findViewById(R.id.add_image);
         mCooseFileLayout = (LinearLayout) rootView.findViewById(R.id.choose_file_layout);
 
         Button saveAllInfo = (Button) rootView.findViewById(R.id.btn_st_save_info);
@@ -204,7 +202,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         mDatabaseRef = FirebaseDatabase.getInstance().getReference().child("photographs").child(mUser.getUid());
         mDatabaseGalleryRef = mDatabaseRef.child("gallery");
 
-        mStorageRef = FirebaseStorage.getInstance().getReference();
+        StorageReference mStorageRef = FirebaseStorage.getInstance().getReference();
         mStorageAvatarRef = mStorageRef.child("photographs").child("avatar").child(mUser.getUid());
         mStorageGalleryRef = mStorageRef.child("photographs").child("gallery").child(mUser.getUid());
         mDatabaseRef.child("uid").setValue(mUser.getUid());
@@ -235,7 +233,6 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     }
 
     private void saveInFbDb() {
-
         mDatabaseRef.child("name").setValue(mName.getText().toString());
         mDatabaseRef.child("address").setValue(mAddress.getText().toString());
         mDatabaseRef.child("cameraInfo").setValue(mCameraInfo.getText().toString());
@@ -286,9 +283,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
                 }
                 break;
             }
-
         }
-
     }
 
     private void choosePic(int requestCode) {

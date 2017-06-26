@@ -29,8 +29,8 @@ public class GPSTracker extends Service implements LocationListener {
     public Location getLocation() {
         try {
             mlocationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
-            isGPSEnabled = mlocationManager.isProviderEnabled(mlocationManager.GPS_PROVIDER);
-            isNetworkEnabled = mlocationManager.isProviderEnabled(mlocationManager.NETWORK_PROVIDER);
+            isGPSEnabled = mlocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+            isNetworkEnabled = mlocationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
 
             if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION)
                     == PackageManager.PERMISSION_GRANTED

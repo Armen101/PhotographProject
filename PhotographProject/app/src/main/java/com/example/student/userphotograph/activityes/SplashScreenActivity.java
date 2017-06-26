@@ -9,7 +9,6 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.student.userphotograph.R;
-import com.example.student.userphotograph.service.LocationService;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -36,7 +35,6 @@ public class SplashScreenActivity extends AppCompatActivity {
             @Override
             public void onAnimationRepeat(Animation animation) {}
         });
-        startService(new Intent(this, LocationService.class));
     }
 
     private void goToActivity() {

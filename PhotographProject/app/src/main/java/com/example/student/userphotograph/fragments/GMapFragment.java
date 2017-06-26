@@ -86,6 +86,7 @@ public class GMapFragment extends Fragment implements OnMapReadyCallback,
 
         if (mlocation == null) {
             Intent i = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(i);
         } else {
             double mLatitude = mlocation.getLatitude();
@@ -96,5 +97,4 @@ public class GMapFragment extends Fragment implements OnMapReadyCallback,
             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myLocation, 15));
         }
     }
-
 }

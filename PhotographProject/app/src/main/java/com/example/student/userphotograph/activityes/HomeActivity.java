@@ -1,14 +1,17 @@
 package com.example.student.userphotograph.activityes;
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -19,10 +22,12 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.student.userphotograph.R;
 import com.example.student.userphotograph.fragments.GMapFragment;
 import com.example.student.userphotograph.fragments.SettingsFragment;
+import com.example.student.userphotograph.service.LocationService;
 import com.example.student.userphotograph.utilityes.DownloadAvatar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -62,6 +67,17 @@ public class HomeActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                ActivityCompat.requestPermissions(
+                        this,
+                        new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION},
+                        10);
+            }
+        }
+
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
@@ -78,8 +94,23 @@ public class HomeActivity extends AppCompatActivity
         toggle.syncState();
 
         replaceFragment(SettingsFragment.newInstance());
+        startService(new Intent(this, LocationService.class));
 
     }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
+        if(requestCode == 10 &&
+                 grantResults.length > 0
+                 && grantResults[0] == PackageManager.PERMISSION_GRANTED
+                 && grantResults[1] == PackageManager.PERMISSION_GRANTED)
+        {
+            Toast.makeText(this, "Permissions is disable", Toast.LENGTH_LONG).show();
+        } else
+            {
+               Toast.makeText(this, "Permissions is enabled", Toast.LENGTH_LONG).show();
+            }
+       }
 
     private void findViewById() {
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -98,9 +129,6 @@ public class HomeActivity extends AppCompatActivity
     }
 
     private void writeFbDb() {
-
-
-
         FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
         mDatabaseRef = FirebaseDatabase.getInstance().getReference().child("photographs").child(mUser.getUid());
         mStorageRef = FirebaseStorage.getInstance().getReference();
@@ -199,6 +227,4 @@ public class HomeActivity extends AppCompatActivity
     @Override
     public void onDrawerStateChanged(int newState) {
     }
-
-
 }
