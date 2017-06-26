@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="#100505"
     tools:context="com.example.student.userphotograph.fragments.SettingsFragment">
 
     <LinearLayout
@@ -10,13 +11,12 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/st_avatar"
-            android:layout_width="0dp"
+            android:layout_width="100dp"
             android:layout_height="100dp"
-            android:layout_weight="1"
-            android:contentDescription="@string/add_avatar"
             android:src="@drawable/add" />
+
 
         <LinearLayout
             android:layout_width="0dp"
@@ -32,12 +32,16 @@
                 android:focusable="false"
                 android:focusableInTouchMode="false"
                 android:hint="@string/name"
+                android:textColor="@color/colorWhite"
+                android:textColorHint="@color/colorWhite"
                 android:longClickable="false" />
 
             <EditText
                 android:id="@+id/et_st_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="@color/colorWhite"
+                android:textColorHint="@color/colorWhite"
                 android:hint="@string/address" />
 
         </LinearLayout>
@@ -54,6 +58,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
+            android:textColor="@color/colorWhite"
+            android:textColorHint="@color/colorWhite"
             android:hint="@string/camera_info" />
 
         <EditText
@@ -63,6 +69,8 @@
             android:layout_weight="1"
             android:gravity="center"
             android:hint="@string/phone"
+            android:textColor="@color/colorWhite"
+            android:textColorHint="@color/colorWhite"
             android:inputType="phone" />
     </LinearLayout>
 
@@ -100,6 +108,8 @@
             android:layout_height="0dp"
             android:layout_weight="0.4"
             android:gravity="center"
+            android:textColor="@color/colorWhite"
+            android:textColorHint="@color/colorWhite"
             android:hint="title  photo" />
 
         <LinearLayout
@@ -125,7 +135,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:text="choose photo"
+                    android:shadowColor="@color/colorAccent"
+                    android:text="@string/choose_photo"
                     android:textAllCaps="false" />
 
                 <Button
@@ -133,7 +144,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:text="upload photo"
+                    android:text="@string/upload_photo"
                     android:textAllCaps="false" />
 
                 <Button
@@ -141,8 +152,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:text="save all info"
+                    android:text="@string/save_all_info"
                     android:textAllCaps="false" />
+
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
