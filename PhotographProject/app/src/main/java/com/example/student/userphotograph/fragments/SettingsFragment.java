@@ -363,10 +363,11 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     mAvatar.setImageURI(uri);
-
+                    @SuppressWarnings("VisibleForTests")Uri uri = taskSnapshot.getDownloadUrl();
+                    assert uri != null;
+                    mDatabaseRef.child("avatarUri").setValue(uri.toString());
                 }
             });
-            //mDatabaseRef.child("avatar").setValue(uri.toString());
         }
         super.onActivityResult(requestCode, resultCode, data);
 
@@ -380,5 +381,4 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
             }
         }
     }
-
 }
