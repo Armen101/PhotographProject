@@ -27,7 +27,7 @@ import android.widget.Toast;
 import com.example.student.userphotograph.R;
 import com.example.student.userphotograph.fragments.GMapFragment;
 import com.example.student.userphotograph.fragments.SettingsFragment;
-import com.example.student.userphotograph.utilityes.DownloadAvatar;
+import com.example.student.userphotograph.utilityes.FirebaseHelper;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -133,7 +133,7 @@ public class HomeActivity extends AppCompatActivity
         StorageReference mStorageRef = FirebaseStorage.getInstance().getReference();
         mStorageAvatarRef = mStorageRef.child("photographs").child("avatar").child(mUser.getUid());
 
-        DownloadAvatar.downloadImageAndSetAvatar(mStorageAvatarRef, mNavDrawerAvatar);
+        FirebaseHelper.downloadImageAndSetAvatar(mStorageAvatarRef, mNavDrawerAvatar);
 
         mDatabaseRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -215,7 +215,7 @@ public class HomeActivity extends AppCompatActivity
 
     @Override
     public void onDrawerOpened(View drawerView) {
-        DownloadAvatar.downloadImageAndSetAvatar(mStorageAvatarRef, mNavDrawerAvatar);
+        FirebaseHelper.downloadImageAndSetAvatar(mStorageAvatarRef, mNavDrawerAvatar);
         invalidateOptionsMenu();
     }
 

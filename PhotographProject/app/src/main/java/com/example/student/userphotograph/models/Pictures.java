@@ -10,9 +10,6 @@ public class Pictures {
     public Pictures() {
     }
 
-    public Pictures(String imageUri) {
-        this.imageUri = imageUri;
-    }
 
     public Pictures(String title, String imageUri, String imageName) {
         this.title = title;

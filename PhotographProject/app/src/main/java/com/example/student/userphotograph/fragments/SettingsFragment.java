@@ -1,15 +1,12 @@
 package com.example.student.userphotograph.fragments;
 
 
-import android.app.ProgressDialog;
-import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
@@ -18,7 +15,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -30,9 +26,8 @@ import com.bumptech.glide.Glide;
 import com.example.student.userphotograph.R;
 import com.example.student.userphotograph.models.Pictures;
 import com.example.student.userphotograph.utilityes.Constants;
-import com.example.student.userphotograph.utilityes.DownloadAvatar;
+import com.example.student.userphotograph.utilityes.FirebaseHelper;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -42,7 +37,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
@@ -74,8 +68,6 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     private List<Pictures> mItemViewPager;
     private FirebaseUser mUser;
 
-    public SettingsFragment() {
-    }
 
     public static SettingsFragment newInstance() {
         return new SettingsFragment();
@@ -96,12 +88,11 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         onCreateFirebaseRecyclerAdapter(recyclerView);
 
         writeWithFbDb();
-        DownloadAvatar.downloadImageAndSetAvatar(mStorageAvatarRef, mAvatar);
+        FirebaseHelper.downloadImageAndSetAvatar(mStorageAvatarRef, mAvatar);
         return rootView;
     }
 
     private void findViewById(View rootView) {
-
         mName = (EditText) rootView.findViewById(R.id.et_st_name);
         mAddress = (EditText) rootView.findViewById(R.id.et_st_address);
         mCameraInfo = (EditText) rootView.findViewById(R.id.st_camera_info);
@@ -265,7 +256,11 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
             case R.id.btn_st_upload_phote: {
                 mNamePhoto.setVisibility(View.GONE);
                 mNamePhoto.setText(mNamePhoto.getText().toString());
-                uploadFile();
+
+
+                String mImageName = System.currentTimeMillis() + "." + FirebaseHelper.getFileExtension(mFilePath, getActivity());
+                FirebaseHelper.upload(getContext(), mImageName, mNamePhoto, mDatabaseGalleryRef, mStorageGalleryRef, mFilePath);
+
                 mFilePath = null;
                 mImage.setImageBitmap(null);
                 break;
@@ -301,56 +296,6 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         Intent choosePicIntent = new Intent(Intent.ACTION_GET_CONTENT);
         choosePicIntent.setType("image/*");
         startActivityForResult(choosePicIntent, requestCode);
-    }
-
-    private String getFileExtension(Uri uri) {
-        ContentResolver contentResolver = getActivity().getContentResolver();
-        MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
-        return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
-    }
-
-    private void uploadFile() {
-        if (mFilePath != null) {
-            final ProgressDialog progressDialog = new ProgressDialog(getContext());
-            progressDialog.setTitle("Uploading");
-            progressDialog.show();
-            final String imageName = System.currentTimeMillis() + "." + getFileExtension(mFilePath);
-            StorageReference sRef = mStorageGalleryRef.child(Constants.STORAGE_PATH_UPLOADS + imageName);
-
-            sRef.putFile(mFilePath)
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            progressDialog.dismiss();
-                            Toast.makeText(getContext(), "File Uploaded ", Toast.LENGTH_LONG).show();
-
-                            @SuppressWarnings("VisibleForTests")
-                            Pictures picture = new Pictures(mNamePhoto.getText().toString().trim(), taskSnapshot.getDownloadUrl().toString(), imageName);
-
-                            String uploadId = mDatabaseGalleryRef.push().getKey();
-                            mDatabaseGalleryRef.child(uploadId).setValue(picture);
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception exception) {
-                            progressDialog.dismiss();
-                            Toast.makeText(getContext().getApplicationContext(), exception.getMessage(), Toast.LENGTH_LONG).show();
-                        }
-                    })
-                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                            @SuppressWarnings("VisibleForTests")
-                            double progress = (100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
-                            progressDialog.setMessage("Uploaded " + ((int) progress) + "%...");
-                        }
-                    });
-
-        } else {
-            Toast.makeText(getContext(), "Warning !!!, Error file ", Toast.LENGTH_LONG).show();
-            mNamePhoto.setText("");
-        }
     }
 
     @Override
