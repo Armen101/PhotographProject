@@ -33,4 +33,6 @@
     <string name="choose_photo">choose photo</string>
     <string name="upload_photo">upload photo</string>
     <string name="save_all_info">save all info</string>
+    <string name="email">email</string>
+    <string name="confirm_password">confirm password</string>
 </resources>
