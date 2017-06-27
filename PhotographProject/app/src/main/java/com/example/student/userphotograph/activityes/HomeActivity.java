@@ -27,7 +27,6 @@ import android.widget.Toast;
 import com.example.student.userphotograph.R;
 import com.example.student.userphotograph.fragments.GMapFragment;
 import com.example.student.userphotograph.fragments.SettingsFragment;
-import com.example.student.userphotograph.service.LocationService;
 import com.example.student.userphotograph.utilityes.DownloadAvatar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -82,7 +81,7 @@ public class HomeActivity extends AppCompatActivity
         toggle.syncState();
 
         replaceFragment(SettingsFragment.newInstance());
-        startService(new Intent(this, LocationService.class));
+        //startService(new Intent(this, LocationService.class));
 
     }
 

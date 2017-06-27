@@ -71,7 +71,8 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     private StorageReference mStorageGalleryRef;
 
     private LinearLayout mCooseFileLayout;
-    private List<Pictures> imagi;
+    private List<Pictures> mItemViewPager;
+    private FirebaseUser mUser;
 
     public SettingsFragment() {
     }
@@ -88,7 +89,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         findViewById(rootView);
         firebaseRef();
 
-        imagi = new ArrayList<>();
+        mItemViewPager = new ArrayList<>();
         RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
         recyclerView.setHasFixedSize(true);
@@ -137,13 +138,13 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
                         .load(model.getImageUri())
                         .into(viewHolder.imgGallery);
 
-                imagi.add(model);
+                mItemViewPager.add(model);
 
                 viewHolder.imgGallery.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Bundle bundle = new Bundle();
-                        bundle.putSerializable("images", (Serializable) imagi);
+                        bundle.putSerializable("images", (Serializable) mItemViewPager);
                         bundle.putInt("position", position);
 
                         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
@@ -160,10 +161,20 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
                         mAlertDialog.setTitle("Remove")
                                 .setMessage("Are you sure?");
                         mAlertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+
+
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.dismiss();
+
+                                String imageName = getItem(position).getImageName();
                                 getRef(position).removeValue();
+
+                                StorageReference sRef = FirebaseStorage.getInstance()
+                                        .getReference().child("photographs").child("gallery")
+                                        .child(mUser.getUid()).child("uploads").child(imageName);
+                                sRef.delete();
+
                                 notifyDataSetChanged();
                                 Toast.makeText(getContext(), "Removed", Toast.LENGTH_SHORT).show();
                             }
@@ -196,7 +207,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
 
     private void firebaseRef() {
         FirebaseAuth auth = FirebaseAuth.getInstance();
-        FirebaseUser mUser = auth.getCurrentUser();
+        mUser = auth.getCurrentUser();
 
         assert mUser != null;
         mDatabaseRef = FirebaseDatabase.getInstance().getReference().child("photographs").child(mUser.getUid());
@@ -205,12 +216,12 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         StorageReference mStorageRef = FirebaseStorage.getInstance().getReference();
         mStorageAvatarRef = mStorageRef.child("photographs").child("avatar").child(mUser.getUid());
         mStorageGalleryRef = mStorageRef.child("photographs").child("gallery").child(mUser.getUid());
+
         mDatabaseRef.child("uid").setValue(mUser.getUid());
         mDatabaseRef.child("email").setValue(mUser.getEmail());
     }
 
     private void writeWithFbDb() {
-
         mDatabaseRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -303,7 +314,8 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
             final ProgressDialog progressDialog = new ProgressDialog(getContext());
             progressDialog.setTitle("Uploading");
             progressDialog.show();
-            StorageReference sRef = mStorageGalleryRef.child(Constants.STORAGE_PATH_UPLOADS + System.currentTimeMillis() + "." + getFileExtension(mFilePath));
+            final String imageName = System.currentTimeMillis() + "." + getFileExtension(mFilePath);
+            StorageReference sRef = mStorageGalleryRef.child(Constants.STORAGE_PATH_UPLOADS + imageName);
 
             sRef.putFile(mFilePath)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -313,7 +325,8 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
                             Toast.makeText(getContext(), "File Uploaded ", Toast.LENGTH_LONG).show();
 
                             @SuppressWarnings("VisibleForTests")
-                            Pictures picture = new Pictures(mNamePhoto.getText().toString().trim(), taskSnapshot.getDownloadUrl().toString());
+                            Pictures picture = new Pictures(mNamePhoto.getText().toString().trim(), taskSnapshot.getDownloadUrl().toString(), imageName);
+
                             String uploadId = mDatabaseGalleryRef.push().getKey();
                             mDatabaseGalleryRef.child(uploadId).setValue(picture);
                         }
@@ -345,12 +358,15 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
 
         if (requestCode == Constants.REQUEST_AVATAR_CHOOSE_PICK && resultCode == RESULT_OK) {
             final Uri uri = data.getData();
+
             mStorageAvatarRef.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     mAvatar.setImageURI(uri);
+
                 }
             });
+            //mDatabaseRef.child("avatar").setValue(uri.toString());
         }
         super.onActivityResult(requestCode, resultCode, data);
 

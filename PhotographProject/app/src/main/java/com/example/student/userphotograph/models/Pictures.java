@@ -4,15 +4,19 @@ public class Pictures {
 
     private String title;
     private String imageUri;
+    private String imageName;
+
 
     public Pictures() {
     }
 
-    public Pictures(String title, String imageUri) {
+    public Pictures(String title, String imageUri, String imageName) {
         this.title = title;
         this.imageUri = imageUri;
+        this.imageName = imageName;
     }
 
+    public String getImageName() {return imageName;}
     public String getTitle() {
         return title;
     }
@@ -25,7 +29,4 @@ public class Pictures {
         return imageUri;
     }
 
-    public void setImageUri(String imageUri) {
-        this.imageUri = imageUri;
-    }
 }
