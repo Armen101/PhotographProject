@@ -21,6 +21,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+import static com.example.student.userphotograph.utilityes.Constants.IS_SHOW__FORGOT_PASSWORD;
+
 public class SignInFragment extends Fragment implements View.OnClickListener {
 
     private FirebaseAuth mAuth;
@@ -89,8 +91,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-    private void addFragment(Fragment fragment) {
-
+    private void replaceFragment(Fragment fragment) {
         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.container_login, fragment);
         ft.addToBackStack(null);
@@ -101,16 +102,19 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.sign_in_button: {
+                IS_SHOW__FORGOT_PASSWORD = false;
                 mSignInbtn.setClickable(false);
                 signIn(mEmailEd.getText().toString(), mPasswordEd.getText().toString());
                 break;
             }
             case R.id.dont_have_sign_up: {
-                addFragment(SignUpFragment.newInstance());
+                IS_SHOW__FORGOT_PASSWORD = false;
+                replaceFragment(SignUpFragment.newInstance());
                 break;
             }
             case R.id.tv_forgot_password: {
-                addFragment(ForgotPasswordFragment.newInstance());
+                IS_SHOW__FORGOT_PASSWORD = true;
+                replaceFragment(ForgotPasswordFragment.newInstance());
                 break;
             }
         }

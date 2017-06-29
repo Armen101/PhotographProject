@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#100505"
+    android:padding="20dp"
+    android:background="@color/colorPrimaryDark"
     tools:context="com.example.student.userphotograph.fragments.SettingsFragment">
 
     <LinearLayout
@@ -32,6 +33,7 @@
                 android:focusable="false"
                 android:focusableInTouchMode="false"
                 android:hint="@string/name"
+                android:gravity="center"
                 android:textColor="@color/colorWhite"
                 android:textColorHint="@color/colorWhite"
                 android:longClickable="false" />
@@ -41,6 +43,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorWhite"
+                android:gravity="center"
                 android:textColorHint="@color/colorWhite"
                 android:hint="@string/address" />
 

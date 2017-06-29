@@ -3,6 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
+    android:padding="20dp"
+    android:background="@color/colorPrimaryDark"
     tools:context="com.example.student.userphotograph.fragments.SettingsFragment">
 
     <LinearLayout
@@ -10,11 +12,11 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/st_avatar"
-            android:layout_width="match_parent"
+            android:layout_width="100dp"
             android:layout_height="100dp"
-            android:contentDescription="@string/add_avatar"
+            android:layout_gravity="center"
             android:src="@drawable/add" />
 
         <LinearLayout
@@ -27,9 +29,11 @@
                 android:id="@+id/et_st_name"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="3"
+                android:layout_weight="1"
                 android:clickable="false"
                 android:focusable="false"
+                android:textColor="@color/colorWhite"
+                android:textColorHint="@color/colorWhite"
                 android:gravity="center"
                 android:focusableInTouchMode="false"
                 android:hint="@string/name"
@@ -39,27 +43,45 @@
                 android:id="@+id/et_st_phone"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="3"
+                android:layout_weight="1"
                 android:gravity="center"
+                android:textColor="@color/colorWhite"
+                android:textColorHint="@color/colorWhite"
                 android:hint="@string/phone"
                 android:inputType="phone" />
 
             <EditText
                 android:id="@+id/et_st_address"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:hint="@string/address"
+                android:textColor="@color/colorWhite"
+                android:textColorHint="@color/colorWhite"
                 android:gravity="center"
                 android:visibility="visible"/>
 
             <EditText
                 android:id="@+id/st_camera_info"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:layout_weight="1"
                 android:gravity="center"
+                android:textColor="@color/colorWhite"
+                android:textColorHint="@color/colorWhite"
                 android:hint="@string/camera_info"
                 android:visibility="visible"/>
+
+            <Button
+                android:id="@+id/btn_st_save_info"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:textColor="@color/colorRed"
+                android:textSize="24sp"
+                android:background="@android:color/transparent"
+                android:text="@string/save"
+                android:textAllCaps="false" />
 
             <LinearLayout
                 android:id="@+id/choose_file_layout"
@@ -74,6 +96,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="0.4"
+                    android:textColor="@color/colorWhite"
+                    android:textColorHint="@color/colorWhite"
                     android:gravity="center"
                     android:hint="title  photo" />
 
@@ -111,13 +135,6 @@
                             android:text="upload photo"
                             android:textAllCaps="false" />
 
-                        <Button
-                            android:id="@+id/btn_st_save_info"
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="1"
-                            android:text="save all info"
-                            android:textAllCaps="false" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>

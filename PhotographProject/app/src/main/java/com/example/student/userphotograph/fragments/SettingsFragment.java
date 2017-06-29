@@ -46,6 +46,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
+import static com.example.student.userphotograph.utilityes.Constants.ADDRESS;
+import static com.example.student.userphotograph.utilityes.Constants.AVATAR;
+import static com.example.student.userphotograph.utilityes.Constants.AVATAR_URI;
+import static com.example.student.userphotograph.utilityes.Constants.CAMERA_INFO;
+import static com.example.student.userphotograph.utilityes.Constants.EMAIL;
+import static com.example.student.userphotograph.utilityes.Constants.GALLERY;
+import static com.example.student.userphotograph.utilityes.Constants.NAME;
+import static com.example.student.userphotograph.utilityes.Constants.PHONE;
+import static com.example.student.userphotograph.utilityes.Constants.PHOTOGRAPHS;
+import static com.example.student.userphotograph.utilityes.Constants.USER_ID;
 
 public class SettingsFragment extends Fragment implements View.OnClickListener {
 
@@ -73,9 +83,12 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         return new SettingsFragment();
     }
 
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         View rootView = inflater.inflate(R.layout.fragment_settings, container, false);
 
         findViewById(rootView);
@@ -89,8 +102,22 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
 
         writeWithFbDb();
         FirebaseHelper.downloadImageAndSetAvatar(mStorageAvatarRef, mAvatar);
+
         return rootView;
     }
+
+
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(PHONE, mPhone.getText().toString());
+        outState.putString(ADDRESS, mAddress.getText().toString());
+        outState.putString(CAMERA_INFO, mCameraInfo.getText().toString());
+    }
+
+
+
 
     private void findViewById(View rootView) {
         mName = (EditText) rootView.findViewById(R.id.et_st_name);
@@ -135,13 +162,13 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
                     @Override
                     public void onClick(View v) {
                         Bundle bundle = new Bundle();
-                        bundle.putSerializable("images", (Serializable) mItemViewPager);
-                        bundle.putInt("position", position);
+                        bundle.putSerializable(getString(R.string.images), (Serializable) mItemViewPager);
+                        bundle.putInt(getString(R.string.position), position);
 
                         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                         SlideshowDialogFragment newFragment = SlideshowDialogFragment.newInstance();
                         newFragment.setArguments(bundle);
-                        newFragment.show(ft, "slideshow");
+                        newFragment.show(ft, getString(R.string.slideshow));
                     }
                 });
 
@@ -149,10 +176,9 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
                     @Override
                     public boolean onLongClick(View v) {
                         final AlertDialog.Builder mAlertDialog = new AlertDialog.Builder(getContext());
-                        mAlertDialog.setTitle("Remove")
-                                .setMessage("Are you sure?");
-                        mAlertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-
+                        mAlertDialog.setTitle(R.string.removed)
+                                .setMessage(R.string.are_you_sure);
+                        mAlertDialog.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
 
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -162,17 +188,17 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
                                 getRef(position).removeValue();
 
                                 StorageReference sRef = FirebaseStorage.getInstance()
-                                        .getReference().child("photographs").child("gallery")
-                                        .child(mUser.getUid()).child("uploads").child(imageName);
+                                        .getReference().child(PHOTOGRAPHS).child(GALLERY)
+                                        .child(mUser.getUid()).child(imageName);
                                 sRef.delete();
 
                                 notifyDataSetChanged();
-                                Toast.makeText(getContext(), "Removed", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getContext(), R.string.removed, Toast.LENGTH_SHORT).show();
                             }
-                        }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        }).setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                Toast.makeText(getContext(), "Canceled", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getContext(), R.string.canceled, Toast.LENGTH_SHORT).show();
                             }
                         })
                                 .create().show();
@@ -201,15 +227,15 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         mUser = auth.getCurrentUser();
 
         assert mUser != null;
-        mDatabaseRef = FirebaseDatabase.getInstance().getReference().child("photographs").child(mUser.getUid());
-        mDatabaseGalleryRef = mDatabaseRef.child("gallery");
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference().child(PHOTOGRAPHS).child(mUser.getUid());
+        mDatabaseGalleryRef = mDatabaseRef.child(GALLERY);
 
         StorageReference mStorageRef = FirebaseStorage.getInstance().getReference();
-        mStorageAvatarRef = mStorageRef.child("photographs").child("avatar").child(mUser.getUid());
-        mStorageGalleryRef = mStorageRef.child("photographs").child("gallery").child(mUser.getUid());
+        mStorageAvatarRef = mStorageRef.child(PHOTOGRAPHS).child(AVATAR).child(mUser.getUid());
+        mStorageGalleryRef = mStorageRef.child(PHOTOGRAPHS).child(GALLERY).child(mUser.getUid());
 
-        mDatabaseRef.child("uid").setValue(mUser.getUid());
-        mDatabaseRef.child("email").setValue(mUser.getEmail());
+        mDatabaseRef.child(USER_ID).setValue(mUser.getUid());
+        mDatabaseRef.child(EMAIL).setValue(mUser.getEmail());
     }
 
     private void writeWithFbDb() {
@@ -217,10 +243,10 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                String name = dataSnapshot.child("name").getValue(String.class);
-                String address = dataSnapshot.child("address").getValue(String.class);
-                String cameraInfo = dataSnapshot.child("cameraInfo").getValue(String.class);
-                String phone = dataSnapshot.child("phone").getValue(String.class);
+                String name = dataSnapshot.child(NAME).getValue(String.class);
+                String address = dataSnapshot.child(ADDRESS).getValue(String.class);
+                String cameraInfo = dataSnapshot.child(CAMERA_INFO).getValue(String.class);
+                String phone = dataSnapshot.child(PHONE).getValue(String.class);
 
                 mName.setText(name);
                 mAddress.setText(address);
@@ -235,10 +261,10 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     }
 
     private void saveInFbDb() {
-        mDatabaseRef.child("name").setValue(mName.getText().toString());
-        mDatabaseRef.child("address").setValue(mAddress.getText().toString());
-        mDatabaseRef.child("cameraInfo").setValue(mCameraInfo.getText().toString());
-        mDatabaseRef.child("phone").setValue(mPhone.getText().toString());
+        mDatabaseRef.child(NAME).setValue(mName.getText().toString());
+        mDatabaseRef.child(ADDRESS).setValue(mAddress.getText().toString());
+        mDatabaseRef.child(CAMERA_INFO).setValue(mCameraInfo.getText().toString());
+        mDatabaseRef.child(PHONE).setValue(mPhone.getText().toString());
         Toast.makeText(getContext(), "Successfull saveing dates", Toast.LENGTH_SHORT).show();
     }
 
@@ -256,7 +282,6 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
             case R.id.btn_st_upload_phote: {
                 mNamePhoto.setVisibility(View.GONE);
                 mNamePhoto.setText(mNamePhoto.getText().toString());
-
 
                 String mImageName = System.currentTimeMillis() + "." + FirebaseHelper.getFileExtension(mFilePath, getActivity());
                 FirebaseHelper.upload(getContext(), mImageName, mNamePhoto, mDatabaseGalleryRef, mStorageGalleryRef, mFilePath);
@@ -291,7 +316,6 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
             }
         }
     }
-
     private void choosePic(int requestCode) {
         Intent choosePicIntent = new Intent(Intent.ACTION_GET_CONTENT);
         choosePicIntent.setType("image/*");
@@ -310,7 +334,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
                     mAvatar.setImageURI(uri);
                     @SuppressWarnings("VisibleForTests")Uri uri = taskSnapshot.getDownloadUrl();
                     assert uri != null;
-                    mDatabaseRef.child("avatarUri").setValue(uri.toString());
+                    mDatabaseRef.child(AVATAR_URI).setValue(uri.toString());
                 }
             });
         }

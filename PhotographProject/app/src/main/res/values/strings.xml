@@ -35,4 +35,12 @@
     <string name="save_all_info">save all info</string>
     <string name="email">email</string>
     <string name="confirm_password">confirm password</string>
+    <string name="images">images</string>
+    <string name="position">position</string>
+    <string name="slideshow">slideshow</string>
+    <string name="removed">Removed</string>
+    <string name="canceled">Canceled</string>
+    <string name="are_you_sure">Are you sure?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 </resources>

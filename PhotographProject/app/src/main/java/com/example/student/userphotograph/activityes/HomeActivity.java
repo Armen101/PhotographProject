@@ -20,6 +20,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -80,10 +81,11 @@ public class HomeActivity extends AppCompatActivity
         mDrawer.addDrawerListener(toggle);
         toggle.syncState();
 
+
         replaceFragment(SettingsFragment.newInstance());
         //startService(new Intent(this, LocationService.class));
-
     }
+
 
     private void responsePermissionGranted() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
@@ -187,8 +189,9 @@ public class HomeActivity extends AppCompatActivity
                 mProgressDialog.show();
                 FirebaseAuth.getInstance().signOut();
                 finish();
+
+
                 Intent i = new Intent(this, LoginActivity.class);
-                i.putExtra("log_out", false);
                 startActivity(i);
                 mProgressDialog.dismiss();
             }
@@ -218,12 +221,11 @@ public class HomeActivity extends AppCompatActivity
         FirebaseHelper.downloadImageAndSetAvatar(mStorageAvatarRef, mNavDrawerAvatar);
         invalidateOptionsMenu();
     }
-
     @Override
     public void onDrawerClosed(View drawerView) {
     }
-
     @Override
     public void onDrawerStateChanged(int newState) {
     }
+
 }

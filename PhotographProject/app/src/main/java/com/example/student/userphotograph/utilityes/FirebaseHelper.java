@@ -58,7 +58,7 @@ public class FirebaseHelper {
         progressDialog.setTitle("Uploading");
         progressDialog.show();
 
-        StorageReference sRef = storageGalleryRef.child(Constants.STORAGE_PATH_UPLOADS + imageName);
+        StorageReference sRef = storageGalleryRef.child(imageName);
 
         sRef.putFile(filePath)
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
