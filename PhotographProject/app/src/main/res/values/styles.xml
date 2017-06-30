@@ -16,4 +16,9 @@
     <style name="AppTheme.AppBarOverlay" parent="Theme.AppCompat.NoActionBar" />
     <style name="AppTheme.PopupOverlay" parent="Theme.AppCompat.NoActionBar" />
 
+    <style name="MyDialogTheme"
+        parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:background">#94b4e4</item>
+    </style>
+
 </resources>

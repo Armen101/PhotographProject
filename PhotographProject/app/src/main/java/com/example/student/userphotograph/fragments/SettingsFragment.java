@@ -175,7 +175,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
                 viewHolder.imgGallery.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
                     public boolean onLongClick(View v) {
-                        final AlertDialog.Builder mAlertDialog = new AlertDialog.Builder(getContext());
+                        final AlertDialog.Builder mAlertDialog = new AlertDialog.Builder(getContext(), R.style.MyDialogTheme);
                         mAlertDialog.setTitle(R.string.removed)
                                 .setMessage(R.string.are_you_sure);
                         mAlertDialog.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
