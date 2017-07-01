@@ -37,8 +37,6 @@ public class SplashScreenActivity extends AppCompatActivity {
         });
     }
 
-
-
     private void goToActivity() {
         finish();
         FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();

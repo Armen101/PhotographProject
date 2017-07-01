@@ -132,7 +132,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
 
         final FirebaseRecyclerAdapter<Pictures, MyViewHolder> adapter = new FirebaseRecyclerAdapter<Pictures, MyViewHolder>(
                 Pictures.class,
-                R.layout.layout_images,
+                R.layout.grid_view_item,
                 MyViewHolder.class,
                 mDatabaseGalleryRef
         ) {
