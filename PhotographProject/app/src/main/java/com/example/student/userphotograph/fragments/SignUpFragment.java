@@ -91,6 +91,7 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
 
         if (isValidateForm()) {
             final ProgressDialog mProgressDialog = new ProgressDialog(getContext());
+            mProgressDialog.setTitle("Loading to sign up");
             mProgressDialog.show();
             mAuth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {

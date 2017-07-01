@@ -17,10 +17,14 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -84,6 +88,31 @@ public class HomeActivity extends AppCompatActivity
 
         replaceFragment(SettingsFragment.newInstance());
         //startService(new Intent(this, LocationService.class));
+        toggleNavDrawer();
+    }
+
+    private void toggleNavDrawer() {
+        Button button = (Button) findViewById(R.id.nav_bar_toggle);
+        button.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent e) {
+                switch (e.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        mDrawer.openDrawer(Gravity.LEFT);
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        // Here you can try to detect the swipe. It will be necessary to
+                        // store more than the previous value to check that the user move constantly in the same direction
+                        mDrawer.openDrawer(Gravity.LEFT);
+
+                    case MotionEvent.ACTION_UP:
+                        mDrawer.openDrawer(Gravity.LEFT);
+                        break;
+                }
+                mDrawer.openDrawer(Gravity.LEFT);
+                return true;
+            }
+        });
     }
 
 

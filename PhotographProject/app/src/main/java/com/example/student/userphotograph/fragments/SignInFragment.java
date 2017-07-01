@@ -65,6 +65,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
 
     public void signIn(String email, String password) {
         final ProgressDialog mProgressDialog = new ProgressDialog(getContext());
+        mProgressDialog.setTitle("Loading to sign in");
         mProgressDialog.show();
         if (email.isEmpty() || password.isEmpty()) {
             mProgressDialog.dismiss();
