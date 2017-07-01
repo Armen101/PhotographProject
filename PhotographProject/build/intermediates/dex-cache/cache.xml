@@ -3,21 +3,21 @@
 
     <item
         is-multidex="true"
-        jar="C:\Users\Armen\Desktop\aaaaaaaaa\PhotographProject\PhotographProject\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jar="C:\Users\Student\Desktop\git\PhotographProject\PhotographProject\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="30696171d1b1cef719e4d14ed382954d53defb6d">
+        <dex dex="C:\Users\Student\Desktop\git\PhotographProject\PhotographProject\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_4cd2c4e1afc52b37affe6e7ea448b134ef84f683\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Student\Desktop\git\PhotographProject\PhotographProject\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.3"
         sha1="3be78ebc2706b2e1fe2f12d5726887a92d6c183b">
-        <dex dex="C:\Users\Armen\Desktop\aaaaaaaaa\PhotographProject\PhotographProject\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_c896dc2a4e9133a4644f200c37bd5e71a69722b2\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Armen\Desktop\aaaaaaaaa\PhotographProject\PhotographProject\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="7de41927eb068ea3669eaee0ef07247dc3ceb176">
-        <dex dex="C:\Users\Armen\Desktop\aaaaaaaaa\PhotographProject\PhotographProject\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_7a33cf3ce1b446fee009e9e3b902cfab089f17c6\classes.dex" />
+        <dex dex="C:\Users\Student\Desktop\git\PhotographProject\PhotographProject\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_b98ccbadd9b17ba05e28ad54184f4965c57b33d9\classes.dex" />
     </item>
 
 </items>

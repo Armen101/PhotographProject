@@ -3,22 +3,22 @@ package com.example.student.userphotograph.fragments;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,7 +40,6 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -63,26 +62,25 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     private EditText mAddress;
     private EditText mCameraInfo;
     private EditText mPhone;
-    private EditText mNamePhoto;
     private ImageView mAvatar;
 
     private Uri mFilePath;
-    private ImageView mImage;
 
     private DatabaseReference mDatabaseRef;
     private DatabaseReference mDatabaseGalleryRef;
     private StorageReference mStorageAvatarRef;
     private StorageReference mStorageGalleryRef;
 
-    private LinearLayout mCooseFileLayout;
     private List<Pictures> mItemViewPager;
     private FirebaseUser mUser;
+    private EditText photoTitle;
+    private AlertDialog alertDialog;
+    private FloatingActionButton saveInfo;
 
 
     public static SettingsFragment newInstance() {
         return new SettingsFragment();
     }
-
 
 
     @Override
@@ -107,7 +105,6 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     }
 
 
-
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -117,26 +114,16 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     }
 
 
-
-
     private void findViewById(View rootView) {
         mName = (EditText) rootView.findViewById(R.id.et_st_name);
         mAddress = (EditText) rootView.findViewById(R.id.et_st_address);
         mCameraInfo = (EditText) rootView.findViewById(R.id.st_camera_info);
         mPhone = (EditText) rootView.findViewById(R.id.et_st_phone);
         mAvatar = (ImageView) rootView.findViewById(R.id.st_avatar);
-        mImage = (ImageView) rootView.findViewById(R.id.img_gallery);
-        mNamePhoto = (EditText) rootView.findViewById(R.id.st_name_photo);
         ImageView mAddImg = (ImageView) rootView.findViewById(R.id.add_image);
-        mCooseFileLayout = (LinearLayout) rootView.findViewById(R.id.choose_file_layout);
+        saveInfo = (FloatingActionButton) rootView.findViewById(R.id.save_info);
 
-        Button saveAllInfo = (Button) rootView.findViewById(R.id.btn_st_save_info);
-        Button choosePhoto = (Button) rootView.findViewById(R.id.btn_st_choose_photo);
-        Button uploadPhoto = (Button) rootView.findViewById(R.id.btn_st_upload_phote);
-
-        uploadPhoto.setOnClickListener(this);
-        choosePhoto.setOnClickListener(this);
-        saveAllInfo.setOnClickListener(this);
+        saveInfo.setOnClickListener(this);
         mAvatar.setOnClickListener(this);
         mAddImg.setOnClickListener(this);
     }
@@ -260,62 +247,74 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         });
     }
 
-    private void saveInFbDb() {
-        mDatabaseRef.child(NAME).setValue(mName.getText().toString());
-        mDatabaseRef.child(ADDRESS).setValue(mAddress.getText().toString());
-        mDatabaseRef.child(CAMERA_INFO).setValue(mCameraInfo.getText().toString());
-        mDatabaseRef.child(PHONE).setValue(mPhone.getText().toString());
-        Toast.makeText(getContext(), "Successfull saveing dates", Toast.LENGTH_SHORT).show();
-    }
-
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.btn_st_save_info: {
-                saveInFbDb();
+
+            case R.id.save_info: {
+                mDatabaseRef.child(NAME).setValue(mName.getText().toString());
+                mDatabaseRef.child(ADDRESS).setValue(mAddress.getText().toString());
+                mDatabaseRef.child(CAMERA_INFO).setValue(mCameraInfo.getText().toString());
+                mDatabaseRef.child(PHONE).setValue(mPhone.getText().toString());
+                Toast.makeText(getContext(), "Successfull saveing dates", Toast.LENGTH_SHORT).show();
+
                 break;
             }
+
             case R.id.st_avatar: {
                 choosePic(Constants.REQUEST_AVATAR_CHOOSE_PICK);
                 break;
             }
-            case R.id.btn_st_upload_phote: {
-                mNamePhoto.setVisibility(View.GONE);
-                mNamePhoto.setText(mNamePhoto.getText().toString());
-
-                String mImageName = System.currentTimeMillis() + "." + FirebaseHelper.getFileExtension(mFilePath, getActivity());
-                FirebaseHelper.upload(getContext(), mImageName, mNamePhoto, mDatabaseGalleryRef, mStorageGalleryRef, mFilePath);
-
-                mFilePath = null;
-                mImage.setImageBitmap(null);
-                break;
-            }
-            case R.id.btn_st_choose_photo: {
-                mNamePhoto.setText("");
-                mNamePhoto.setVisibility(View.VISIBLE);
-                choosePic(Constants.REQUEST_GALLERY_CHOOSE_PICK);
-                break;
-            }
             case R.id.add_image: {
-                if (mCooseFileLayout.getVisibility() == View.VISIBLE) {
-                    mCooseFileLayout.setVisibility(View.GONE);
-                    if (getResources().getDisplayMetrics().widthPixels > getResources().getDisplayMetrics().
-                            heightPixels) {
-                        mCameraInfo.setVisibility(View.VISIBLE);
-                        mAddress.setVisibility(View.VISIBLE);
-                    }
-                } else {
-                    mCooseFileLayout.setVisibility(View.VISIBLE);
-                    if (getResources().getDisplayMetrics().widthPixels > getResources().getDisplayMetrics().
-                            heightPixels) {
-                        mCameraInfo.setVisibility(View.GONE);
-                        mAddress.setVisibility(View.GONE);
-                    }
-                }
+                AlertDialog.Builder dialogBuilder = initDialog();
+                alertDialog = dialogBuilder.create();
+                alertDialog.show();
                 break;
             }
         }
     }
+
+    private AlertDialog.Builder initDialog() {
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
+        dialogBuilder.setTitle("Uploading ...");
+        dialogBuilder.setView(getDialogLayout());
+        return dialogBuilder;
+    }
+
+    private View getDialogLayout() {
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.upload_dialog_layout, null);
+        photoTitle = (EditText) dialogView.findViewById(R.id.et_dialog_title);
+        final Button btnChoosePhoto = (Button) dialogView.findViewById(R.id.btn_choose_photo);
+        btnChoosePhoto.setEnabled(false);
+        photoTitle.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (!s.toString().isEmpty()) {
+                    btnChoosePhoto.setEnabled(true);
+                } else btnChoosePhoto.setEnabled(false);
+            }
+        });
+
+        btnChoosePhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                choosePic(Constants.REQUEST_GALLERY_CHOOSE_PICK);
+            }
+        });
+        return dialogView;
+    }
+
     private void choosePic(int requestCode) {
         Intent choosePicIntent = new Intent(Intent.ACTION_GET_CONTENT);
         choosePicIntent.setType("image/*");
@@ -332,7 +331,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     mAvatar.setImageURI(uri);
-                    @SuppressWarnings("VisibleForTests")Uri uri = taskSnapshot.getDownloadUrl();
+                    @SuppressWarnings("VisibleForTests") Uri uri = taskSnapshot.getDownloadUrl();
                     assert uri != null;
                     mDatabaseRef.child(AVATAR_URI).setValue(uri.toString());
                 }
@@ -342,12 +341,9 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
 
         if (requestCode == Constants.REQUEST_GALLERY_CHOOSE_PICK && resultCode == RESULT_OK && data.getData() != null) {
             mFilePath = data.getData();
-            try {
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), mFilePath);
-                mImage.setImageBitmap(bitmap);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            String mImageName = System.currentTimeMillis() + "." + FirebaseHelper.getFileExtension(mFilePath, getActivity());
+            FirebaseHelper.upload(getContext(), mImageName, photoTitle, mDatabaseGalleryRef, mStorageGalleryRef, mFilePath);
+            alertDialog.dismiss();
         }
     }
 }

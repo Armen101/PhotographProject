@@ -75,6 +75,7 @@
             android:textColor="@color/colorWhite"
             android:textColorHint="@color/colorWhite"
             android:inputType="phone" />
+
     </LinearLayout>
 
     <RelativeLayout
@@ -96,74 +97,13 @@
             android:src="@drawable/ic_add_a_photo_black_24dp"
             android:visibility="visible" />
 
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/save_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:src="@android:drawable/ic_menu_save" />
+
     </RelativeLayout>
 
-    <LinearLayout
-        android:id="@+id/choose_file_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:visibility="gone">
-
-        <EditText
-            android:id="@+id/st_name_photo"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.4"
-            android:gravity="center"
-            android:textColor="@color/colorWhite"
-            android:textColorHint="@color/colorWhite"
-            android:hint="title  photo" />
-
-        <LinearLayout
-            android:id="@+id/id_linear"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1">
-
-            <ImageView
-                android:id="@+id/img_gallery"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="2" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <Button
-                    android:id="@+id/btn_st_choose_photo"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:backgroundTint="@color/colorAccent"
-                    android:padding="20dp"
-                    android:text="@string/choose_photo"
-                    android:textAllCaps="false" />
-
-                <Button
-                    android:id="@+id/btn_st_upload_phote"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:padding="20dp"
-                    android:backgroundTint="@color/colorAccent"
-                    android:text="@string/upload_photo"
-                    android:textAllCaps="false" />
-
-                <Button
-                    android:id="@+id/btn_st_save_info"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:padding="20dp"
-                    android:backgroundTint="@color/colorAccent"
-                    android:text="@string/save_all_info"
-                    android:textAllCaps="false" />
-
-            </LinearLayout>
-        </LinearLayout>
-    </LinearLayout>
 </LinearLayout>
