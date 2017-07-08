@@ -123,6 +123,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         ImageView mAddImg = (ImageView) rootView.findViewById(R.id.add_image);
         saveInfo = (FloatingActionButton) rootView.findViewById(R.id.save_info);
 
+        mName.setHorizontallyScrolling(true);
         saveInfo.setOnClickListener(this);
         mAvatar.setOnClickListener(this);
         mAddImg.setOnClickListener(this);
