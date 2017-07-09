@@ -17,6 +17,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -40,6 +41,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -67,6 +70,8 @@ public class HomeActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        String token = FirebaseInstanceId.getInstance().getToken();
+        Log.i("Tooooooooken", token);
 
         responsePermissionGranted();
 
@@ -79,7 +84,7 @@ public class HomeActivity extends AppCompatActivity
 
         findViewById();
         writeFbDb();
-
+        FirebaseMessaging.getInstance().subscribeToTopic("topik");
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, mDrawer, null, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         mDrawer.addDrawerListener(toggle);
@@ -131,16 +136,15 @@ public class HomeActivity extends AppCompatActivity
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
-        if(requestCode == 10 &&
-                 grantResults.length > 0
-                 && grantResults[0] == PackageManager.PERMISSION_GRANTED
-                 && grantResults[1] == PackageManager.PERMISSION_GRANTED)
-        {
+        if (requestCode == 10 &&
+                grantResults.length > 0
+                && grantResults[0] == PackageManager.PERMISSION_GRANTED
+                && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
             Toast.makeText(this, "Permissions is disable", Toast.LENGTH_LONG).show();
         } else {
-               Toast.makeText(this, "Permissions is enabled", Toast.LENGTH_LONG).show();
-            }
-       }
+            Toast.makeText(this, "Permissions is enabled", Toast.LENGTH_LONG).show();
+        }
+    }
 
     private void findViewById() {
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -188,7 +192,7 @@ public class HomeActivity extends AppCompatActivity
             drawer.closeDrawer(GravityCompat.START);
         } else if (getSupportFragmentManager().findFragmentById(R.id.container_home) != null) {
             super.onBackPressed();
-            if (getSupportFragmentManager().findFragmentById(R.id.container_home) == null){
+            if (getSupportFragmentManager().findFragmentById(R.id.container_home) == null) {
                 finish();
             }
         }
@@ -214,6 +218,7 @@ public class HomeActivity extends AppCompatActivity
             break;
 
             case R.id.nav_log_out: {
+                FirebaseMessaging.getInstance().unsubscribeFromTopic("topik");
                 ProgressDialog mProgressDialog = new ProgressDialog(HomeActivity.this);
                 mProgressDialog.show();
                 FirebaseAuth.getInstance().signOut();
@@ -250,9 +255,11 @@ public class HomeActivity extends AppCompatActivity
         FirebaseHelper.downloadImageAndSetAvatar(mStorageAvatarRef, mNavDrawerAvatar);
         invalidateOptionsMenu();
     }
+
     @Override
     public void onDrawerClosed(View drawerView) {
     }
+
     @Override
     public void onDrawerStateChanged(int newState) {
     }
