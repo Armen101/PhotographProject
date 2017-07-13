@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="true"
+        jar="C:\Users\Arman\Desktop\aaap\PhotographProject\PhotographProject\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="3be78ebc2706b2e1fe2f12d5726887a92d6c183b">
+        <dex dex="C:\Users\Arman\Desktop\aaap\PhotographProject\PhotographProject\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_3173bff9fb104c3b81afd86b7c5ef33b8d316a77\classes.dex" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Arman\.gradle\caches\modules-2\files-2.1\com.squareup.okhttp3\okhttp\3.8.1\4d060ca3190df0eda4dc13415532a12e15ca5f11\okhttp-3.8.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="4d060ca3190df0eda4dc13415532a12e15ca5f11">
+        <dex dex="C:\Users\Arman\Desktop\aaap\PhotographProject\PhotographProject\app\build\intermediates\pre-dexed\debug\okhttp-3.8.1_435ed25eae32344cfe8c1c26037c9831816cb527.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Arman\.gradle\caches\modules-2\files-2.1\com.squareup.okio\okio\1.13.0\a9283170b7305c8d92d25aff02a6ab7e45d06cbe\okio-1.13.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="a9283170b7305c8d92d25aff02a6ab7e45d06cbe">
+        <dex dex="C:\Users\Arman\Desktop\aaap\PhotographProject\PhotographProject\app\build\intermediates\pre-dexed\debug\okio-1.13.0_ecd2113eee9542ae86c305ef72d4bfd222731040.jar" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Arman\Desktop\aaap\PhotographProject\PhotographProject\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="bde1f66736506265837ca8d135db8eaeb75e7155">
+        <dex dex="C:\Users\Arman\Desktop\aaap\PhotographProject\PhotographProject\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_84a8c136ad94b26865f1371f521cf9cea36a8aa9\classes.dex" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Arman\.gradle\caches\modules-2\files-2.1\com.google.code.gson\gson\2.8.1\2a8e0aa38a2e21cb39e2f5a7d6704cbdc941da0\gson-2.8.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="02a8e0aa38a2e21cb39e2f5a7d6704cbdc941da0">
+        <dex dex="C:\Users\Arman\Desktop\aaap\PhotographProject\PhotographProject\app\build\intermediates\pre-dexed\debug\gson-2.8.1_b89e8a707ced64d973f77c04b38e205e32f779bd.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Arman\.android\build-cache\09fa54c092ec1600bbe4c7f5166f687704792152\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="9ff5114aff3bfb387577ba92a11408dcf0441c24">
+        <dex dex="C:\Users\Arman\Desktop\aaap\PhotographProject\PhotographProject\app\build\intermediates\pre-dexed\debug\classes_c3afc52d72cc7ff479542a9eb2286768c298d11a.jar" />
+    </item>
+
+</items>

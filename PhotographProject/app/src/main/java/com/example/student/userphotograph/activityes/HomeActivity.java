@@ -34,6 +34,7 @@ import com.example.student.userphotograph.R;
 import com.example.student.userphotograph.fragments.GMapFragment;
 import com.example.student.userphotograph.fragments.SettingsFragment;
 import com.example.student.userphotograph.utilityes.FirebaseHelper;
+import com.example.student.userphotograph.utilityes.NetworkHelper;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -49,7 +50,6 @@ import com.google.firebase.storage.StorageReference;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, DrawerLayout.DrawerListener {
 
@@ -59,6 +59,7 @@ public class HomeActivity extends AppCompatActivity
     private TextView mLastName;
     private TextView mEmail;
     private Typeface mTypeface;
+    private String uid;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -70,6 +71,7 @@ public class HomeActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
         String token = FirebaseInstanceId.getInstance().getToken();
         Log.i("Tooooooooken", token);
 
@@ -84,7 +86,9 @@ public class HomeActivity extends AppCompatActivity
 
         findViewById();
         writeFbDb();
-        FirebaseMessaging.getInstance().subscribeToTopic("topik");
+
+        FirebaseMessaging.getInstance().subscribeToTopic(uid);
+
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, mDrawer, null, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         mDrawer.addDrawerListener(toggle);
@@ -167,6 +171,7 @@ public class HomeActivity extends AppCompatActivity
         DatabaseReference mDatabaseRef = FirebaseDatabase.getInstance().getReference().child("photographs").child(mUser.getUid());
         StorageReference mStorageRef = FirebaseStorage.getInstance().getReference();
         mStorageAvatarRef = mStorageRef.child("photographs").child("avatar").child(mUser.getUid());
+        uid = mUser.getUid();
 
         FirebaseHelper.downloadImageAndSetAvatar(mStorageAvatarRef, mNavDrawerAvatar);
 
@@ -213,7 +218,6 @@ public class HomeActivity extends AppCompatActivity
             break;
 
             case R.id.nav_about: {
-
             }
             break;
 

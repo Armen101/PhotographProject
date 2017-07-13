@@ -1,7 +1,10 @@
 package com.example.student.userphotograph.utilityes;
 
+import android.content.Context;
+
 import com.example.student.userphotograph.models.DataObject;
 import com.example.student.userphotograph.models.NotificationData;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -17,13 +20,14 @@ import okhttp3.Response;
 public class NetworkHelper {
     private static final String SERVER_KEY = "AAAAXOlepJ4:APA91bG49WQvvZ4YDaT_Wf_n7cLXwhjjwoo0rVzuw-r3cIEE9FC2WvimfMEmxEK1aw7rdkIkMwPyDk0_BxWWf3XuCIDSnWKqE8v_4hHNpQQb85yCgmcH2mgC5lSJjcScGRRdBRkknFhI";
 
-    private void sendNotificationRequest() {
+    public void sendNotificationRequest(Context context, String token) {
         Gson gson = new Gson();
         NotificationData notificationData = new NotificationData();
         DataObject dataObject = new DataObject();
         dataObject.setTitle("Arman Jan");
+        dataObject.setToken(FirebaseInstanceId.getInstance().getToken());
         notificationData.setData(dataObject);
-        notificationData.setTo("/topics/uid");
+        notificationData.setTo("/topics/topic");
 
         String json = gson.toJson(notificationData);
         String url = "https://fcm.googleapis.com/fcm/send";

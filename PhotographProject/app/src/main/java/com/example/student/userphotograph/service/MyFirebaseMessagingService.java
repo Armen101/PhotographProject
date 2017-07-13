@@ -4,11 +4,13 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.support.v7.app.NotificationCompat;
-import android.util.Log;
 
 import com.example.student.userphotograph.R;
 import com.example.student.userphotograph.activityes.HomeActivity;
+import com.example.student.userphotograph.utilityes.NetworkHelper;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -16,28 +18,31 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-        if (remoteMessage.getData().size() > 0) {
-            Log.d("VTC!!!!!!", "Message data payload: " + remoteMessage.getData());
-        }
 
-        if (remoteMessage.getNotification() != null) {
-            Log.d("VTC!!!", "Message Notification Body: " + remoteMessage.getNotification().getBody());
-        }
-        sendNotification(remoteMessage.getData().toString());
+        String tokencho = remoteMessage.getData().get("token");
+        sendNotification(remoteMessage.getData().get("token"));
+        sendNotification(remoteMessage.getData().get("title"));
+
+        NetworkHelper networkHelper = new NetworkHelper();
+        networkHelper.sendNotificationRequest(getApplicationContext(), tokencho);
     }
 
     private void sendNotification(String text) {
-        NotificationCompat.Builder mBuilder = (NotificationCompat.Builder) new NotificationCompat.Builder(this)
-                .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentTitle("Notification")
-                .setContentText(text);
+        Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        NotificationCompat.Builder mBuilder =
+                (NotificationCompat.Builder) new NotificationCompat.Builder(this)
+                        .setSmallIcon(R.mipmap.ic_launcher)
+                        .setContentTitle("Notification")
+                        .setContentText("This is a test notification");
+
         Intent resultIntent = new Intent(this, HomeActivity.class);
         PendingIntent resultPendingIntent = PendingIntent.getActivity(
-                this, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT
-        );
+                this, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         mBuilder.setContentIntent(resultPendingIntent);
+        mBuilder.setContentText(text);
+        mBuilder.setSound(uri);
         NotificationManager mNotificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        mNotificationManager.notify(100, mBuilder.build());
+        mNotificationManager.notify(0, mBuilder.build());
     }
 }
