@@ -21,7 +21,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         String tokencho = remoteMessage.getData().get("token");
         sendNotification(remoteMessage.getData().get("token"));
-        sendNotification(remoteMessage.getData().get("title"));
 
         NetworkHelper networkHelper = new NetworkHelper();
         networkHelper.sendNotificationRequest(getApplicationContext(), tokencho);

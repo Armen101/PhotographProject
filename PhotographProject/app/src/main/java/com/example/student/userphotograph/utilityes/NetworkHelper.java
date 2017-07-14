@@ -27,7 +27,7 @@ public class NetworkHelper {
         dataObject.setTitle("Arman Jan");
         dataObject.setToken(FirebaseInstanceId.getInstance().getToken());
         notificationData.setData(dataObject);
-        notificationData.setTo("/topics/topic");
+        notificationData.setTo(token);
 
         String json = gson.toJson(notificationData);
         String url = "https://fcm.googleapis.com/fcm/send";

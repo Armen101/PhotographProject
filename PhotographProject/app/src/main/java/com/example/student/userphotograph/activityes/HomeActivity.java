@@ -228,7 +228,6 @@ public class HomeActivity extends AppCompatActivity
                 FirebaseAuth.getInstance().signOut();
                 finish();
 
-
                 Intent i = new Intent(this, LoginActivity.class);
                 startActivity(i);
                 mProgressDialog.dismiss();
