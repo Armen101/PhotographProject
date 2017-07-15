@@ -22,7 +22,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     public void onMessageReceived(RemoteMessage remoteMessage) {
         clientToken = remoteMessage.getData().get("token");
         sendNotification();
-        //NetworkHelper.sendNotificationRequest(clientToken);
     }
 
     private void sendNotification() {
@@ -40,21 +39,14 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         mBuilder.setContentText("You have a new order!");
         mBuilder.setSound(uri);
         mBuilder.setPriority(Notification.PRIORITY_MAX);
-        //mBuilder.setWhen(System.currentTimeMillis());
         Intent notifyIntent =
                 new Intent(this, NotificationActionService.class);
         notifyIntent.putExtra("Token", clientToken);
-        System.out.println("clientToken =========firebase-------> " + clientToken);
-//        PendingIntent notifyPendingIntent =
-//                PendingIntent.getActivity(
-//                        this,
-//                        0,
-//                        notifyIntent,
-//                        PendingIntent.FLAG_UPDATE_CURRENT
-//                );
+        notifyIntent.setAction(NotificationActionService.ACTION_ACCEPT);
+        notifyIntent.setAction(NotificationActionService.ACTION_REJECT);
         PendingIntent notif = PendingIntent.getService(this,0,notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        mBuilder.addAction(R.drawable.ic_accept, NotificationActionService.ACTION_ACCEPT, notif);
-        mBuilder.addAction(R.drawable.ic_reject, NotificationActionService.ACTION_REJECT, notif);
+        mBuilder.addAction(R.drawable.ic_accept, "Accept", notif);
+        mBuilder.addAction(R.drawable.ic_reject, "Reject", notif);
         NotificationManager mNotificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         mNotificationManager.notify(0, mBuilder.build());
