@@ -24,8 +24,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,7 +32,6 @@ import com.example.student.userphotograph.R;
 import com.example.student.userphotograph.fragments.GMapFragment;
 import com.example.student.userphotograph.fragments.SettingsFragment;
 import com.example.student.userphotograph.utilityes.FirebaseHelper;
-import com.example.student.userphotograph.utilityes.NetworkHelper;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -73,7 +70,7 @@ public class HomeActivity extends AppCompatActivity
         setContentView(R.layout.activity_home);
 
         String token = FirebaseInstanceId.getInstance().getToken();
-        Log.i("Tooooooooken", token);
+        Log.i("Token: ", token);
 
         responsePermissionGranted();
 
@@ -222,7 +219,7 @@ public class HomeActivity extends AppCompatActivity
             break;
 
             case R.id.nav_log_out: {
-                FirebaseMessaging.getInstance().unsubscribeFromTopic("topik");
+                FirebaseMessaging.getInstance().unsubscribeFromTopic(uid);
                 ProgressDialog mProgressDialog = new ProgressDialog(HomeActivity.this);
                 mProgressDialog.show();
                 FirebaseAuth.getInstance().signOut();
