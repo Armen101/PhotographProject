@@ -32,9 +32,11 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                         .setContentTitle("Notification")
                         .setContentText("This is a test notification");
 
-        Intent resultIntent = new Intent(this, HomeActivity.class);
+
+        Intent callIntent = new Intent(Intent.ACTION_CALL);
+        callIntent.setData(Uri.parse("tel:"+ "095800177"));
         PendingIntent resultPendingIntent = PendingIntent.getActivity(
-                this, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                this, 0, callIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         mBuilder.setContentIntent(resultPendingIntent);
         mBuilder.setContentText("You have a new order!");
         mBuilder.setSound(uri);
