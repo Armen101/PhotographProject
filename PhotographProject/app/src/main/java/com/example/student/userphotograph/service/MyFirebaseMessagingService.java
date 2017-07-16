@@ -5,8 +5,10 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.v7.app.NotificationCompat;
 
 import com.example.student.userphotograph.R;
@@ -19,6 +21,16 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
+        float lat = Float.parseFloat(((remoteMessage.getData().get("lat"))));
+        float lng = Float.parseFloat(((remoteMessage.getData().get("lng"))));
+        System.out.println("lng = " + lng);
+
+        SharedPreferences shared = getSharedPreferences("location", MODE_PRIVATE);
+        SharedPreferences.Editor edit = shared.edit();
+        edit.putFloat("key_lat", lat);
+        edit.putFloat("key_lng", lng);
+        edit.apply();
+
         sendNotification(remoteMessage.getData().get("token"),(remoteMessage.getData().get("title")));
     }
 

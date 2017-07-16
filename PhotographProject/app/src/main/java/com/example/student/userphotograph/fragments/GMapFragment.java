@@ -2,7 +2,9 @@ package com.example.student.userphotograph.fragments;
 
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
@@ -23,10 +25,14 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PointOfInterest;
 
 public class GMapFragment extends Fragment implements OnMapReadyCallback,
         GoogleMap.OnPoiClickListener, View.OnClickListener {
+
+    double lat;
+    double lng;
 
     private GoogleMap mMap;
 
@@ -60,6 +66,10 @@ public class GMapFragment extends Fragment implements OnMapReadyCallback,
     @Override
     public void onMapReady(GoogleMap googleMap) {
 
+        SharedPreferences shared = getActivity().getSharedPreferences("location", Context.MODE_PRIVATE);
+        float lng = shared.getFloat("key_lng", 0);
+        float lat = shared.getFloat("key_lat", 0);
+
         mMap = googleMap;
         mMap.setOnPoiClickListener(this);
 
@@ -69,8 +79,15 @@ public class GMapFragment extends Fragment implements OnMapReadyCallback,
                 != PackageManager.PERMISSION_GRANTED) {
             return;
         }
+
+        LatLng l = new LatLng(lat, 21);
+        mMap.addMarker(new MarkerOptions().position(l));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(l));
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(l, 15));
         mMap.setMyLocationEnabled(true);
+
         mMap.getUiSettings().setMyLocationButtonEnabled(false);
+
     }
 
     @Override
