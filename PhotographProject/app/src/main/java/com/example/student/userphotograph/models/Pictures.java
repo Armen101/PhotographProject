@@ -6,10 +6,8 @@ public class Pictures {
     private String imageUri;
     private String imageName;
 
-
     public Pictures() {
     }
-
 
     public Pictures(String title, String imageUri, String imageName) {
         this.title = title;

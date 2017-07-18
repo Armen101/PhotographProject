@@ -8,30 +8,32 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.RingtoneManager;
 import android.net.Uri;
-import android.os.Bundle;
 import android.support.v7.app.NotificationCompat;
+import android.util.Log;
 
 import com.example.student.userphotograph.R;
-import com.example.student.userphotograph.activityes.HomeActivity;
+import com.example.student.userphotograph.fragments.GMapFragment;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
-
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
+        if (remoteMessage.getData().get("phone").equals("-1")) {
+            Log.i("ssssssssssservice", "map buttonic  ekav petqa location update exni");
+
+        }
+
         float lat = Float.parseFloat(((remoteMessage.getData().get("lat"))));
         float lng = Float.parseFloat(((remoteMessage.getData().get("lng"))));
-        System.out.println("lng = " + lng);
 
         SharedPreferences shared = getSharedPreferences("location", MODE_PRIVATE);
         SharedPreferences.Editor edit = shared.edit();
         edit.putFloat("key_lat", lat);
         edit.putFloat("key_lng", lng);
         edit.apply();
-
-        sendNotification(remoteMessage.getData().get("token"),(remoteMessage.getData().get("title")));
+        sendNotification(remoteMessage.getData().get("token"), (remoteMessage.getData().get("title")));
     }
 
     private void sendNotification(String token, String title) {
@@ -42,9 +44,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                         .setContentTitle("Notification")
                         .setContentText("This is a test notification");
 
-
         Intent callIntent = new Intent(Intent.ACTION_CALL);
-        callIntent.setData(Uri.parse("tel:"+ "095800177"));
+        callIntent.setData(Uri.parse("tel:" + "095800177"));
         PendingIntent resultPendingIntent = PendingIntent.getActivity(
                 this, 0, callIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         mBuilder.setContentIntent(resultPendingIntent);
@@ -56,15 +57,14 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 new Intent(this, NotificationActionService.class);
         notifyIntentAccept.putExtra("Token", token);
         notifyIntentAccept.setAction(NotificationActionService.ACTION_ACCEPT);
-        PendingIntent accept = PendingIntent.getService(this,0,notifyIntentAccept, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent accept = PendingIntent.getService(this, 0, notifyIntentAccept, PendingIntent.FLAG_UPDATE_CURRENT);
 
         Intent notifyIntentReject =
                 new Intent(this, NotificationActionService.class);
         notifyIntentReject.putExtra("Token", token);
         notifyIntentReject.putExtra("Title", title);
         notifyIntentReject.setAction(NotificationActionService.ACTION_REJECT);
-        PendingIntent pendingIntent = PendingIntent.getService(this,0,notifyIntentReject, PendingIntent.FLAG_UPDATE_CURRENT);
-
+        PendingIntent pendingIntent = PendingIntent.getService(this, 0, notifyIntentReject, PendingIntent.FLAG_UPDATE_CURRENT);
 
         mBuilder.addAction(R.drawable.ic_accept, "Accept", accept);
         mBuilder.addAction(R.drawable.ic_reject, "Reject", pendingIntent);

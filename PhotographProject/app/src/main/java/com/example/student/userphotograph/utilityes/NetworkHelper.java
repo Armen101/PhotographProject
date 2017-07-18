@@ -3,9 +3,7 @@ package com.example.student.userphotograph.utilityes;
 import com.example.student.userphotograph.models.DataObject;
 import com.example.student.userphotograph.models.NotificationData;
 import com.google.gson.Gson;
-
 import java.io.IOException;
-
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.MediaType;
@@ -16,12 +14,16 @@ import okhttp3.Response;
 
 final public class NetworkHelper {
     private static final String SERVER_KEY = "AAAAXOlepJ4:APA91bG49WQvvZ4YDaT_Wf_n7cLXwhjjwoo0rVzuw-r3cIEE9FC2WvimfMEmxEK1aw7rdkIkMwPyDk0_BxWWf3XuCIDSnWKqE8v_4hHNpQQb85yCgmcH2mgC5lSJjcScGRRdBRkknFhI";
+    private static double mLatRef;
+    private static double mLngRef;
 
     public static void sendNotificationRequest(String token, String status) {
         Gson gson = new Gson();
         NotificationData notificationData = new NotificationData();
         DataObject dataObject = new DataObject();
         dataObject.setTitle(status);
+        dataObject.setLat(mLatRef);
+        dataObject.setLng(mLngRef);
         notificationData.setData(dataObject);
         notificationData.setTo(token);
 

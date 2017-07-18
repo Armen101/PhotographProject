@@ -27,20 +27,28 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PointOfInterest;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class GMapFragment extends Fragment implements OnMapReadyCallback,
         GoogleMap.OnPoiClickListener, View.OnClickListener {
 
-    double lat;
-    double lng;
-
     private GoogleMap mMap;
+    private DatabaseReference mLatRef;
+    private DatabaseReference mLngRef;
 
     public GMapFragment(){
     }
 
      public static GMapFragment newInstance() {
         return new GMapFragment();
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
     }
 
     @Override
@@ -72,6 +80,7 @@ public class GMapFragment extends Fragment implements OnMapReadyCallback,
 
         mMap = googleMap;
         mMap.setOnPoiClickListener(this);
+        updateLocation();
 
         if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED
@@ -85,9 +94,7 @@ public class GMapFragment extends Fragment implements OnMapReadyCallback,
         mMap.moveCamera(CameraUpdateFactory.newLatLng(l));
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(l, 15));
         mMap.setMyLocationEnabled(true);
-
         mMap.getUiSettings().setMyLocationButtonEnabled(false);
-
     }
 
     @Override
@@ -95,9 +102,12 @@ public class GMapFragment extends Fragment implements OnMapReadyCallback,
         Toast.makeText(getActivity(), poi.name, Toast.LENGTH_SHORT).show();
     }
 
-
     @Override
     public void onClick(View v) {
+        updateLocation();
+    }
+
+    public void updateLocation() {
         GPSTracker gpsTracker = new GPSTracker(getActivity().getApplicationContext());
         Location mlocation = gpsTracker.getLocation();
 
@@ -112,6 +122,15 @@ public class GMapFragment extends Fragment implements OnMapReadyCallback,
             LatLng myLocation = new LatLng(mLatitude, mLongitude);
             mMap.moveCamera(CameraUpdateFactory.newLatLng(myLocation));
             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myLocation, 15));
+
+            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            assert user != null;
+            final DatabaseReference mDatabaseRef = FirebaseDatabase.getInstance().getReference()
+                    .child("photographs").child(user.getUid());
+            mLatRef = mDatabaseRef.child("latitude");
+            mLngRef = mDatabaseRef.child("longitude");
+            mLatRef.setValue(mLatitude);
+            mLngRef.setValue(mLongitude);
         }
     }
 }

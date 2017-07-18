@@ -1,10 +1,14 @@
 package com.example.student.userphotograph.fragments;
 
-
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -25,9 +29,12 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.student.userphotograph.R;
 import com.example.student.userphotograph.models.Pictures;
+import com.example.student.userphotograph.service.GPSTracker;
 import com.example.student.userphotograph.utilityes.Constants;
 import com.example.student.userphotograph.utilityes.FirebaseHelper;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -63,25 +70,25 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     private EditText mCameraInfo;
     private EditText mPhone;
     private ImageView mAvatar;
-
     private Uri mFilePath;
-
     private DatabaseReference mDatabaseRef;
     private DatabaseReference mDatabaseGalleryRef;
     private StorageReference mStorageAvatarRef;
     private StorageReference mStorageGalleryRef;
-
     private List<Pictures> mItemViewPager;
     private FirebaseUser mUser;
     private EditText photoTitle;
     private AlertDialog alertDialog;
     private FloatingActionButton saveInfo;
 
-
     public static SettingsFragment newInstance() {
         return new SettingsFragment();
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -112,7 +119,6 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         outState.putString(ADDRESS, mAddress.getText().toString());
         outState.putString(CAMERA_INFO, mCameraInfo.getText().toString());
     }
-
 
     private void findViewById(View rootView) {
         mName = (EditText) rootView.findViewById(R.id.et_st_name);
@@ -241,7 +247,6 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
                 mCameraInfo.setText(cameraInfo);
                 mPhone.setText(phone);
             }
-
             @Override
             public void onCancelled(DatabaseError error) {
             }
@@ -251,17 +256,14 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-
             case R.id.save_info: {
                 mDatabaseRef.child(NAME).setValue(mName.getText().toString());
                 mDatabaseRef.child(ADDRESS).setValue(mAddress.getText().toString());
                 mDatabaseRef.child(CAMERA_INFO).setValue(mCameraInfo.getText().toString());
                 mDatabaseRef.child(PHONE).setValue(mPhone.getText().toString());
                 Toast.makeText(getContext(), "Successfull saveing dates", Toast.LENGTH_SHORT).show();
-
                 break;
             }
-
             case R.id.st_avatar: {
                 choosePic(Constants.REQUEST_AVATAR_CHOOSE_PICK);
                 break;

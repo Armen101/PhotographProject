@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -36,16 +37,19 @@ public class LocationService extends Service {
     public void onCreate() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         assert user != null;
-        DatabaseReference mDatabaseRef = FirebaseDatabase.getInstance().getReference()
+        final DatabaseReference mDatabaseRef = FirebaseDatabase.getInstance().getReference()
                 .child("photographs").child(user.getUid());
         mLatRef = mDatabaseRef.child("latitude");
         mLngRef = mDatabaseRef.child("longitude");
-
         mLocationListener = new LocationListener() {
             @Override
             public void onLocationChanged(Location newLocation) {
-                if(oldLocation != newLocation){
-                    mLatRef.setValue(String.valueOf(newLocation.getLatitude()));
+                Intent intent = new Intent("LOCATION_UPDATE");
+                intent.putExtra("lat", newLocation.getLatitude());
+                intent.putExtra("lng", newLocation.getLongitude());
+                sendBroadcast(intent);
+                if (oldLocation != newLocation) {
+                    mLatRef.setValue(newLocation.getLatitude());
                     mLngRef.setValue(newLocation.getLongitude());
                     oldLocation = newLocation;
                 }
@@ -68,9 +72,7 @@ public class LocationService extends Service {
             }
         };
         mLocationManager = (LocationManager) getApplicationContext().getSystemService(LOCATION_SERVICE);
-        mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
-                300000,
-                0, mLocationListener);
+        mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 300000, 0, mLocationListener);
     }
 
     @Override
@@ -81,7 +83,7 @@ public class LocationService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if(mLocationManager != null) {
+        if (mLocationManager != null) {
             mLocationManager.removeUpdates(mLocationListener);
         }
     }

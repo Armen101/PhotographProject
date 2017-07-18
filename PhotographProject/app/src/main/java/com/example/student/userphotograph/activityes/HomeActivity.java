@@ -69,13 +69,8 @@ public class HomeActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        String token = FirebaseInstanceId.getInstance().getToken();
-        Log.i("Token: ", token);
-
         responsePermissionGranted();
-
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
                 .setDefaultFontPath("choco_cooky.ttf")
                 .build());
@@ -83,7 +78,6 @@ public class HomeActivity extends AppCompatActivity
 
         findViewById();
         writeFbDb();
-
         FirebaseMessaging.getInstance().subscribeToTopic(uid);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
