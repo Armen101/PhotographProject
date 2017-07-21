@@ -29,6 +29,7 @@ import android.widget.Toast;
 
 import com.example.student.userphotograph.R;
 import com.example.student.userphotograph.fragments.GMapFragment;
+import com.example.student.userphotograph.fragments.PostsFragment;
 import com.example.student.userphotograph.fragments.SettingsFragment;
 import com.example.student.userphotograph.utilityes.FirebaseHelper;
 import com.google.firebase.auth.FirebaseAuth;
@@ -83,9 +84,7 @@ public class HomeActivity extends AppCompatActivity
         mDrawer.addDrawerListener(toggle);
         toggle.syncState();
 
-
         replaceFragment(SettingsFragment.newInstance());
-        //startService(new Intent(this, LocationService.class));
         toggleNavDrawer();
     }
 
@@ -112,7 +111,6 @@ public class HomeActivity extends AppCompatActivity
             }
         });
     }
-
 
     private void responsePermissionGranted() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
@@ -205,6 +203,10 @@ public class HomeActivity extends AppCompatActivity
             }
             break;
 
+            case R.id.nav_posts: {
+                replaceFragment(PostsFragment.newInstance());
+            }
+            break;
             case R.id.nav_about: {
             }
             break;

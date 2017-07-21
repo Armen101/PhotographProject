@@ -12,6 +12,10 @@
             android:icon="@drawable/ic_settings_applications_black_24dp"
             android:title="Settings" />
         <item
+            android:id="@+id/nav_posts"
+            android:icon="@drawable/posts_black_24dp"
+            android:title="Posts" />
+        <item
             android:id="@+id/nav_about"
             android:icon="@drawable/ic_sms_failed_black_24dp"
             android:title="About" />
