@@ -89,10 +89,12 @@ public class GMapFragment extends Fragment implements OnMapReadyCallback,
             return;
         }
 
-        LatLng l = new LatLng(lat, 21);
-        mMap.addMarker(new MarkerOptions().position(l));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(l));
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(l, 15));
+        LatLng l = new LatLng(lat, lng);
+        if (lat != 0 && lng != 0){
+            mMap.addMarker(new MarkerOptions().position(l));
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(l));
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(l, 15));
+        }
         mMap.setMyLocationEnabled(true);
         mMap.getUiSettings().setMyLocationButtonEnabled(false);
     }

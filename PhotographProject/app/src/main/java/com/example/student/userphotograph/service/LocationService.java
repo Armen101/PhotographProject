@@ -53,6 +53,7 @@ public class LocationService extends Service {
                     mLngRef.setValue(newLocation.getLongitude());
                     oldLocation = newLocation;
                 }
+                Log.i("ssssss", "location service");
             }
 
             @Override
@@ -72,7 +73,7 @@ public class LocationService extends Service {
             }
         };
         mLocationManager = (LocationManager) getApplicationContext().getSystemService(LOCATION_SERVICE);
-        mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 300000, 0, mLocationListener);
+        mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 3000, 0, mLocationListener);
     }
 
     @Override

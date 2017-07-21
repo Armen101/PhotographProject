@@ -9,10 +9,8 @@ import android.content.SharedPreferences;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.support.v7.app.NotificationCompat;
-import android.util.Log;
 
 import com.example.student.userphotograph.R;
-import com.example.student.userphotograph.fragments.GMapFragment;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -20,11 +18,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-        if (remoteMessage.getData().get("phone").equals("-1")) {
-            Log.i("ssssssssssservice", "map buttonic  ekav petqa location update exni");
-
-        }
-
         float lat = Float.parseFloat(((remoteMessage.getData().get("lat"))));
         float lng = Float.parseFloat(((remoteMessage.getData().get("lng"))));
 

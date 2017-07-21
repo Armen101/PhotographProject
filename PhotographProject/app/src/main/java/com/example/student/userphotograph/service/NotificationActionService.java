@@ -2,10 +2,8 @@ package com.example.student.userphotograph.service;
 
 import android.app.IntentService;
 import android.content.Intent;
-import android.os.Bundle;
 
 import com.example.student.userphotograph.utilityes.NetworkHelper;
-import com.google.android.gms.maps.MapFragment;
 
 public class NotificationActionService extends IntentService {
 
@@ -24,6 +22,8 @@ public class NotificationActionService extends IntentService {
             final String clientToken = intent.getStringExtra("Token");
             if (ACTION_ACCEPT.equals(action)) {
                 NetworkHelper.sendNotificationRequest(clientToken, "OK");
+                Intent i = new Intent(NotificationActionService.this, LocationService.class);
+                getApplicationContext().startService(i);
             } else if (ACTION_REJECT.equals(action)) {
                 NetworkHelper.sendNotificationRequest(clientToken, "CANCEL");
             }
