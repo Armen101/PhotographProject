@@ -1,13 +1,9 @@
 package com.example.student.userphotograph.fragments;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -29,12 +25,9 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.student.userphotograph.R;
 import com.example.student.userphotograph.models.Pictures;
-import com.example.student.userphotograph.service.GPSTracker;
 import com.example.student.userphotograph.utilityes.Constants;
 import com.example.student.userphotograph.utilityes.FirebaseHelper;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;

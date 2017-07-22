@@ -35,7 +35,6 @@ public class SlideshowDialogFragment extends DialogFragment {
         View rootView = inflater.inflate(R.layout.fragment_slideshow_dialog, container, false);
 
         mViewPager = (ViewPager) rootView.findViewById(R.id.viewpager);
-
         mImgPager = (ArrayList<Pictures>) getArguments().getSerializable("images");
         int mSelectedPosition = getArguments().getInt("position");
 
@@ -61,7 +60,6 @@ public class SlideshowDialogFragment extends DialogFragment {
 
         @Override
         public void onPageScrolled(int arg0, float arg1, int arg2) {
-
         }
 
         @Override
@@ -76,11 +74,11 @@ public class SlideshowDialogFragment extends DialogFragment {
         setStyle(DialogFragment.STYLE_NORMAL, android.R.style.Theme_Black_NoTitleBar_Fullscreen);
     }
 
-    public class MyViewPagerAdapter extends PagerAdapter {
+    private class MyViewPagerAdapter extends PagerAdapter {
 
         private LayoutInflater layoutInflater;
 
-        public MyViewPagerAdapter() {
+        MyViewPagerAdapter() {
         }
 
         @Override
@@ -88,7 +86,6 @@ public class SlideshowDialogFragment extends DialogFragment {
 
             layoutInflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View rootView = layoutInflater.inflate(R.layout.image_fullscreen_preview, container, false);
-
             ImageView imageViewPreview = (ImageView) rootView.findViewById(R.id.image_preview);
 
             Pictures mPictures = mImgPager.get(position);
