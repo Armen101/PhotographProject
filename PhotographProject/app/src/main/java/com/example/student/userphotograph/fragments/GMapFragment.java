@@ -7,11 +7,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +27,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PointOfInterest;
 import com.google.firebase.auth.FirebaseAuth;
@@ -39,10 +42,10 @@ public class GMapFragment extends Fragment implements OnMapReadyCallback,
     private DatabaseReference mLatRef;
     private DatabaseReference mLngRef;
 
-    public GMapFragment(){
+    public GMapFragment() {
     }
 
-     public static GMapFragment newInstance() {
+    public static GMapFragment newInstance() {
         return new GMapFragment();
     }
 
@@ -77,6 +80,7 @@ public class GMapFragment extends Fragment implements OnMapReadyCallback,
         SharedPreferences shared = getActivity().getSharedPreferences("location", Context.MODE_PRIVATE);
         float lng = shared.getFloat("key_lng", 0);
         float lat = shared.getFloat("key_lat", 0);
+        final int phone = shared.getInt("key_phone", 0);
 
         mMap = googleMap;
         mMap.setOnPoiClickListener(this);
@@ -90,10 +94,26 @@ public class GMapFragment extends Fragment implements OnMapReadyCallback,
         }
 
         LatLng l = new LatLng(lat, lng);
-        if (lat != 0 && lng != 0){
+        mMap.addMarker(new MarkerOptions().position(l).title(String.valueOf(phone)));
+        if (lat != 0 && lng != 0) {
             mMap.addMarker(new MarkerOptions().position(l));
             mMap.moveCamera(CameraUpdateFactory.newLatLng(l));
             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(l, 15));
+            mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+                @Override
+                public void onInfoWindowClick(Marker marker) {
+                    Intent callIntent = new Intent(Intent.ACTION_CALL);
+                    callIntent.setData(Uri.parse("tel:" + phone));
+
+
+                    if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                        ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CALL_PHONE}, 1);
+                        return;
+                    }
+                    startActivity(callIntent);
+                }
+            });
+
         }
         mMap.setMyLocationEnabled(true);
         mMap.getUiSettings().setMyLocationButtonEnabled(false);

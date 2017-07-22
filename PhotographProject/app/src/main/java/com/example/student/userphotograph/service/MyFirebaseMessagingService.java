@@ -20,11 +20,13 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     public void onMessageReceived(RemoteMessage remoteMessage) {
         float lat = Float.parseFloat(((remoteMessage.getData().get("lat"))));
         float lng = Float.parseFloat(((remoteMessage.getData().get("lng"))));
+        int phone = Integer.parseInt(remoteMessage.getData().get("phone"));
 
         SharedPreferences shared = getSharedPreferences("location", MODE_PRIVATE);
         SharedPreferences.Editor edit = shared.edit();
         edit.putFloat("key_lat", lat);
         edit.putFloat("key_lng", lng);
+        edit.putInt("key_phone", phone);
         edit.apply();
         sendNotification(remoteMessage.getData().get("token"), (remoteMessage.getData().get("title")));
     }
