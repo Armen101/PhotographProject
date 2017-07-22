@@ -21,8 +21,6 @@ public class SlideshowDialogFragment extends DialogFragment {
 
     private ViewPager mViewPager;
     private List<Pictures> mImgPager;
-    private TextView galleryTitle;
-    private int mSelectedPosition;
 
     public SlideshowDialogFragment() {
     }
@@ -37,9 +35,8 @@ public class SlideshowDialogFragment extends DialogFragment {
         View rootView = inflater.inflate(R.layout.fragment_slideshow_dialog, container, false);
 
         mViewPager = (ViewPager) rootView.findViewById(R.id.viewpager);
-        galleryTitle = (TextView) rootView.findViewById(R.id.gallery_title);
         mImgPager = (List<Pictures>) getArguments().getSerializable("images");
-        mSelectedPosition = getArguments().getInt("position");
+        int mSelectedPosition = getArguments().getInt("position");
 
         MyViewPagerAdapter mAdapter = new MyViewPagerAdapter();
         mViewPager.setAdapter(mAdapter);
@@ -59,7 +56,6 @@ public class SlideshowDialogFragment extends DialogFragment {
         @Override
         public void onPageSelected(int position) {
             mViewPager.setCurrentItem(position, false);
-            galleryTitle.setText(mImgPager.get(position).getTitle());
         }
 
         @Override
@@ -88,13 +84,14 @@ public class SlideshowDialogFragment extends DialogFragment {
             layoutInflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View rootView = layoutInflater.inflate(R.layout.image_fullscreen_preview, container, false);
             ImageView imageViewPreview = (ImageView) rootView.findViewById(R.id.image_preview);
+            TextView galleryTitle = (TextView) rootView.findViewById(R.id.gallery_title);
 
             Glide.with(getActivity())
                     .load(mImgPager.get(position).getImageUri())
                     .into(imageViewPreview);
+            galleryTitle.setText(mImgPager.get(position).getTitle());
 
             container.addView(rootView);
-
             return rootView;
         }
 
