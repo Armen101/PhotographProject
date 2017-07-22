@@ -13,7 +13,6 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -152,6 +151,8 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
                 viewHolder.imgGallery.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        mItemViewPager.clear();
+                        notifyDataSetChanged();
                         Bundle bundle = new Bundle();
                         bundle.putSerializable(getString(R.string.images), (Serializable) mItemViewPager);
                         bundle.putInt(getString(R.string.position), position);
@@ -177,12 +178,12 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
 
                                 String imageName = getItem(position).getImageName();
                                 getRef(position).removeValue();
+                                mItemViewPager.clear();
 
                                 StorageReference sRef = FirebaseStorage.getInstance()
                                         .getReference().child(PHOTOGRAPHS).child(GALLERY)
                                         .child(mUser.getUid()).child(imageName);
                                 sRef.delete();
-
                                 notifyDataSetChanged();
                                 Toast.makeText(getContext(), R.string.removed, Toast.LENGTH_SHORT).show();
                             }
@@ -203,8 +204,8 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
 
     private static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        ImageView imgGallery;
-        TextView tvGallery;
+        private ImageView imgGallery;
+        private TextView tvGallery;
 
         public MyViewHolder(View view) {
             super(view);
@@ -247,6 +248,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
                 mCameraInfo.setText(cameraInfo);
                 mPhone.setText(phone);
             }
+
             @Override
             public void onCancelled(DatabaseError error) {
             }

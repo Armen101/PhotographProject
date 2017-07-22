@@ -100,13 +100,14 @@
             android:src="@android:drawable/ic_menu_save" />
 
         <RatingBar
-            android:theme="@style/RatingBar"
             android:id="@+id/rating_bar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:stepSize="0.1" />
+            android:isIndicator="true"
+            android:stepSize="0.1"
+            android:theme="@style/RatingBar" />
 
         <ImageView
             android:id="@+id/add_image"

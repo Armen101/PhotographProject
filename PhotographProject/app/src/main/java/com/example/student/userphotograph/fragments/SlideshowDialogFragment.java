@@ -9,18 +9,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.student.userphotograph.R;
 import com.example.student.userphotograph.models.Pictures;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class SlideshowDialogFragment extends DialogFragment {
 
     private ViewPager mViewPager;
     private List<Pictures> mImgPager;
+    private TextView galleryTitle;
+    private int mSelectedPosition;
 
     public SlideshowDialogFragment() {
     }
@@ -35,8 +37,9 @@ public class SlideshowDialogFragment extends DialogFragment {
         View rootView = inflater.inflate(R.layout.fragment_slideshow_dialog, container, false);
 
         mViewPager = (ViewPager) rootView.findViewById(R.id.viewpager);
-        mImgPager = (ArrayList<Pictures>) getArguments().getSerializable("images");
-        int mSelectedPosition = getArguments().getInt("position");
+        galleryTitle = (TextView) rootView.findViewById(R.id.gallery_title);
+        mImgPager = (List<Pictures>) getArguments().getSerializable("images");
+        mSelectedPosition = getArguments().getInt("position");
 
         MyViewPagerAdapter mAdapter = new MyViewPagerAdapter();
         mViewPager.setAdapter(mAdapter);
@@ -56,6 +59,7 @@ public class SlideshowDialogFragment extends DialogFragment {
         @Override
         public void onPageSelected(int position) {
             mViewPager.setCurrentItem(position, false);
+            galleryTitle.setText(mImgPager.get(position).getTitle());
         }
 
         @Override
@@ -64,7 +68,6 @@ public class SlideshowDialogFragment extends DialogFragment {
 
         @Override
         public void onPageScrollStateChanged(int arg0) {
-
         }
     };
 
@@ -75,7 +78,6 @@ public class SlideshowDialogFragment extends DialogFragment {
     }
 
     private class MyViewPagerAdapter extends PagerAdapter {
-
         private LayoutInflater layoutInflater;
 
         MyViewPagerAdapter() {
@@ -83,15 +85,12 @@ public class SlideshowDialogFragment extends DialogFragment {
 
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
-
             layoutInflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View rootView = layoutInflater.inflate(R.layout.image_fullscreen_preview, container, false);
             ImageView imageViewPreview = (ImageView) rootView.findViewById(R.id.image_preview);
 
-            Pictures mPictures = mImgPager.get(position);
-
             Glide.with(getActivity())
-                    .load(mPictures.getImageUri())
+                    .load(mImgPager.get(position).getImageUri())
                     .into(imageViewPreview);
 
             container.addView(rootView);
@@ -108,7 +107,6 @@ public class SlideshowDialogFragment extends DialogFragment {
         public boolean isViewFromObject(View view, Object obj) {
             return view == ((View) obj);
         }
-
 
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {

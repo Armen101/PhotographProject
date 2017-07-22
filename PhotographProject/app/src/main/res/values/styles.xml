@@ -14,16 +14,15 @@
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="Theme.AppCompat.NoActionBar" />
+
     <style name="AppTheme.PopupOverlay" parent="Theme.AppCompat.NoActionBar" />
 
-    <style name="MyDialogTheme"
-        parent="Theme.AppCompat.Light.Dialog.Alert">
+    <style name="MyDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="android:background">#94b4e4</item>
     </style>
 
     <style name="RatingBar" parent="Theme.AppCompat">
-        <item name="colorControlNormal">#ffffff</item>
-        <item name="colorControlActivated">#ffac37</item>
+        <item name="colorControlNormal">#ffcc00</item>
     </style>
 
 </resources>
