@@ -13,12 +13,14 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -73,6 +75,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     private EditText photoTitle;
     private AlertDialog alertDialog;
     private FloatingActionButton saveInfo;
+    private RatingBar ratingBar;
 
     public static SettingsFragment newInstance() {
         return new SettingsFragment();
@@ -121,6 +124,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         mAvatar = (ImageView) rootView.findViewById(R.id.st_avatar);
         ImageView mAddImg = (ImageView) rootView.findViewById(R.id.add_image);
         saveInfo = (FloatingActionButton) rootView.findViewById(R.id.save_info);
+        ratingBar = (RatingBar) rootView.findViewById(R.id.rating_bar);
 
         mName.setHorizontallyScrolling(true);
         saveInfo.setOnClickListener(this);
@@ -234,6 +238,9 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
                 String address = dataSnapshot.child(ADDRESS).getValue(String.class);
                 String cameraInfo = dataSnapshot.child(CAMERA_INFO).getValue(String.class);
                 String phone = dataSnapshot.child(PHONE).getValue(String.class);
+
+                int rating = dataSnapshot.child("rating").getValue(Integer.class);
+                ratingBar.setProgress(rating);
 
                 mName.setText(name);
                 mAddress.setText(address);

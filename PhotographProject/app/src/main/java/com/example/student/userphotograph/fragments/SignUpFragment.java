@@ -103,12 +103,12 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
 
                                 mUser = mAuth.getCurrentUser();
                                 mRef.child(mUser.getUid()).child("name").setValue(mNameEd.getText().toString());
-
+                                mRef.child(mUser.getUid()).child("rating").setValue(0);
                                 Intent goToHomeActivity = new Intent(getContext(), HomeActivity.class);
                                 startActivity(goToHomeActivity);
                             } else
                                 mProgressDialog.dismiss();
-                                Toast.makeText(getContext(), "Unsuccessful registration", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), "Unsuccessful registration", Toast.LENGTH_SHORT).show();
                         }
                     });
         }

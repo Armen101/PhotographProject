@@ -21,4 +21,9 @@
         <item name="android:background">#94b4e4</item>
     </style>
 
+    <style name="RatingBar" parent="Theme.AppCompat">
+        <item name="colorControlNormal">#ffffff</item>
+        <item name="colorControlActivated">#ffac37</item>
+    </style>
+
 </resources>
