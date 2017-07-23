@@ -51,15 +51,11 @@ public class FirebaseHelper {
                               final EditText titlePhoto,
                               final DatabaseReference databaseGalleryRef,
                               StorageReference storageGalleryRef,
-                              Uri filePath
-                              ){
-
+                              Uri filePath){
         final ProgressDialog progressDialog = new ProgressDialog(context);
         progressDialog.setTitle("Uploading");
         progressDialog.show();
-
         StorageReference sRef = storageGalleryRef.child(imageName);
-
         sRef.putFile(filePath)
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
@@ -74,6 +70,7 @@ public class FirebaseHelper {
                         databaseGalleryRef.child(uploadId).setValue(picture);
                     }
                 })
+
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception exception) {
@@ -93,4 +90,44 @@ public class FirebaseHelper {
                     }
                 });
     }
+
+    public static void uploadPost(final Context context,
+                              final String imageName,
+                              final EditText titlePhoto,
+                              StorageReference storageGalleryRef,
+                              Uri filePath){
+        final ProgressDialog progressDialog = new ProgressDialog(context);
+        progressDialog.setTitle("Uploading");
+        progressDialog.show();
+        StorageReference sRef = storageGalleryRef.child(imageName);
+        sRef.putFile(filePath)
+                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        progressDialog.dismiss();
+                        Toast.makeText(context, "File Uploaded ", Toast.LENGTH_LONG).show();
+                    }
+                })
+
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        progressDialog.dismiss();
+                        Toast.makeText(context.getApplicationContext(), exception.getMessage(), Toast.LENGTH_LONG).show();
+
+                        Toast.makeText(context, "Warning !!!, Error file ", Toast.LENGTH_LONG).show();
+                        titlePhoto.setText("");
+                    }
+                })
+                .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                        @SuppressWarnings("VisibleForTests")
+                        double progress = (100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
+                        progressDialog.setMessage("Uploaded " + ((int) progress) + "%...");
+                    }
+                });
+    }
+
+
 }

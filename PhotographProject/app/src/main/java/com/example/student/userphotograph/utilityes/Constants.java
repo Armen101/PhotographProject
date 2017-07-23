@@ -18,11 +18,13 @@ public class Constants {
     public static final String LATITUDE = "latitude";
     public static final String LONGITUDE = "longitude";
     public static final String RATING = "rating";
+    public static final String POST = "posts";
 
     public static final String ACTION_ACCEPT = "Accept";
     public static final String ACTION_REJECT = "Reject";
 
     public static final int REQUEST_AVATAR_CHOOSE_PICK = 100;
     public static final int REQUEST_GALLERY_CHOOSE_PICK = 101;
+    public static final int REQUEST_POST_CHOOSE_PICK = 102;
 
 }

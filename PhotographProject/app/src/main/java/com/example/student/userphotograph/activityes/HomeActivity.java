@@ -29,7 +29,7 @@ import android.widget.Toast;
 
 import com.example.student.userphotograph.R;
 import com.example.student.userphotograph.fragments.GMapFragment;
-import com.example.student.userphotograph.fragments.PostsFragment;
+import com.example.student.userphotograph.fragments.PostFragment;
 import com.example.student.userphotograph.fragments.SettingsFragment;
 import com.example.student.userphotograph.utilityes.FirebaseHelper;
 import com.google.firebase.auth.FirebaseAuth;
@@ -204,7 +204,7 @@ public class HomeActivity extends AppCompatActivity
             break;
 
             case R.id.nav_posts: {
-                replaceFragment(PostsFragment.newInstance());
+                replaceFragment(PostFragment.newInstance());
             }
             break;
             case R.id.nav_about: {
