@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.support.v7.app.NotificationCompat;
 
 import com.example.student.userphotograph.R;
+import com.example.student.userphotograph.utilityes.Constants;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -51,14 +52,14 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         Intent notifyIntentAccept =
                 new Intent(this, NotificationActionService.class);
         notifyIntentAccept.putExtra("Token", token);
-        notifyIntentAccept.setAction(NotificationActionService.ACTION_ACCEPT);
+        notifyIntentAccept.setAction(Constants.ACTION_ACCEPT);
         PendingIntent accept = PendingIntent.getService(this, 0, notifyIntentAccept, PendingIntent.FLAG_UPDATE_CURRENT);
 
         Intent notifyIntentReject =
                 new Intent(this, NotificationActionService.class);
         notifyIntentReject.putExtra("Token", token);
         notifyIntentReject.putExtra("Title", title);
-        notifyIntentReject.setAction(NotificationActionService.ACTION_REJECT);
+        notifyIntentReject.setAction(Constants.ACTION_REJECT);
         PendingIntent pendingIntent = PendingIntent.getService(this, 0, notifyIntentReject, PendingIntent.FLAG_UPDATE_CURRENT);
 
         mBuilder.addAction(R.drawable.ic_accept, "Accept", accept);
