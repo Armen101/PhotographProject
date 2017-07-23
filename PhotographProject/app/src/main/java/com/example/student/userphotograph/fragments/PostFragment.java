@@ -109,6 +109,7 @@ public class PostFragment extends Fragment implements View.OnClickListener {
                         if (isFirstClicked) {
                             isFirstClicked = false;
                             updateNumLikes(model.getUid());
+                            updateRatingLikes(model.getUserId());
                             // TODO change user rating!
                             Toast.makeText(getActivity(), "liked", Toast.LENGTH_SHORT).show();
                         } else {
@@ -172,6 +173,24 @@ public class PostFragment extends Fragment implements View.OnClickListener {
                         num++;
                         mutableData.setValue(num);
                         isFirstClicked = false;
+                        return Transaction.success(mutableData);
+                    }
+
+                    @Override
+                    public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot) {
+                        Log.d(TAG, "likeTransaction:onComplete:" + databaseError);
+                    }
+                });
+    }
+
+    private void updateRatingLikes(String userId) {
+        mDatabaseRef.child(userId).child("rating")
+                .runTransaction(new Transaction.Handler() {
+                    @Override
+                    public Transaction.Result doTransaction(MutableData mutableData) {
+                        long num = (long) mutableData.getValue();
+                        num++;
+                        mutableData.setValue(num);
                         return Transaction.success(mutableData);
                     }
 
