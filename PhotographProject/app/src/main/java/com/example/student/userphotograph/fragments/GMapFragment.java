@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.example.student.userphotograph.R;
 import com.example.student.userphotograph.service.GPSTracker;
+import com.example.student.userphotograph.utilityes.Constants;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -148,9 +149,9 @@ public class GMapFragment extends Fragment implements OnMapReadyCallback,
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
             assert user != null;
             final DatabaseReference mDatabaseRef = FirebaseDatabase.getInstance().getReference()
-                    .child("photographs").child(user.getUid());
-            mLatRef = mDatabaseRef.child("latitude");
-            mLngRef = mDatabaseRef.child("longitude");
+                    .child(Constants.PHOTOGRAPHS).child(user.getUid());
+            mLatRef = mDatabaseRef.child(Constants.LATITUDE);
+            mLngRef = mDatabaseRef.child(Constants.LONGITUDE);
             mLatRef.setValue(mLatitude);
             mLngRef.setValue(mLongitude);
         }

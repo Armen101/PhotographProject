@@ -240,7 +240,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
                 String cameraInfo = dataSnapshot.child(CAMERA_INFO).getValue(String.class);
                 String phone = dataSnapshot.child(PHONE).getValue(String.class);
 
-                int rating = dataSnapshot.child("rating").getValue(Integer.class);
+                int rating = dataSnapshot.child(Constants.RATING).getValue(Integer.class);
                 ratingBar.setProgress(rating);
 
                 mName.setText(name);

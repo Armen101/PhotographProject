@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.example.student.userphotograph.R;
 import com.example.student.userphotograph.activityes.HomeActivity;
+import com.example.student.userphotograph.utilityes.Constants;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -45,7 +46,7 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mAuth = FirebaseAuth.getInstance();
-        mRef = FirebaseDatabase.getInstance().getReference().child("photographs");
+        mRef = FirebaseDatabase.getInstance().getReference().child(Constants.PHOTOGRAPHS);
     }
 
     @Override
@@ -102,8 +103,8 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
                                 Toast.makeText(getContext(), "Successful registration", Toast.LENGTH_SHORT).show();
 
                                 mUser = mAuth.getCurrentUser();
-                                mRef.child(mUser.getUid()).child("name").setValue(mNameEd.getText().toString());
-                                mRef.child(mUser.getUid()).child("rating").setValue(0);
+                                mRef.child(mUser.getUid()).child(Constants.NAME).setValue(mNameEd.getText().toString());
+                                mRef.child(mUser.getUid()).child(Constants.RATING).setValue(0);
                                 Intent goToHomeActivity = new Intent(getContext(), HomeActivity.class);
                                 startActivity(goToHomeActivity);
                             } else
