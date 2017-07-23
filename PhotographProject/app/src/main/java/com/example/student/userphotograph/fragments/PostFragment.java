@@ -1,11 +1,12 @@
 package com.example.student.userphotograph.fragments;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -36,14 +37,17 @@ import com.google.firebase.database.Transaction;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import static android.app.Activity.RESULT_OK;
+import static com.bumptech.glide.gifdecoder.GifHeaderParser.TAG;
 import static com.example.student.userphotograph.utilityes.Constants.POST;
-import static com.google.android.gms.internal.zzt.TAG;
 
 public class PostFragment extends Fragment implements View.OnClickListener {
+
+    private static PostFragment instance;
 
     private RecyclerView postRecyclerView;
     public DatabaseReference mDatabaseRef;
@@ -58,8 +62,9 @@ public class PostFragment extends Fragment implements View.OnClickListener {
     }
 
     public static PostFragment newInstance() {
-
-        return new PostFragment();
+        if (instance == null)
+            instance = new PostFragment();
+        return instance;
     }
 
     @Override
@@ -237,7 +242,7 @@ public class PostFragment extends Fragment implements View.OnClickListener {
         if (requestCode == Constants.REQUEST_POST_CHOOSE_PICK && resultCode == RESULT_OK && data.getData() != null) {
             mFilePath = data.getData();
             String mImageName = System.currentTimeMillis() + "." + FirebaseHelper.getFileExtension(mFilePath, getActivity());
-            FirebaseHelper.uploadPost(getContext(), mImageName, photoTitle, mStoragePostGallery, mFilePath);
+            FirebaseHelper.uploadPost(getActivity(), mImageName, photoTitle, mStoragePostGallery, mFilePath);
             String userName = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
             String title = photoTitle.getText().toString();
             String imageUrl = String.valueOf(mFilePath);
