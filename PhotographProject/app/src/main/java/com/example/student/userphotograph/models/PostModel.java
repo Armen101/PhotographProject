@@ -1,7 +1,5 @@
 package com.example.student.userphotograph.models;
 
-import com.example.student.userphotograph.fragments.PostFragment;
-
 import java.util.Random;
 
 public class PostModel {
@@ -13,6 +11,7 @@ public class PostModel {
     private String userName;
     private String uid;
     private String userId;
+    private String imageName;
 
     public PostModel() {
     }
@@ -21,7 +20,8 @@ public class PostModel {
         return userId;
     }
 
-    public PostModel(String imageUrl, String title, String userName, String userId) {
+    public PostModel(String imageUrl, String title, String imageName, String userName, String userId) {
+        this.imageName = imageName;
         this.imageUrl = imageUrl;
         this.title = title;
         this.userName = userName;

@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -27,7 +26,6 @@ import com.example.student.userphotograph.models.PostModel;
 import com.example.student.userphotograph.utilityes.Constants;
 import com.example.student.userphotograph.utilityes.FirebaseHelper;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -36,7 +34,6 @@ import com.google.firebase.database.MutableData;
 import com.google.firebase.database.Transaction;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -56,6 +53,7 @@ public class PostFragment extends Fragment implements View.OnClickListener {
     private AlertDialog alertDialog;
     private Uri mFilePath;
     private StorageReference mStoragePostGallery;
+    private DatabaseReference databasePost;
 
     public PostFragment() {
 
@@ -71,7 +69,7 @@ public class PostFragment extends Fragment implements View.OnClickListener {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
+        databasePost = FirebaseDatabase.getInstance().getReference();
 
     }
 
@@ -261,13 +259,13 @@ public class PostFragment extends Fragment implements View.OnClickListener {
         if (requestCode == Constants.REQUEST_POST_CHOOSE_PICK && resultCode == RESULT_OK && data.getData() != null) {
             mFilePath = data.getData();
             String mImageName = System.currentTimeMillis() + "." + FirebaseHelper.getFileExtension(mFilePath, getActivity());
-            FirebaseHelper.uploadPost(getActivity(), mImageName, photoTitle, mStoragePostGallery, mFilePath);
-            String userName = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
-            String title = photoTitle.getText().toString();
-            String imageUrl = String.valueOf(mFilePath);
-            String userUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-            PostModel model = new PostModel(imageUrl, title, userName, userUid);
-            mDatabaseRef.child(model.getUid()).setValue(model);
+            FirebaseHelper.uploadPost(getActivity(), mImageName, photoTitle, mStoragePostGallery, databasePost ,mFilePath);
+//            String userName = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
+//            String title = photoTitle.getText().toString();
+//            String imageUrl = String.valueOf(mFilePath);
+//            String userUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+//            PostModel model = new PostModel(imageUrl, title, userName, userUid);
+//            mDatabaseRef.child(model.getUid()).setValue(model);
             alertDialog.dismiss();
         }
     }

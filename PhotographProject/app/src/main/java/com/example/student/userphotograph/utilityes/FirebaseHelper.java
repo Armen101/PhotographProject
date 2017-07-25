@@ -14,15 +14,31 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.student.userphotograph.models.Pictures;
+import com.example.student.userphotograph.models.PostModel;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import static com.example.student.userphotograph.utilityes.Constants.NAME;
+import static com.example.student.userphotograph.utilityes.Constants.PHOTOGRAPHS;
+import static com.example.student.userphotograph.utilityes.Constants.POST;
+import static com.example.student.userphotograph.utilityes.Constants.USER_ID;
+
 
 public class FirebaseHelper {
+
+    private static String name;
+    private static String uid;
+    private static DatabaseReference databaseRef;
 
     public static void downloadImageAndSetAvatar(final StorageReference ref, final ImageView img) {
         ref.getBytes(1024 * 1024).addOnSuccessListener(new OnSuccessListener<byte[]>() {
@@ -51,7 +67,7 @@ public class FirebaseHelper {
                               final EditText titlePhoto,
                               final DatabaseReference databaseGalleryRef,
                               StorageReference storageGalleryRef,
-                              Uri filePath){
+                              Uri filePath) {
         final ProgressDialog progressDialog = new ProgressDialog(context);
         progressDialog.setTitle("Uploading");
         progressDialog.show();
@@ -64,6 +80,7 @@ public class FirebaseHelper {
                         Toast.makeText(context, "File Uploaded ", Toast.LENGTH_LONG).show();
 
                         @SuppressWarnings("VisibleForTests")
+
                         Pictures picture = new Pictures(titlePhoto.getText().toString().trim(), taskSnapshot.getDownloadUrl().toString(), imageName);
 
                         String uploadId = databaseGalleryRef.push().getKey();
@@ -92,20 +109,43 @@ public class FirebaseHelper {
     }
 
     public static void uploadPost(final Context context,
-                              final String imageName,
-                              final EditText titlePhoto,
-                              StorageReference storageGalleryRef,
-                              Uri filePath){
+                                  final String imageName,
+                                  final EditText titlePhoto,
+                                  StorageReference storagePostRef,
+                                  final DatabaseReference databasePostRef,
+                                  Uri filePath) {
         final ProgressDialog progressDialog = new ProgressDialog(context);
         progressDialog.setTitle("Uploading");
         progressDialog.show();
-        StorageReference sRef = storageGalleryRef.child(imageName);
+        StorageReference sRef = storagePostRef.child(imageName);
         sRef.putFile(filePath)
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                         progressDialog.dismiss();
                         Toast.makeText(context, "File Uploaded ", Toast.LENGTH_LONG).show();
+                        FirebaseAuth auth = FirebaseAuth.getInstance();
+                        FirebaseUser mUser = auth.getCurrentUser();
+                        assert mUser != null;
+                        databaseRef = FirebaseDatabase.getInstance().getReference().child(PHOTOGRAPHS).child(mUser.getUid());
+                        databaseRef.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                name = dataSnapshot.child(NAME).getValue(String.class);
+                                uid = dataSnapshot.child(USER_ID).getValue(String.class);
+                                
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError error) {
+                            }
+                        });
+
+                        @SuppressWarnings("VisibleForTests")
+                        PostModel postModel = new PostModel(taskSnapshot.getDownloadUrl().toString(), titlePhoto.getText().toString().trim(), imageName, name, uid);
+
+                        String uploadId = databasePostRef.push().getKey();
+                        databasePostRef.child(POST).child(uploadId).setValue(postModel);
                     }
                 })
 
