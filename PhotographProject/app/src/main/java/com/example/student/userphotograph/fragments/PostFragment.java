@@ -40,18 +40,18 @@ import java.util.Calendar;
 
 import static android.app.Activity.RESULT_OK;
 import static com.bumptech.glide.gifdecoder.GifHeaderParser.TAG;
+import static com.example.student.userphotograph.utilityes.Constants.PHOTOGRAPHS;
 import static com.example.student.userphotograph.utilityes.Constants.POST;
+import static com.example.student.userphotograph.utilityes.Constants.RATING;
 
 public class PostFragment extends Fragment implements View.OnClickListener {
 
     private static PostFragment instance;
-
     private RecyclerView postRecyclerView;
-    public DatabaseReference mDatabaseRef;
+    private DatabaseReference mDatabaseRef;
     private boolean isFirstClicked = true;
     private EditText photoTitle;
     private AlertDialog alertDialog;
-    private Uri mFilePath;
     private StorageReference mStoragePostGallery;
     private DatabaseReference databasePost;
 
@@ -68,26 +68,26 @@ public class PostFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         databasePost = FirebaseDatabase.getInstance().getReference();
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_posts, container, false);
-        final FloatingActionButton btn = (FloatingActionButton)rootView.findViewById(R.id.newPost);
+        final FloatingActionButton btn = (FloatingActionButton) rootView.findViewById(R.id.newPost);
 
         postRecyclerView = (RecyclerView) rootView.findViewById(R.id.post_recycler_view);
         LinearLayoutManager lm = new LinearLayoutManager(getActivity());
+        lm.setReverseLayout(true);
+        lm.setStackFromEnd(true);
         postRecyclerView.setLayoutManager(lm);
         postRecyclerView.setHasFixedSize(true);
         floatingScrollListener(btn);
         btn.setOnClickListener(this);
         StorageReference mStorageRef = FirebaseStorage.getInstance().getReference();
         mStoragePostGallery = mStorageRef.child(POST);
-        mDatabaseRef = FirebaseDatabase.getInstance().getReference().child("posts");
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference().child(POST);
         FirebaseRecyclerAdapter<PostModel, PostHolder> postAdapter = new FirebaseRecyclerAdapter<PostModel, PostHolder>(
                 PostModel.class,
                 R.layout.post_recycler_row_item,
@@ -115,7 +115,6 @@ public class PostFragment extends Fragment implements View.OnClickListener {
                         }
                     }
                 });
-
                 Glide.with(getActivity())
                         .load(model.getImageUrl())
                         .into(viewHolder.imgPost);
@@ -123,35 +122,27 @@ public class PostFragment extends Fragment implements View.OnClickListener {
             }
         };
         postRecyclerView.setAdapter(postAdapter);
-
         return rootView;
     }
 
     private void floatingScrollListener(final FloatingActionButton btn) {
         postRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy)
-            {
-                if (dy > 0 ||dy<0 && btn.isShown())
-                {
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (dy > 0 || dy < 0 && btn.isShown()) {
                     btn.hide();
                 }
             }
 
             @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState)
-            {
-                if (newState == RecyclerView.SCROLL_STATE_IDLE)
-                {
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
                     btn.show();
                 }
-
                 super.onScrollStateChanged(recyclerView, newState);
             }
-
         });
     }
-
 
     public static String getCurrentDate(long milliSeconds, String dateFormat) {
         // Create a DateFormatter object for displaying date in specified format.
@@ -181,8 +172,8 @@ public class PostFragment extends Fragment implements View.OnClickListener {
                 });
     }
 
-    private void updateRatingLikes(String userId) {
-        mDatabaseRef.child(userId).child("rating")
+    private void updateRatingLikes(final String userId) {
+        databasePost.child(PHOTOGRAPHS).child(userId).child(RATING)
                 .runTransaction(new Transaction.Handler() {
                     @Override
                     public Transaction.Result doTransaction(MutableData mutableData) {
@@ -204,7 +195,6 @@ public class PostFragment extends Fragment implements View.OnClickListener {
         AlertDialog.Builder dialogBuilder = initDialog();
         alertDialog = dialogBuilder.create();
         alertDialog.show();
-
     }
 
     private AlertDialog.Builder initDialog() {
@@ -257,21 +247,14 @@ public class PostFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == Constants.REQUEST_POST_CHOOSE_PICK && resultCode == RESULT_OK && data.getData() != null) {
-            mFilePath = data.getData();
+            Uri mFilePath = data.getData();
             String mImageName = System.currentTimeMillis() + "." + FirebaseHelper.getFileExtension(mFilePath, getActivity());
-            FirebaseHelper.uploadPost(getActivity(), mImageName, photoTitle, mStoragePostGallery, databasePost ,mFilePath);
-//            String userName = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
-//            String title = photoTitle.getText().toString();
-//            String imageUrl = String.valueOf(mFilePath);
-//            String userUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-//            PostModel model = new PostModel(imageUrl, title, userName, userUid);
-//            mDatabaseRef.child(model.getUid()).setValue(model);
+            FirebaseHelper.uploadPost(getActivity(), mImageName, photoTitle, mStoragePostGallery, databasePost, mFilePath);
             alertDialog.dismiss();
         }
     }
 
-    public static class PostHolder extends RecyclerView.ViewHolder {
-
+    private static class PostHolder extends RecyclerView.ViewHolder {
         private TextView tvUserName;
         private TextView tvPostTitle;
         private TextView tvPostTime;
@@ -281,7 +264,6 @@ public class PostFragment extends Fragment implements View.OnClickListener {
 
         public PostHolder(View itemView) {
             super(itemView);
-
             tvUserName = (TextView) itemView.findViewById(R.id.tv_post_username);
             tvPostTitle = (TextView) itemView.findViewById(R.id.tv_post_title);
             tvPostTime = (TextView) itemView.findViewById(R.id.tv_post_time);
@@ -290,6 +272,4 @@ public class PostFragment extends Fragment implements View.OnClickListener {
             imgLike = (ImageView) itemView.findViewById(R.id.img_like);
         }
     }
-
-
 }

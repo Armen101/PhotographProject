@@ -28,7 +28,7 @@ public class PostModel {
         this.userId = userId;
         this.likes = 0;
         this.date = System.currentTimeMillis();
-        this.uid = getRandomPostId();
+        this.uid = String.valueOf(System.currentTimeMillis());
     }
 
     public void setUserId(String userId) {

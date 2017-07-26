@@ -33,7 +33,6 @@ import static com.example.student.userphotograph.utilityes.Constants.PHOTOGRAPHS
 import static com.example.student.userphotograph.utilityes.Constants.POST;
 import static com.example.student.userphotograph.utilityes.Constants.USER_ID;
 
-
 public class FirebaseHelper {
 
     private static String name;
@@ -60,7 +59,6 @@ public class FirebaseHelper {
         MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
         return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
     }
-
 
     public static void upload(final Context context,
                               final String imageName,
@@ -121,7 +119,7 @@ public class FirebaseHelper {
         sRef.putFile(filePath)
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    public void onSuccess(final UploadTask.TaskSnapshot taskSnapshot) {
                         progressDialog.dismiss();
                         Toast.makeText(context, "File Uploaded ", Toast.LENGTH_LONG).show();
                         FirebaseAuth auth = FirebaseAuth.getInstance();
@@ -133,19 +131,17 @@ public class FirebaseHelper {
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 name = dataSnapshot.child(NAME).getValue(String.class);
                                 uid = dataSnapshot.child(USER_ID).getValue(String.class);
-                                
+
+                                @SuppressWarnings("VisibleForTests")
+                                PostModel postModel = new PostModel(taskSnapshot.getDownloadUrl().toString(), titlePhoto.getText().toString().trim(), imageName, name, uid);
+                                long data = postModel.getDate();
+                                databasePostRef.child(POST).child(String.valueOf(data)).setValue(postModel);
                             }
 
                             @Override
                             public void onCancelled(DatabaseError error) {
                             }
                         });
-
-                        @SuppressWarnings("VisibleForTests")
-                        PostModel postModel = new PostModel(taskSnapshot.getDownloadUrl().toString(), titlePhoto.getText().toString().trim(), imageName, name, uid);
-
-                        String uploadId = databasePostRef.push().getKey();
-                        databasePostRef.child(POST).child(uploadId).setValue(postModel);
                     }
                 })
 
@@ -154,7 +150,6 @@ public class FirebaseHelper {
                     public void onFailure(@NonNull Exception exception) {
                         progressDialog.dismiss();
                         Toast.makeText(context.getApplicationContext(), exception.getMessage(), Toast.LENGTH_LONG).show();
-
                         Toast.makeText(context, "Warning !!!, Error file ", Toast.LENGTH_LONG).show();
                         titlePhoto.setText("");
                     }
@@ -168,6 +163,4 @@ public class FirebaseHelper {
                     }
                 });
     }
-
-
 }
