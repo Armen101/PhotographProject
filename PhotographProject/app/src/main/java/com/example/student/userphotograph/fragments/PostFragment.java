@@ -98,7 +98,7 @@ public class PostFragment extends Fragment implements View.OnClickListener {
             protected void populateViewHolder(final PostHolder viewHolder, final PostModel model, int position) {
                 viewHolder.tvUserName.setText(model.getUserName());
                 long date = model.getDate();
-                viewHolder.tvPostTime.setText(getCurrentDate(date, "dd/MM/yyyy hh:mm"));
+                viewHolder.tvPostTime.setText(getCurrentDate(date, "dd/MM/yyyy HH:mm"));
                 viewHolder.tvPostTitle.setText(model.getTitle());
                 viewHolder.tvLikesCount.setText(String.valueOf(model.getLikes()));
                 viewHolder.imgLike.setOnClickListener(new View.OnClickListener() {

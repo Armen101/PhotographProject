@@ -16,12 +16,13 @@ import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
+    private int phone;
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         float lat = Float.parseFloat(((remoteMessage.getData().get("lat"))));
         float lng = Float.parseFloat(((remoteMessage.getData().get("lng"))));
-        int phone = Integer.parseInt(remoteMessage.getData().get("phone"));
+        phone = Integer.parseInt(remoteMessage.getData().get("phone"));
 
         SharedPreferences shared = getSharedPreferences("location", MODE_PRIVATE);
         SharedPreferences.Editor edit = shared.edit();
@@ -41,7 +42,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                         .setContentText("This is a test notification");
 
         Intent callIntent = new Intent(Intent.ACTION_CALL);
-        callIntent.setData(Uri.parse("tel:" + "095800177"));
+        callIntent.setData(Uri.parse("tel:" + phone));
         PendingIntent resultPendingIntent = PendingIntent.getActivity(
                 this, 0, callIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         mBuilder.setContentIntent(resultPendingIntent);

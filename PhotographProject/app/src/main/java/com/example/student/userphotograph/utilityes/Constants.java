@@ -4,6 +4,10 @@ package com.example.student.userphotograph.utilityes;
 public class Constants {
 
     public static boolean IS_SHOW__FORGOT_PASSWORD = false;
+    public static final float ZOOM_NUMBER = 13;
+    public static final int MAP_ANIMATION_DURATION = 2000;
+    public static final float DISTANCE = 5000;
+    public static final long MAP_RADAR_ANIMATION_DURATION = 12000;
 
     public static final String NAME = "name";
     public static final String ADDRESS = "address";
