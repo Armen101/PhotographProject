@@ -118,7 +118,6 @@ public class PostFragment extends Fragment implements View.OnClickListener {
                 Glide.with(getActivity())
                         .load(model.getImageUrl())
                         .into(viewHolder.imgPost);
-
             }
         };
         postRecyclerView.setAdapter(postAdapter);

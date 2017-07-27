@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimaryDark"
+    android:background="@color/colorDarkGreen"
     android:orientation="vertical"
     android:padding="5dp"
     tools:context="com.example.student.userphotograph.fragments.SettingsFragment">
@@ -85,19 +85,25 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="2">
+        android:layout_weight="10">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
+    </RelativeLayout>
 
-        <android.support.design.widget.FloatingActionButton
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.5">
+
+        <ImageView
             android:id="@+id/save_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:src="@android:drawable/ic_menu_save" />
+            android:src="@drawable/ic_save_black_24dp" />
 
         <RatingBar
             android:id="@+id/rating_bar"
@@ -106,6 +112,9 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:isIndicator="true"
+            android:numStars="5"
+            android:scaleX="0.8"
+            android:scaleY="0.8"
             android:stepSize="0.1"
             android:theme="@style/RatingBar" />
 
@@ -117,8 +126,6 @@
             android:layout_alignParentRight="true"
             android:src="@drawable/ic_add_a_photo_black_24dp"
             android:visibility="visible" />
-
-
     </RelativeLayout>
 
 </LinearLayout>

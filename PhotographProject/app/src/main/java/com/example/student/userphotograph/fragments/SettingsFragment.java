@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
@@ -73,7 +72,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     private FirebaseUser mUser;
     private EditText photoTitle;
     private AlertDialog alertDialog;
-    private FloatingActionButton saveInfo;
+    private ImageView saveInfo;
     private RatingBar ratingBar;
 
     public static SettingsFragment newInstance() {
@@ -122,7 +121,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         mPhone = (EditText) rootView.findViewById(R.id.et_st_phone);
         mAvatar = (ImageView) rootView.findViewById(R.id.st_avatar);
         ImageView mAddImg = (ImageView) rootView.findViewById(R.id.add_image);
-        saveInfo = (FloatingActionButton) rootView.findViewById(R.id.save_info);
+        saveInfo = (ImageView) rootView.findViewById(R.id.save_info);
         ratingBar = (RatingBar) rootView.findViewById(R.id.rating_bar);
 
         mName.setHorizontallyScrolling(true);

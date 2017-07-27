@@ -26,7 +26,6 @@
                 android:background="@drawable/ic_push_drawer"/>
 
         </FrameLayout>
-
     </LinearLayout>
 
 
@@ -39,7 +38,8 @@
         android:id="@+id/navigation_view"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:background="#717273"
+        android:background="@drawable/side_nav_bar"
+        app:itemTextColor="@color/colorWhite"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header_home"
