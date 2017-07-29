@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Լուսանկարիչ</string>
+
+    <string name="title_activity_maps">Տեղայնացման քարտեզ</string>
+    <string name="sign_up">Գրանցվել</string>
+    <string name="text_forgot_password">Մոռացել եք ծածկագիրը</string>
+    <string name="text_we_just_need_yuor_registered">Մուտքագրեք Ձեր էլ.-փոստի id-ին գաղտնաբառը վերակազմավորելու հրահանգներ ստանալու համար</string>
+    <string name="text_email_hint">Էլ.-փոստ</string>
+    <string name="button_reset">Վերակազմավորել գաղտնաբառը</string>
+    <string name="button_back">Վերադարձ</string>
+    <string name="title_activity_home">ՀիմնականԳործունեություն</string>
+
+    <string name="navigation_drawer_open">Բացել տեղայնացման մենյուն</string>
+    <string name="navigation_drawer_close">Փակել տեղայնացման մենյուն</string>
+
+    <string name="action_settings">Կարգավորումներ</string>
+    <string name="loading" />
+    <string name="don_t_have_an_account_sign_up">Դեռ բաժանորդագրված չեք Գրանցվեք</string>
+    <string name="username">Օգտագործողի անուն</string>
+    <string name="password">Գաղտնաբառ</string>
+    <string name="sign_in">Գրանցվել</string>
+    <string name="phone">Հերախոսահամար</string>
+    <string name="address">Հասցե</string>
+    <string name="name">Անուն</string>
+    <string name="camera_info">Նկարահանման սարքի տվյալներ</string>
+    <string name="add_avatar">Ավելացնել նշան</string>
+    <string name="save">Պահպանել</string>
+    <string name="minimum_password" />
+    <string name="auth_failed" />
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Բարև սկզբնական հավելված</string>
+    <string name="choose_photo">Ընտրեք նկարը</string>
+    <string name="upload_photo">Ներբեռնեք նկարը</string>
+    <string name="save_all_info">Պահպանել ամբողջ ինֆորմացիան</string>
+    <string name="email">Էլ.-փոստ</string>
+    <string name="confirm_password">Հաստատել գաղտնաբառը</string>
+    <string name="images">Նկարներ</string>
+    <string name="position">Դիրքը</string>
+    <string name="slideshow">Պատկերասրահ</string>
+    <string name="removed">Հեռացված</string>
+    <string name="canceled">Չեղարկված</string>
+    <string name="are_you_sure">Համոզված եք</string>
+    <string name="yes">ԱՅՈ</string>
+    <string name="no">ՈՉ</string>
+</resources>
