@@ -26,6 +26,7 @@ public class Constants {
 
     public static final String ACTION_ACCEPT = "Accept";
     public static final String ACTION_REJECT = "Reject";
+    public static final String DEFAULT_LANGUAGE = "defaultLanguage";
 
     public static final int REQUEST_AVATAR_CHOOSE_PICK = 100;
     public static final int REQUEST_GALLERY_CHOOSE_PICK = 101;

@@ -20,6 +20,10 @@
             android:icon="@drawable/ic_sms_failed_black_24dp"
             android:title="About" />
         <item
+            android:id="@+id/nav_language"
+            android:icon="@drawable/ic_exit_to_app_black_24dp"
+            android:title="Language" />
+        <item
             android:id="@+id/nav_log_out"
             android:icon="@drawable/ic_exit_to_app_black_24dp"
             android:title="Log Out" />

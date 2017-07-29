@@ -1,9 +1,11 @@
 package com.example.student.userphotograph.activityes;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.os.Build;
@@ -17,13 +19,18 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,6 +38,7 @@ import com.example.student.userphotograph.R;
 import com.example.student.userphotograph.fragments.GMapFragment;
 import com.example.student.userphotograph.fragments.PostFragment;
 import com.example.student.userphotograph.fragments.SettingsFragment;
+import com.example.student.userphotograph.utilityes.Constants;
 import com.example.student.userphotograph.utilityes.FirebaseHelper;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -42,6 +50,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+
+import java.util.Locale;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
@@ -56,6 +66,9 @@ public class HomeActivity extends AppCompatActivity
     private TextView mEmail;
     private Typeface mTypeface;
     private String uid;
+    private String locale;
+    AlertDialog dialog;
+    private SharedPreferences shared;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -67,6 +80,7 @@ public class HomeActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
 
         responsePermissionGranted();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
@@ -86,6 +100,12 @@ public class HomeActivity extends AppCompatActivity
 
         replaceFragment(SettingsFragment.newInstance());
         toggleNavDrawer();
+        locale = Locale.getDefault().getDisplayLanguage();
+
+        shared = getSharedPreferences("localization", MODE_PRIVATE);
+        if(TextUtils.isEmpty(shared.getString("defaultLanguage", ""))) {
+            shared.edit().putString(Constants.DEFAULT_LANGUAGE, locale).apply();
+        }
     }
 
     private void toggleNavDrawer() {
@@ -208,6 +228,71 @@ public class HomeActivity extends AppCompatActivity
             }
             break;
             case R.id.nav_about: {
+            }
+            break;
+            case R.id.nav_language: {
+                LayoutInflater inflater = getLayoutInflater();
+                View dialogLayout = inflater.inflate(R.layout.languages, null);
+                final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+                dialogBuilder.setView(dialogLayout);
+                dialog = dialogBuilder.create();
+                dialog.show();
+
+                Button btnOk = (Button) dialogLayout.findViewById(R.id.btn_confirm);
+                final RadioGroup rgLanguage = (RadioGroup) dialogLayout.findViewById(R.id.language_group);
+                RadioButton rbEnglish = (RadioButton) dialogLayout.findViewById(R.id.rb_english);
+                RadioButton rbArmenian = (RadioButton) dialogLayout.findViewById(R.id.rb_armenian);
+                RadioButton rbSpanish = (RadioButton) dialogLayout.findViewById(R.id.rb_spanish);
+                RadioButton rbGermany = (RadioButton) dialogLayout.findViewById(R.id.rb_german);
+                RadioButton rbRussian = (RadioButton) dialogLayout.findViewById(R.id.rb_russian);
+
+                btnOk.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        int cheked = rgLanguage.getCheckedRadioButtonId();
+                        switch (cheked){
+                            case R.id.rb_english: {
+                                Locale english = new Locale("en");
+                                Locale.setDefault(english);
+                                shared.edit().putString(Constants.DEFAULT_LANGUAGE, english.toString()).apply();
+                                dialog.dismiss();
+                                break;
+                            }
+                            case R.id.rb_armenian: {
+                                Locale armenian = new Locale("hy");
+                                Locale.setDefault(armenian);
+                                shared.edit().putString(Constants.DEFAULT_LANGUAGE, armenian.toString()).apply();
+                                dialog.dismiss();
+                                break;
+                            }
+                            case R.id.rb_spanish: {
+                                Locale spanish = new Locale("sp");
+                                Locale.setDefault(spanish);
+                                shared.edit().putString(Constants.DEFAULT_LANGUAGE, spanish.toString()).apply();
+                                dialog.dismiss();
+                                break;
+                            }
+                            case R.id.rb_german: {
+                                Locale german = new Locale("de");
+                                Locale.setDefault(german);
+                                shared.edit().putString(Constants.DEFAULT_LANGUAGE, german.toString()).apply();
+                                dialog.dismiss();
+                                break;
+                            }
+                            case R.id.rb_russian: {
+                                Locale russian = new Locale("ru");
+                                Locale.setDefault(russian);
+                                shared.edit().putString(Constants.DEFAULT_LANGUAGE, russian.toString()).apply();
+                                dialog.dismiss();
+                                break;
+                            }
+                        }
+                    }
+
+                });
+
+
+
             }
             break;
 
