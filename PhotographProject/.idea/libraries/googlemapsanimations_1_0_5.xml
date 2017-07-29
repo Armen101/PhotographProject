@@ -1,8 +1,8 @@
 <component name="libraryTable">
   <library name="googlemapsanimations-1.0.5">
     <CLASSES>
-      <root url="file://$USER_HOME$/.android/build-cache/e6b5fec46164e75ba0ac7e9635dc866d7b6c5d51/output/res" />
-      <root url="jar://$USER_HOME$/.android/build-cache/e6b5fec46164e75ba0ac7e9635dc866d7b6c5d51/output/jars/classes.jar!/" />
+      <root url="jar://$USER_HOME$/.android/build-cache/3c2b740c32a92ca97715936f74dba18ad28741ad/output/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.android/build-cache/3c2b740c32a92ca97715936f74dba18ad28741ad/output/res" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

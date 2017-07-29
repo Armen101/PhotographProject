@@ -25,6 +25,7 @@ import com.example.student.userphotograph.R;
 import com.example.student.userphotograph.models.PostModel;
 import com.example.student.userphotograph.utilityes.Constants;
 import com.example.student.userphotograph.utilityes.FirebaseHelper;
+import com.example.student.userphotograph.utilityes.SQLHelper;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -49,11 +50,11 @@ public class PostFragment extends Fragment implements View.OnClickListener {
     private static PostFragment instance;
     private RecyclerView postRecyclerView;
     private DatabaseReference mDatabaseRef;
-    private boolean isFirstClicked = true;
     private EditText photoTitle;
     private AlertDialog alertDialog;
     private StorageReference mStoragePostGallery;
     private DatabaseReference databasePost;
+    private SQLHelper db;
 
     public PostFragment() {
 
@@ -69,6 +70,7 @@ public class PostFragment extends Fragment implements View.OnClickListener {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         databasePost = FirebaseDatabase.getInstance().getReference();
+        db = new SQLHelper(getActivity());
     }
 
     @Override
@@ -101,17 +103,21 @@ public class PostFragment extends Fragment implements View.OnClickListener {
                 viewHolder.tvPostTime.setText(getCurrentDate(date, "dd/MM/yyyy HH:mm"));
                 viewHolder.tvPostTitle.setText(model.getTitle());
                 viewHolder.tvLikesCount.setText(String.valueOf(model.getLikes()));
+                final String postId = model.getUid();
+                if (db.isLiked(postId)) {
+                    viewHolder.imgLike.setImageResource(R.drawable.ic_thumb_up_blue_dark_24dp);
+                }
                 viewHolder.imgLike.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (isFirstClicked) {
-                            isFirstClicked = false;
+                        if (db.isLiked(postId)) {
+                            Toast.makeText(getActivity(), "has already liked", Toast.LENGTH_SHORT).show();
+                        } else {
+                            db.addPostLikes(postId);
                             updateNumLikes(model.getUid());
                             updateRatingLikes(model.getUserId());
-                            // TODO change user rating!
                             Toast.makeText(getActivity(), "liked", Toast.LENGTH_SHORT).show();
-                        } else {
-                            viewHolder.imgLike.setEnabled(false);
+                            viewHolder.imgLike.setImageResource(R.drawable.ic_thumb_up_blue_dark_24dp);
                         }
                     }
                 });
@@ -160,7 +166,6 @@ public class PostFragment extends Fragment implements View.OnClickListener {
                         long num = (long) mutableData.getValue();
                         num++;
                         mutableData.setValue(num);
-                        isFirstClicked = false;
                         return Transaction.success(mutableData);
                     }
 
