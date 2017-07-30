@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
@@ -66,7 +67,6 @@ public class HomeActivity extends AppCompatActivity
     private TextView mEmail;
     private Typeface mTypeface;
     private String uid;
-    private String locale;
     AlertDialog dialog;
     private SharedPreferences shared;
 
@@ -80,9 +80,8 @@ public class HomeActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
-
         responsePermissionGranted();
+        shared = getSharedPreferences("localization", MODE_PRIVATE);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
                 .setDefaultFontPath("choco_cooky.ttf")
@@ -100,12 +99,6 @@ public class HomeActivity extends AppCompatActivity
 
         replaceFragment(SettingsFragment.newInstance());
         toggleNavDrawer();
-        locale = Locale.getDefault().getDisplayLanguage();
-
-        shared = getSharedPreferences("localization", MODE_PRIVATE);
-        if(TextUtils.isEmpty(shared.getString("defaultLanguage", ""))) {
-            shared.edit().putString(Constants.DEFAULT_LANGUAGE, locale).apply();
-        }
     }
 
     private void toggleNavDrawer() {
@@ -246,6 +239,30 @@ public class HomeActivity extends AppCompatActivity
                 RadioButton rbGermany = (RadioButton) dialogLayout.findViewById(R.id.rb_german);
                 RadioButton rbRussian = (RadioButton) dialogLayout.findViewById(R.id.rb_russian);
 
+                String language = shared.getString(Constants.DEFAULT_LANGUAGE, "");
+                switch (language){
+                    case "en":{
+                        rbEnglish.setChecked(true);
+                        break;
+                    }
+                    case "ru":{
+                        rbRussian.setChecked(true);
+                        break;
+                    }
+                    case "hy":{
+                        rbArmenian.setChecked(true);
+                        break;
+                    }
+                    case "de":{
+                        rbGermany.setChecked(true);
+                        break;
+                    }
+                    case "es":{
+                        rbSpanish.setChecked(true);
+                        break;
+                    }
+                }
+
                 btnOk.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -253,46 +270,47 @@ public class HomeActivity extends AppCompatActivity
                         switch (cheked){
                             case R.id.rb_english: {
                                 Locale english = new Locale("en");
-                                Locale.setDefault(english);
-                                shared.edit().putString(Constants.DEFAULT_LANGUAGE, english.toString()).apply();
-                                dialog.dismiss();
+                                changeLocale(english);
                                 break;
                             }
                             case R.id.rb_armenian: {
                                 Locale armenian = new Locale("hy");
-                                Locale.setDefault(armenian);
-                                shared.edit().putString(Constants.DEFAULT_LANGUAGE, armenian.toString()).apply();
-                                dialog.dismiss();
+                                changeLocale(armenian);
                                 break;
                             }
                             case R.id.rb_spanish: {
-                                Locale spanish = new Locale("sp");
-                                Locale.setDefault(spanish);
-                                shared.edit().putString(Constants.DEFAULT_LANGUAGE, spanish.toString()).apply();
-                                dialog.dismiss();
+                                Locale spanish = new Locale("es");
+                                changeLocale(spanish);
                                 break;
                             }
                             case R.id.rb_german: {
                                 Locale german = new Locale("de");
-                                Locale.setDefault(german);
-                                shared.edit().putString(Constants.DEFAULT_LANGUAGE, german.toString()).apply();
-                                dialog.dismiss();
+                                changeLocale(german);
                                 break;
                             }
                             case R.id.rb_russian: {
                                 Locale russian = new Locale("ru");
-                                Locale.setDefault(russian);
-                                shared.edit().putString(Constants.DEFAULT_LANGUAGE, russian.toString()).apply();
-                                dialog.dismiss();
+                                changeLocale(russian);
                                 break;
                             }
                         }
+                        shared.edit().putString(Constants.DEFAULT_LANGUAGE, Locale.getDefault().getLanguage()).apply();
+                    }
+
+                    private void changeLocale(Locale language) {
+                        Locale.setDefault(language);
+                        Configuration config = new Configuration();
+                        config.locale = language;
+                        getBaseContext().getResources().updateConfiguration(config,
+                                getBaseContext().getResources().getDisplayMetrics());
+                        Intent intent = getIntent();
+                        finish();
+                        startActivity(intent);
+                        Toast.makeText(HomeActivity.this, shared.getString(Constants.DEFAULT_LANGUAGE,""), Toast.LENGTH_SHORT).show();
+                        dialog.dismiss();
                     }
 
                 });
-
-
-
             }
             break;
 
@@ -314,6 +332,7 @@ public class HomeActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
 
     private void replaceFragment(Fragment fragment) {
         getSupportFragmentManager()

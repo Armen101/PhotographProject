@@ -48,4 +48,12 @@
     <string name="spanish">Spanish</string>
     <string name="russian">Russian</string>
     <string name="armenain">Armenain</string>
+    <string name="full_name">full name</string>
+    <string name="photo_title">Photo title</string>
+    <string name="map">Map</string>
+    <string name="settings">Settings</string>
+    <string name="posts">Posts</string>
+    <string name="about">About</string>
+    <string name="language">Language</string>
+    <string name="log_out">Log Out</string>
 </resources>
