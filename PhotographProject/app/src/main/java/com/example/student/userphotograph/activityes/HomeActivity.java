@@ -20,7 +20,6 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -28,7 +27,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -36,6 +34,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.student.userphotograph.R;
+import com.example.student.userphotograph.fragments.AboutFragment;
 import com.example.student.userphotograph.fragments.GMapFragment;
 import com.example.student.userphotograph.fragments.PostFragment;
 import com.example.student.userphotograph.fragments.SettingsFragment;
@@ -221,6 +220,7 @@ public class HomeActivity extends AppCompatActivity
             }
             break;
             case R.id.nav_about: {
+                replaceFragment(AboutFragment.newInstance());
             }
             break;
             case R.id.nav_language: {
