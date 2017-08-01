@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">UserPhotograph</string>
-
     <string name="title_activity_maps">Map</string>
     <string name="sign_up">Sign Up</string>
     <string name="text_forgot_password">FORGOT PASSWORD?</string>
@@ -10,10 +9,8 @@
     <string name="button_reset">RESET PASSWORD</string>
     <string name="button_back">BACK</string>
     <string name="title_activity_home">HomeActivity</string>
-
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-
     <string name="action_settings">Settings</string>
     <string name="loading" />
     <string name="don_t_have_an_account_sign_up">Don\'t have an account? Sign Up</string>
@@ -30,7 +27,6 @@
     <string name="auth_failed" />
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="choose_photo">choose photo</string>
     <string name="upload_photo">upload photo</string>
     <string name="save_all_info">save all info</string>
@@ -57,5 +53,15 @@
     <string name="about">About</string>
     <string name="language">Language</string>
     <string name="log_out">Log Out</string>
+    <string name="about_app">The application is good opportunity for photographers to demonstrate their portfolio and find more clients.</string>
+    <string name="owner">Owner</string>
+    <string name="tigran_vanyan">Tigran Vanyan</string>
+    <string name="members">Members</string>
+    <string name="_2017_vtc_android_team">\@2017 VTC Android Team</string>
+    <string name="forgot_password">Forgot password?</string>
+    <string name="full_name1">full name</string>
+    <string name="email1">email</string>
+    <string name="my_photo">my photo</string>
+    <string name="_0">0</string>
 
 </resources>

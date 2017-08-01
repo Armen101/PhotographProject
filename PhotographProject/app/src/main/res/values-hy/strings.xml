@@ -1,38 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Լուսանկարիչ</string>
-
     <string name="title_activity_maps">Տեղայնացման քարտեզ</string>
     <string name="sign_up">Գրանցվել</string>
     <string name="text_forgot_password">Մոռացել եք ծածկագիրը</string>
-    <string name="text_we_just_need_yuor_registered">Մուտքագրեք Ձեր էլ.-փոստի id-ին գաղտնաբառը վերակազմավորելու հրահանգներ ստանալու համար</string>
-    <string name="text_email_hint">Էլ.-փոստ</string>
+    <string name="text_we_just_need_yuor_registered">Մուտքագրեք Ձեր էլ.-փոստի id-ին գաղտնաբառը վերակազմավորելու հրահանգները ստանալու համար</string>
+    <string name="text_email_hint">Էլ. հասցե</string>
     <string name="button_reset">Վերակազմավորել գաղտնաբառը</string>
     <string name="button_back">Վերադարձ</string>
-    <string name="title_activity_home">ՀիմնականԳործունեություն</string>
-
+    <string name="title_activity_home">Activity Home</string>
     <string name="navigation_drawer_open">Բացել տեղայնացման մենյուն</string>
     <string name="navigation_drawer_close">Փակել տեղայնացման մենյուն</string>
-
     <string name="action_settings">Կարգավորումներ</string>
     <string name="loading" />
-    <string name="don_t_have_an_account_sign_up">Դեռ բաժանորդագրված չեք Գրանցվեք</string>
+    <string name="don_t_have_an_account_sign_up">Դեռ բաժանորդագրված չե՞ք, Գրանցվեք</string>
     <string name="username">Օգտագործողի անուն</string>
     <string name="password">Գաղտնաբառ</string>
     <string name="sign_in">Գրանցվել</string>
     <string name="phone">Հերախոսահամար</string>
     <string name="address">Հասցե</string>
     <string name="name">Անուն</string>
-    <string name="camera_info">Նկարահանման սարքի տվյալներ</string>
-    <string name="add_avatar">Ավելացնել նշան</string>
+    <string name="camera_info">Տեսախցիկի տվյալներ</string>
+    <string name="add_avatar">Ավելացնել պրոֆիլի նկար</string>
     <string name="save">Պահպանել</string>
     <string name="minimum_password" />
     <string name="auth_failed" />
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Բարև սկզբնական հավելված</string>
     <string name="choose_photo">Ընտրեք նկարը</string>
-    <string name="upload_photo">Ներբեռնեք նկարը</string>
+    <string name="upload_photo">Ներբեռնեք նկար</string>
     <string name="save_all_info">Պահպանել ամբողջ ինֆորմացիան</string>
     <string name="email">Էլ.-փոստ</string>
     <string name="confirm_password">Հաստատել գաղտնաբառը</string>
@@ -41,20 +37,29 @@
     <string name="slideshow">Պատկերասրահ</string>
     <string name="removed">Հեռացված</string>
     <string name="canceled">Չեղարկված</string>
-    <string name="are_you_sure">Համոզված եք</string>
+    <string name="are_you_sure">Համոզվա՞ծ եք</string>
     <string name="yes">ԱՅՈ</string>
     <string name="no">ՈՉ</string>
-    <string name="english">English</string>
-    <string name="german">German</string>
-    <string name="spanish">Spanish</string>
-    <string name="russian">Russian</string>
-    <string name="armenain">Armenain</string>
-    <string name="full_name">full name</string>
-    <string name="photo_title">Photo title</string>
+    <string name="english">Անգլերեն</string>
+    <string name="german">Գերմաներեն</string>
+    <string name="spanish">Իսպաներեն</string>
+    <string name="russian">Ռուսերեն</string>
+    <string name="armenain">Հայերեն</string>
+    <string name="full_name">ամբողջական անուն</string>
+    <string name="photo_title">Նկարի անուն</string>
     <string name="map">Քարտեզ</string>
-    <string name="settings">Settings</string>
-    <string name="posts">Posts</string>
-    <string name="about">About</string>
-    <string name="language">Language</string>
-    <string name="log_out">Log Out</string>
+    <string name="settings">Կարգավորումներ</string>
+    <string name="posts">Գրառումներ</string>
+    <string name="about">Մեր մասին</string>
+    <string name="language">Լեզու</string>
+    <string name="log_out">Դուրս գալ</string>
+    <string name="about_app">Հավելվածը հնարավորություն է ընձեռնում լուսանկարիչներին ցուցադրել իրենց պորտֆոլիոն և գտնել ավելի շատ հաճախորդներ:</string>
+    <string name="owner">Սեփականատեր</string>
+    <string name="tigran_vanyan">Տիգրան Վանյան</string>
+    <string name="members">Անդամնեռ</string>
+    <string name="_2017_vtc_android_team">\@2017 ՎՏԿ Անդրոիդ Թիմ</string>
+    <string name="forgot_password">Մոռացե՞լ եք գաղտնաբառը</string>
+    <string name="full_name1">ամբողջական անուն</string>
+    <string name="email1">էլ. հասցե</string>
+    <string name="_0">0</string>
 </resources>

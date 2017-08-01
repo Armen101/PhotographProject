@@ -32,7 +32,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
-                android:text="Owner"
+                android:text="@string/owner"
                 android:textColor="@color/colorBlack"
                 android:textSize="18sp" />
 
@@ -42,7 +42,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
                 android:gravity="center"
-                android:text="Tigran Vanyan"
+                android:text="@string/tigran_vanyan"
                 android:textColor="@color/colorBlack"
                 android:textSize="18sp" />
 
@@ -67,7 +67,7 @@
         android:layout_below="@id/about_app"
         android:layout_margin="10dp"
         android:gravity="center"
-        android:text="Members"
+        android:text="@string/members"
         android:textColor="@color/colorBlack"
         android:textSize="18sp" />
 
@@ -96,7 +96,7 @@
             android:clickable="true"
             android:gravity="center"
             android:linksClickable="true"
-            android:text="\@2017 VTC Android Team"
+            android:text="@string/_2017_vtc_android_team"
             android:textColor="@color/colorBlack"
             android:textColorLink="@color/colorBlack"
             android:textSize="18sp" />

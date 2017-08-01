@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:hint="full name"
+            android:hint="@string/full_name1"
             android:inputType="textPersonName"
             android:textColor="@color/colorWhite" />
     </android.support.design.widget.TextInputLayout>
@@ -49,7 +49,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:hint="email"
+            android:hint="@string/email1"
             android:inputType="textEmailAddress"
             android:textColor="@color/colorWhite" />
     </android.support.design.widget.TextInputLayout>

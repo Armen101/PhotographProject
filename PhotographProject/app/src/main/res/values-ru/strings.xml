@@ -1,22 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Фотограф</string>
-
     <string name="title_activity_maps">Карта</string>
     <string name="sign_up">Зарегистрироваться</string>
     <string name="text_forgot_password">Забыли пароль?</string>
-    <string name="text_we_just_need_yuor_registered">Введите идентификационный номер вашей электронной почты чтобы получить установки для нового пароля</string>
+    <string name="text_we_just_need_yuor_registered">Введите идентификационный номер вашей электронной почты, чтобы получить установки для нового пароля</string>
     <string name="text_email_hint">электронная почта</string>
     <string name="button_reset">СМЕНИТЬ ПАРОЛЬ</string>
     <string name="button_back">ВЕРНУТЬСЯ НАЗАД</string>
     <string name="title_activity_home">Основная Деятельность</string>
-
     <string name="navigation_drawer_open">Открыть навигационнoe меню</string>
     <string name="navigation_drawer_close">Закрыть навигационное меню</string>
-
     <string name="action_settings">Настройки</string>
     <string name="loading" />
-    <string name="don_t_have_an_account_sign_up">У вас еще нет учетной записи?Зарегиструйтесь.</string>
+    <string name="don_t_have_an_account_sign_up">У Вас еще нет учетной записи?Зарегиструйтесь.</string>
     <string name="username">Имя пользователя</string>
     <string name="password">Пароль</string>
     <string name="sign_in">Зарегистрироваться</string>
@@ -24,13 +21,12 @@
     <string name="address">Адрес</string>
     <string name="name">Имя</string>
     <string name="camera_info">Информация о камере</string>
-    <string name="add_avatar">Добавить avatar</string>
+    <string name="add_avatar">Добавить аватар</string>
     <string name="save">Сохранить</string>
     <string name="minimum_password" />
     <string name="auth_failed" />
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Здравствуйте начальный фрагмент</string>
     <string name="choose_photo">Выбрать фото</string>
     <string name="upload_photo">Загрузить фото</string>
     <string name="save_all_info">Сохранить всю информацию</string>
@@ -44,17 +40,26 @@
     <string name="are_you_sure">Вы уверены?</string>
     <string name="yes">Да</string>
     <string name="no">Нет</string>
-    <string name="english">English</string>
-    <string name="german">German</string>
-    <string name="spanish">Spanish</string>
-    <string name="russian">Russian</string>
-    <string name="armenain">Armenain</string>
-    <string name="full_name">full name</string>
+    <string name="english">Английский</string>
+    <string name="german">Немецкий</string>
+    <string name="spanish">Испанский</string>
+    <string name="russian">Русский</string>
+    <string name="armenain">Армянский</string>
+    <string name="full_name">полное имя</string>
     <string name="photo_title">Photo title</string>
-    <string name="map">Map</string>
-    <string name="settings">Settings</string>
-    <string name="posts">Posts</string>
-    <string name="about">About</string>
-    <string name="language">Language</string>
-    <string name="log_out">Log Out</string>
+    <string name="map">Карта</string>
+    <string name="settings">Настройки</string>
+    <string name="posts">Публикации</string>
+    <string name="about">О нас</string>
+    <string name="language">Язык</string>
+    <string name="log_out">Выйти</string>
+    <string name="about_app">Приложение предоставляет шанс фотографам подемонстрировать свое портфолио и найти как можно больше клиентов.</string>
+    <string name="owner">Владелец</string>
+    <string name="tigran_vanyan">Тигран Ванян</string>
+    <string name="members">Члены</string>
+    <string name="_2017_vtc_android_team">\@2017 ВТЦ Андроид группа</string>
+    <string name="forgot_password">Забыли пароль?</string>
+    <string name="full_name1">полное имя</string>
+    <string name="email1">эл. адрес</string>
+    <string name="_0">0</string>
 </resources>

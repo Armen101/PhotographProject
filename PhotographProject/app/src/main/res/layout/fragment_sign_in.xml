@@ -76,7 +76,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_gravity="right"
-                android:text="Forgot password?"
+                android:text="@string/forgot_password"
                 android:textColor="@color/colorWhite"
                 android:textSize="18sp" />
 
