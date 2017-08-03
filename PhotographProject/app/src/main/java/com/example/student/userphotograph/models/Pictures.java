@@ -6,7 +6,6 @@ public class Pictures {
     private String imageUri;
     private String imageName;
 
-
     public Pictures() {
     }
 
@@ -14,10 +13,7 @@ public class Pictures {
         this.title = title;
         this.imageUri = imageUri;
         this.imageName = imageName;
-
 }
-
-
 
     public void setImageUri(String imageUri) {
         this.imageUri = imageUri;

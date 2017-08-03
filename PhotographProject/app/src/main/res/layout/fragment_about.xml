@@ -47,7 +47,6 @@
                 android:textSize="18sp" />
 
         </LinearLayout>
-
     </LinearLayout>
 
     <TextView
@@ -71,15 +70,12 @@
         android:textColor="@color/colorBlack"
         android:textSize="18sp" />
 
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_about"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_members"
-        android:layout_margin="20dp">
-
-    </android.support.v7.widget.RecyclerView>
+        android:layout_margin="20dp"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -102,6 +98,4 @@
             android:textSize="18sp" />
 
     </RelativeLayout>
-
-
 </RelativeLayout>

@@ -37,6 +37,7 @@ import com.example.student.userphotograph.R;
 import com.example.student.userphotograph.fragments.AboutFragment;
 import com.example.student.userphotograph.fragments.GMapFragment;
 import com.example.student.userphotograph.fragments.PostFragment;
+import com.example.student.userphotograph.fragments.RatingFragment;
 import com.example.student.userphotograph.fragments.SettingsFragment;
 import com.example.student.userphotograph.utilityes.Constants;
 import com.example.student.userphotograph.utilityes.FirebaseHelper;
@@ -313,6 +314,11 @@ public class HomeActivity extends AppCompatActivity
                 });
             }
             break;
+
+            case R.id.nav_rating:{
+                replaceFragment(RatingFragment.newInstance());
+                break;
+            }
 
             case R.id.nav_log_out: {
                 FirebaseMessaging.getInstance().unsubscribeFromTopic(uid);

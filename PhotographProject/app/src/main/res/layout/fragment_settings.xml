@@ -115,7 +115,7 @@
             android:numStars="5"
             android:scaleX="0.8"
             android:scaleY="0.8"
-            android:stepSize="0.1"
+            android:stepSize="0.05"
             android:theme="@style/RatingBar" />
 
         <ImageView

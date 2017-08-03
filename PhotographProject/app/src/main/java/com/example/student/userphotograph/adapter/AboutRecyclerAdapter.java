@@ -39,7 +39,6 @@ public class AboutRecyclerAdapter extends RecyclerView.Adapter<AboutRecyclerAdap
         Glide.with(context)
                 .load(model.getImgMember())
                 .into(holder.imgMemberPhoto);
-
     }
 
     @Override
@@ -48,7 +47,6 @@ public class AboutRecyclerAdapter extends RecyclerView.Adapter<AboutRecyclerAdap
     }
 
     static class MyViewHolder extends RecyclerView.ViewHolder {
-
         private final TextView tvMemberNameSurname;
         private final ImageView imgMemberPhoto;
 

@@ -32,4 +32,11 @@ public class Constants {
     public static final int REQUEST_GALLERY_CHOOSE_PICK = 101;
     public static final int REQUEST_POST_CHOOSE_PICK = 102;
 
+    public static final String RATING_UID = "rating_uid";
+    public static final String R_UID1 = "uid1";
+    public static final String R_UID2 = "uid2";
+    public static final String R_UID3 = "uid3";
+    public static final String R_UID4 = "uid4";
+    public static final String R_UID5 = "uid5";
+
 }

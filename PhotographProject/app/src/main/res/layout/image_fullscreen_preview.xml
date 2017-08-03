@@ -17,6 +17,6 @@
         android:layout_alignBottom="@id/image_preview"
         android:layout_centerHorizontal="true"
         android:textSize="18sp"
-        android:textColor="#ffffff"/>
+        android:textColor="@color/colorWhite"/>
 
 </RelativeLayout>
