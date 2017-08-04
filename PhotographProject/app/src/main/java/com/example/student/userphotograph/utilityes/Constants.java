@@ -32,6 +32,9 @@ public class Constants {
     public static final int REQUEST_GALLERY_CHOOSE_PICK = 101;
     public static final int REQUEST_POST_CHOOSE_PICK = 102;
 
+    public static final String FAVORITES_PREF = "favorites_pref";
+    public static final String FAVORITE_KEY = "fav_key";
+
     public static final String RATING_UID = "rating_uid";
     public static final String R_UID1 = "uid1";
     public static final String R_UID2 = "uid2";

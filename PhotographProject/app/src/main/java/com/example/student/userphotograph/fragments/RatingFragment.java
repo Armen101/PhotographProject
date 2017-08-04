@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -20,6 +21,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.parceler.Parcels;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +34,7 @@ import static com.example.student.userphotograph.utilityes.Constants.R_UID3;
 import static com.example.student.userphotograph.utilityes.Constants.R_UID4;
 import static com.example.student.userphotograph.utilityes.Constants.R_UID5;
 
-public class RatingFragment extends Fragment {
+public class RatingFragment extends Fragment implements RatingRecyclerAdapter.OnItemClickFavorite {
 
     private List<RatingModel> ratingList;
     private String uid[] = new String[5];
@@ -87,7 +90,7 @@ public class RatingFragment extends Fragment {
                     RatingModel model = dataSnapshot.child(uid[i]).getValue(RatingModel.class);
                     if (ratingList.size() < 5) ratingList.add(model);
                 }
-                ratingRecyclerView.setAdapter(new RatingRecyclerAdapter(ratingList, getActivity()));
+                ratingRecyclerView.setAdapter(new RatingRecyclerAdapter(ratingList, RatingFragment.this, getContext()));
             }
 
             @Override
@@ -95,5 +98,18 @@ public class RatingFragment extends Fragment {
 
             }
         });
+    }
+
+    @Override
+    public void getModel(RatingModel model) {
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("userInfo", Parcels.wrap(model));
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        DetailFragment fr = new DetailFragment();
+        fr.setArguments(bundle);
+        fragmentManager.beginTransaction()
+                .replace(R.id.container_home, fr, "DETAILS_FRAGMENT")
+                .addToBackStack(null)
+                .commit();
     }
 }

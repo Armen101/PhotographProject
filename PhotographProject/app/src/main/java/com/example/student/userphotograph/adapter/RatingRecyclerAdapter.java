@@ -1,6 +1,7 @@
 package com.example.student.userphotograph.adapter;
 
 import android.content.Context;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.student.userphotograph.R;
@@ -19,14 +21,13 @@ public class RatingRecyclerAdapter extends RecyclerView.Adapter<RatingRecyclerAd
 
     private List<RatingModel> list;
     private Context context;
+    private OnItemClickFavorite mListener;
+    private Fragment usageFragment;
 
-    @Override
-    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
-        super.onAttachedToRecyclerView(recyclerView);
-    }
 
-    public RatingRecyclerAdapter(List<RatingModel> list, Context context) {
+    public RatingRecyclerAdapter(List<RatingModel> list,Fragment usageFragment, Context context) {
         this.list = list;
+        this.usageFragment = usageFragment;
         this.context = context;
     }
 
@@ -44,6 +45,31 @@ public class RatingRecyclerAdapter extends RecyclerView.Adapter<RatingRecyclerAd
         Glide.with(context)
                 .load(list.get(position).getAvatarUri())
                 .into(holder.avatarRating);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(context, "Heloo ", Toast.LENGTH_SHORT).show();
+                mListener.getModel(list.get(position));
+
+            }
+        });
+    }
+
+    @Override
+    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
+        if(mListener == null){
+            mListener = (OnItemClickFavorite) usageFragment;
+        }
+    }
+
+    @Override
+    public void onDetachedFromRecyclerView(RecyclerView recyclerView) {
+        super.onDetachedFromRecyclerView(recyclerView);
+        if(mListener != null){
+            mListener = null;
+        }
     }
 
     @Override
@@ -65,4 +91,9 @@ public class RatingRecyclerAdapter extends RecyclerView.Adapter<RatingRecyclerAd
             countRating = (RatingBar) itemView.findViewById(R.id.rb_rating_count);
         }
     }
+
+    public interface OnItemClickFavorite{
+        void getModel(RatingModel model);
+    }
+
 }
