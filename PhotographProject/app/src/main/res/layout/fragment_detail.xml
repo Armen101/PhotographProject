@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:isIndicator="true"
-        android:stepSize="0.1"
+        android:stepSize="0.05"
         android:theme="@style/RatingBar" />
 
     <LinearLayout
@@ -23,9 +23,8 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/img_detail_avatar"
-            android:layout_width="0dp"
-            android:layout_height="100dp"
-            android:layout_weight="1" />
+            android:layout_width="100dp"
+            android:layout_height="100dp" />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -40,7 +39,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:hint="@string/name"
-                android:textColor="@color/colorWhite" />
+                android:textColor="@color/colorBlack" />
 
             <TextView
                 android:id="@+id/tv_detail_address"
@@ -49,7 +48,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:hint="@string/address"
-                android:textColor="@color/colorWhite" />
+                android:textColor="@color/colorBlack" />
 
         </LinearLayout>
 
@@ -87,7 +86,7 @@
                     android:layout_weight="0.8"
                     android:gravity="center"
                     android:hint="@string/camera_info"
-                    android:textColor="@color/colorWhite" />
+                    android:textColor="@color/colorBlack" />
 
             </LinearLayout>
 
@@ -104,6 +103,7 @@
                     android:layout_weight="0.17"
                     app:srcCompat="@drawable/ic_email_black_24dp" />
 
+
                 <TextView
                     android:id="@+id/tv_detail_email"
                     android:layout_width="0dp"
@@ -111,15 +111,11 @@
                     android:layout_weight="0.8"
                     android:gravity="center"
                     android:hint="@string/email"
-                    android:textColor="@color/colorWhite" />
+                    android:textColor="@color/colorBlack" />
 
             </LinearLayout>
-
         </LinearLayout>
-
-
     </LinearLayout>
-
 
     <FrameLayout
         android:id="@+id/pager_layout"

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -127,9 +128,14 @@ public class DetailFragment extends Fragment implements View.OnClickListener {
         detailAddress.setText(ratingModel.getAddress());
         uid = ratingModel.getUid();
         ratingBar.setProgress((int) ratingModel.getRating());
-        Glide.with(getActivity())
-                .load(ratingModel.getAvatarUri())
-                .into(detailAvatar);
+        if(TextUtils.isEmpty(ratingModel.getAvatarUri())) {
+            detailAvatar.setImageResource(R.drawable.ic_account_circle_black_24dp);
+        } else {
+            Glide.with(getActivity())
+                    .load(ratingModel.getAvatarUri())
+                    .into(detailAvatar);
+        }
+
     }
 
     private void findViewById(View rootView) {

@@ -3,48 +3,21 @@
 
     <item
         is-multidex="true"
-        jar="C:\Users\Nelly\Desktop\newphotograp\PhotographProject\PhotographProject\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jar="C:\Users\Student\Desktop\myphotographproject\PhotographProject\PhotographProject\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.3"
         sha1="3be78ebc2706b2e1fe2f12d5726887a92d6c183b">
-        <dex dex="C:\Users\Nelly\Desktop\newphotograp\PhotographProject\PhotographProject\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_e2168b4a0631a8b2a1b80c042cfd97c7fbbcb388\classes.dex" />
+        <dex dex="C:\Users\Student\Desktop\myphotographproject\PhotographProject\PhotographProject\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_3bea72caacc06690f08bc729be792f6678913748\classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="C:\Users\Nelly\Desktop\GitPhotographProject\PhotographProject\PhotographProject\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jar="C:\Users\Student\Desktop\myphotographproject\PhotographProject\PhotographProject\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.3"
-        sha1="ab37649c952b24fac920b8dc1e155c153da14999">
-        <dex dex="C:\Users\Nelly\Desktop\GitPhotographProject\PhotographProject\PhotographProject\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_6da6383dc38a152ffd37fa62b04d256a4222d930\classes.dex" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="C:\Users\Nelly\.android\build-cache\6aa50593b5014de671855340bc19193aae378e18\output\jars\classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.3"
-        sha1="9ff5114aff3bfb387577ba92a11408dcf0441c24">
-        <dex dex="C:\Users\Nelly\Desktop\GitPhotographProject\PhotographProject\PhotographProject\app\build\intermediates\pre-dexed\debug\classes_da131e22f2876ab99ec9a614ab5382ea422bb0a7.jar" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Nelly\Desktop\GitPhotographProject\PhotographProject\PhotographProject\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="3be78ebc2706b2e1fe2f12d5726887a92d6c183b">
-        <dex dex="C:\Users\Nelly\Desktop\GitPhotographProject\PhotographProject\PhotographProject\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_e3e722700e355b02405ace8c6763783f76029593\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Nelly\Desktop\newphotograp\PhotographProject\PhotographProject\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="e9f4c05b1a61dfc718d3f675c4b5253f31af15bb">
-        <dex dex="C:\Users\Nelly\Desktop\newphotograp\PhotographProject\PhotographProject\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_08643c9e947d52ebd4e6cb664f78f67080926cee\classes.dex" />
+        sha1="d974b18e33ba8f038d048d7324bba27b5a9a57b6">
+        <dex dex="C:\Users\Student\Desktop\myphotographproject\PhotographProject\PhotographProject\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_4f107ab251056e492ae031b025500e24b2e5f2c5\classes.dex" />
     </item>
 
 </items>
