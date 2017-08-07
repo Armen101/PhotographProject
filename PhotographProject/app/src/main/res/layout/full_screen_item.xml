@@ -18,6 +18,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="@id/gallery_image"
         android:layout_centerHorizontal="true"
+        android:textColor="@color/colorWhite"
         android:textSize="18sp" />
 
 </RelativeLayout>

@@ -63,7 +63,6 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     private EditText mCameraInfo;
     private EditText mPhone;
     private ImageView mAvatar;
-    private Uri mFilePath;
     private DatabaseReference mDatabaseRef;
     private DatabaseReference mDatabaseGalleryRef;
     private StorageReference mStorageAvatarRef;
@@ -72,7 +71,6 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     private FirebaseUser mUser;
     private EditText photoTitle;
     private AlertDialog alertDialog;
-    private ImageView saveInfo;
     private RatingBar ratingBar;
 
     public static SettingsFragment newInstance() {
@@ -121,7 +119,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         mPhone = (EditText) rootView.findViewById(R.id.et_st_phone);
         mAvatar = (ImageView) rootView.findViewById(R.id.st_avatar);
         ImageView mAddImg = (ImageView) rootView.findViewById(R.id.add_image);
-        saveInfo = (ImageView) rootView.findViewById(R.id.save_info);
+        ImageView saveInfo = (ImageView) rootView.findViewById(R.id.save_info);
         ratingBar = (RatingBar) rootView.findViewById(R.id.rating_bar);
 
         mName.setHorizontallyScrolling(true);
@@ -131,78 +129,77 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     }
 
     private void onCreateFirebaseRecyclerAdapter(RecyclerView recyclerView) {
-
         final FirebaseRecyclerAdapter<Pictures, MyViewHolder> adapter = new FirebaseRecyclerAdapter<Pictures, MyViewHolder>(
                 Pictures.class,
                 R.layout.grid_view_item,
                 MyViewHolder.class,
-                mDatabaseGalleryRef
-        ) {
+                mDatabaseGalleryRef) {
+
             @Override
-            protected void populateViewHolder(MyViewHolder viewHolder, Pictures model, final int position) {
+            public void populateViewHolder(final MyViewHolder viewHolder, Pictures model, final int position) {
                 viewHolder.tvGallery.setText(model.getTitle());
                 Glide.with(getActivity())
                         .load(model.getImageUri())
                         .into(viewHolder.imgGallery);
-
                 mItemViewPager.add(model);
 
-                viewHolder.imgGallery.setOnClickListener(new View.OnClickListener() {
+
+                viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         mItemViewPager.clear();
                         notifyDataSetChanged();
                         Bundle bundle = new Bundle();
-                        bundle.putSerializable(getString(R.string.images), (Serializable) mItemViewPager);
-                        bundle.putInt(getString(R.string.position), position);
+                        bundle.putInt("position", position);
+                        bundle.putSerializable("images", (Serializable) mItemViewPager);
 
                         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                         SlideshowDialogFragment newFragment = SlideshowDialogFragment.newInstance();
                         newFragment.setArguments(bundle);
-                        newFragment.show(ft, getString(R.string.slideshow));
+                        newFragment.show(ft, "slideshow");
                     }
                 });
 
-                viewHolder.imgGallery.setOnLongClickListener(new View.OnLongClickListener() {
+                viewHolder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
                     public boolean onLongClick(View v) {
-                        final AlertDialog.Builder mAlertDialog = new AlertDialog.Builder(getContext(), R.style.MyDialogTheme);
-                        mAlertDialog.setTitle(R.string.removed)
-                                .setMessage(R.string.are_you_sure);
-                        mAlertDialog.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                        final AlertDialog.Builder mAlertDialog = new AlertDialog.Builder(getActivity(), R.style.MyDialogTheme);
+                        mAlertDialog.setTitle("removed")
+                                .setMessage("are you sure");
 
+                        mAlertDialog.setPositiveButton("yes", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
+                                removeItem(position);
                                 dialog.dismiss();
-
-                                String imageName = getItem(position).getImageName();
-                                getRef(position).removeValue();
-                                mItemViewPager.clear();
-
-                                StorageReference sRef = FirebaseStorage.getInstance()
-                                        .getReference().child(PHOTOGRAPHS).child(GALLERY)
-                                        .child(mUser.getUid()).child(imageName);
-                                sRef.delete();
-                                notifyDataSetChanged();
-                                Toast.makeText(getContext(), R.string.removed, Toast.LENGTH_SHORT).show();
                             }
-                        }).setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                        }).setNegativeButton("no", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                Toast.makeText(getContext(), R.string.canceled, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getContext(), "canceled", Toast.LENGTH_SHORT).show();
                             }
-                        })
-                                .create().show();
+                        }).create().show();
                         return true;
                     }
                 });
+            }
+
+            private void removeItem(int position) {
+                getRef(position).removeValue();
+                String imageName = getItem(position).getImageName();
+                StorageReference sRef = FirebaseStorage.getInstance()
+                        .getReference().child(PHOTOGRAPHS).child(GALLERY)
+                        .child(mUser.getUid()).child(imageName);
+                sRef.delete();
+                Toast.makeText(getContext(), R.string.removed, Toast.LENGTH_SHORT).show();
+                mItemViewPager.clear();
+                notifyDataSetChanged();
             }
         };
         recyclerView.setAdapter(adapter);
     }
 
     private static class MyViewHolder extends RecyclerView.ViewHolder {
-
         private ImageView imgGallery;
         private TextView tvGallery;
 
@@ -344,7 +341,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == Constants.REQUEST_GALLERY_CHOOSE_PICK && resultCode == RESULT_OK && data.getData() != null) {
-            mFilePath = data.getData();
+            Uri mFilePath = data.getData();
             String mImageName = System.currentTimeMillis() + "." + FirebaseHelper.getFileExtension(mFilePath, getActivity());
             FirebaseHelper.upload(getContext(), mImageName, photoTitle, mDatabaseGalleryRef, mStorageGalleryRef, mFilePath);
             alertDialog.dismiss();

@@ -34,7 +34,7 @@ import static com.example.student.userphotograph.utilityes.Constants.R_UID3;
 import static com.example.student.userphotograph.utilityes.Constants.R_UID4;
 import static com.example.student.userphotograph.utilityes.Constants.R_UID5;
 
-public class RatingFragment extends Fragment implements RatingRecyclerAdapter.OnItemClickFavorite {
+public class RatingFragment extends Fragment implements RatingRecyclerAdapter.OnItemClickRating {
 
     private List<RatingModel> ratingList;
     private String uid[] = new String[5];

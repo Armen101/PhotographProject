@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.student.userphotograph.R;
@@ -22,7 +21,7 @@ public class RatingRecyclerAdapter extends RecyclerView.Adapter<RatingRecyclerAd
 
     private List<RatingModel> list;
     private Context context;
-    private OnItemClickFavorite mListener;
+    private OnItemClickRating mListener;
     private Fragment usageFragment;
 
 
@@ -55,9 +54,7 @@ public class RatingRecyclerAdapter extends RecyclerView.Adapter<RatingRecyclerAd
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "Heloo ", Toast.LENGTH_SHORT).show();
                 mListener.getModel(list.get(position));
-
             }
         });
     }
@@ -66,7 +63,7 @@ public class RatingRecyclerAdapter extends RecyclerView.Adapter<RatingRecyclerAd
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
         if (mListener == null) {
-            mListener = (OnItemClickFavorite) usageFragment;
+            mListener = (OnItemClickRating) usageFragment;
         }
     }
 
@@ -98,8 +95,7 @@ public class RatingRecyclerAdapter extends RecyclerView.Adapter<RatingRecyclerAd
         }
     }
 
-    public interface OnItemClickFavorite {
+    public interface OnItemClickRating {
         void getModel(RatingModel model);
     }
-
 }

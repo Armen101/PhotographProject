@@ -3,20 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorDarkBlue"
     android:orientation="vertical"
     tools:context="com.example.student.userphotograph.fragments.DetailFragment">
 
-    <RatingBar
-        android:id="@+id/rating_bar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:isIndicator="true"
-        android:stepSize="0.05"
-        android:theme="@style/RatingBar" />
-
     <LinearLayout
-
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -37,9 +28,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
+                android:textSize="18sp"
                 android:gravity="center"
-                android:hint="@string/name"
-                android:textColor="@color/colorBlack" />
+                android:textColor="@color/colorWhite" />
 
             <TextView
                 android:id="@+id/tv_detail_address"
@@ -47,13 +38,20 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:hint="@string/address"
-                android:textColor="@color/colorBlack" />
+                android:textSize="18sp"
+                android:textColor="@color/colorWhite" />
 
         </LinearLayout>
-
-
     </LinearLayout>
+
+    <RatingBar
+        android:id="@+id/rating_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:isIndicator="true"
+        android:stepSize="0.05"
+        android:theme="@style/RatingBar" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -85,8 +83,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.8"
                     android:gravity="center"
-                    android:hint="@string/camera_info"
-                    android:textColor="@color/colorBlack" />
+                    android:textSize="18sp"
+                    android:textColor="@color/colorWhite" />
 
             </LinearLayout>
 
@@ -103,15 +101,14 @@
                     android:layout_weight="0.17"
                     app:srcCompat="@drawable/ic_email_black_24dp" />
 
-
                 <TextView
                     android:id="@+id/tv_detail_email"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.8"
                     android:gravity="center"
-                    android:hint="@string/email"
-                    android:textColor="@color/colorBlack" />
+                    android:textSize="18sp"
+                    android:textColor="@color/colorWhite" />
 
             </LinearLayout>
         </LinearLayout>
@@ -120,8 +117,7 @@
     <FrameLayout
         android:id="@+id/pager_layout"
         android:layout_width="match_parent"
-        android:layout_height="325dp"
-        android:visibility="visible">
+        android:layout_height="wrap_content">
 
         <android.support.v4.view.ViewPager
             android:id="@+id/view_pager_car"

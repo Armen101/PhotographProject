@@ -24,7 +24,6 @@ public class CarouselPagerAdapter extends PagerAdapter {
 
     private Context mContext;
     private List<RatingModel> mInfoList;
-    private TextView galleryTitle;
 
     public CarouselPagerAdapter(Context context, List<RatingModel> mInfoList) {
         this.mContext = context;
@@ -37,7 +36,7 @@ public class CarouselPagerAdapter extends PagerAdapter {
         try {
 
             RelativeLayout relMain = (RelativeLayout) view.findViewById(R.id.rel_main);
-            galleryTitle =(TextView) view.findViewById(R.id.gallery_title);
+            TextView galleryTitle = (TextView) view.findViewById(R.id.gallery_title);
             ImageView image = (ImageView) view.findViewById(R.id.gallery_image);
             relMain.setTag(position);
 

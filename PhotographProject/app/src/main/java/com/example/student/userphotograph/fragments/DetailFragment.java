@@ -55,7 +55,6 @@ public class DetailFragment extends Fragment implements View.OnClickListener {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         model = Parcels.unwrap(getArguments().getParcelable("userInfo"));
-
     }
 
     @Override
@@ -86,17 +85,15 @@ public class DetailFragment extends Fragment implements View.OnClickListener {
 
         init(rootView);
         imageViewEmail.setOnClickListener(this);
-
         return rootView;
     }
-
 
     private void init(View rootView) {
         viewpagerCar = (ViewPager) rootView.findViewById(R.id.view_pager_car);
         viewpagerCar.setClipChildren(false);
         viewpagerCar.setPageMargin(getResources().getDimensionPixelOffset(R.dimen.pager_margin));
         viewpagerCar.setOffscreenPageLimit(3);
-        viewpagerCar.setPageTransformer(false, new CarouselTransformer(getContext()));// Set transformer);
+        viewpagerCar.setPageTransformer(false, new CarouselTransformer(getContext()));
     }
 
     private void setupViewPager() {
@@ -128,7 +125,7 @@ public class DetailFragment extends Fragment implements View.OnClickListener {
         detailAddress.setText(ratingModel.getAddress());
         uid = ratingModel.getUid();
         ratingBar.setProgress((int) ratingModel.getRating());
-        if(TextUtils.isEmpty(ratingModel.getAvatarUri())) {
+        if (TextUtils.isEmpty(ratingModel.getAvatarUri())) {
             detailAvatar.setImageResource(R.drawable.ic_account_circle_black_24dp);
         } else {
             Glide.with(getActivity())
@@ -151,7 +148,6 @@ public class DetailFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-
             case R.id.email_img: {
                 sendEmail();
                 break;
