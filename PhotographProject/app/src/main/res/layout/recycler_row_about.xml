@@ -4,19 +4,23 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="5dp"
-    app:cardCornerRadius="8dp"
-    app:cardBackgroundColor="@color/colorGrey">
+    app:cardBackgroundColor="@color/color_favorite"
+    app:cardCornerRadius="8dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal">
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/img_member_photo"
             android:layout_width="0dp"
             android:layout_height="100dp"
-            android:layout_weight="0.2" />
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_weight="0.3"
+            app:civ_border_color="@color/colorDarkBlue"
+            app:civ_border_width="2dp" />
 
         <TextView
             android:id="@+id/tv_member_name_surname"
@@ -24,9 +28,11 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="0.8"
-            android:gravity="center"
-            android:textColor="@color/colorBlack"
-            android:textSize="18sp" />
+            android:maxLines="1"
+            android:paddingLeft="30dp"
+            android:paddingStart="30dp"
+            android:textColor="@color/colorDarkBlue"
+            android:textSize="20sp" />
 
     </LinearLayout>
 

@@ -104,9 +104,6 @@ public class PostFragment extends Fragment implements View.OnClickListener {
                 viewHolder.tvPostTitle.setText(model.getTitle());
                 viewHolder.tvLikesCount.setText(String.valueOf(model.getLikes()));
                 final String postId = model.getUid();
-                if (db.isLiked(postId)) {
-                    viewHolder.imgLike.setImageResource(R.drawable.ic_thumb_up_blue_dark_24dp);
-                }
                 viewHolder.imgLike.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -117,7 +114,6 @@ public class PostFragment extends Fragment implements View.OnClickListener {
                             updateNumLikes(model.getUid());
                             updateRatingLikes(model.getUserId());
                             Toast.makeText(getActivity(), "liked", Toast.LENGTH_SHORT).show();
-                            viewHolder.imgLike.setImageResource(R.drawable.ic_thumb_up_blue_dark_24dp);
                         }
                     }
                 });

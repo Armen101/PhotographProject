@@ -8,8 +8,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#c8ffff"
+        android:layout_height="wrap_content"
+        android:background="@color/color_posti"
         android:orientation="vertical">
 
         <TextView
@@ -17,12 +17,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
+            android:textColor="@color/colorWhite"
             android:textSize="20sp" />
 
         <ImageView
             android:id="@+id/post_image"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="200dp"
+            android:layout_gravity="center"
             android:adjustViewBounds="true"
             android:scaleType="centerInside" />
 
@@ -31,6 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
+            android:textColor="@color/colorWhite"
             android:textSize="20sp" />
 
         <LinearLayout
@@ -47,6 +50,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
                 android:layout_weight="1"
+                android:textColor="@color/colorWhite"
                 android:textSize="20sp" />
 
             <ImageView
@@ -61,6 +65,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/_0"
+                android:textColor="@color/colorWhite"
                 android:textSize="20sp" />
 
         </LinearLayout>
