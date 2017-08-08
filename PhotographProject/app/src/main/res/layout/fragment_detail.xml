@@ -28,9 +28,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:textSize="18sp"
                 android:gravity="center"
-                android:textColor="@color/colorWhite" />
+                android:textColor="@color/colorWhite"
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/tv_detail_address"
@@ -38,8 +38,8 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:textSize="18sp"
-                android:textColor="@color/colorWhite" />
+                android:textColor="@color/colorWhite"
+                android:textSize="18sp" />
 
         </LinearLayout>
     </LinearLayout>
@@ -50,6 +50,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:isIndicator="true"
+        android:scaleX="0.8"
+        android:scaleY="0.8"
         android:stepSize="0.05"
         android:theme="@style/RatingBar" />
 
@@ -83,8 +85,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.8"
                     android:gravity="center"
-                    android:textSize="18sp"
-                    android:textColor="@color/colorWhite" />
+                    android:textColor="@color/colorWhite"
+                    android:textSize="18sp" />
 
             </LinearLayout>
 
@@ -107,8 +109,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.8"
                     android:gravity="center"
-                    android:textSize="18sp"
-                    android:textColor="@color/colorWhite" />
+                    android:textColor="@color/colorWhite"
+                    android:textSize="18sp" />
 
             </LinearLayout>
         </LinearLayout>

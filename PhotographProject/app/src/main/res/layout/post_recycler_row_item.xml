@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_margin="16dp"
     android:orientation="horizontal">
 
@@ -28,14 +29,6 @@
             android:adjustViewBounds="true"
             android:scaleType="centerInside" />
 
-        <TextView
-            android:id="@+id/tv_post_username"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:textColor="@color/colorWhite"
-            android:textSize="20sp" />
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -44,14 +37,31 @@
             android:gravity="center_vertical|right"
             android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/tv_post_time"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:layout_weight="1"
-                android:textColor="@color/colorWhite"
-                android:textSize="20sp" />
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_post_username"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginTop="16dp"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="20sp"
+                    tools:text="name" />
+
+                <TextView
+                    android:id="@+id/tv_post_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="16dp"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="20sp"
+                    tools:text="data" />
+            </LinearLayout>
 
             <ImageView
                 android:id="@+id/img_like"
@@ -64,9 +74,9 @@
                 android:id="@+id/tv_likes_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/_0"
                 android:textColor="@color/colorWhite"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                tools:text="likes" />
 
         </LinearLayout>
     </LinearLayout>

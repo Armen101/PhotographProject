@@ -296,6 +296,7 @@ public class HomeActivity extends AppCompatActivity
                             }
                         }
                         shared.edit().putString(Constants.DEFAULT_LANGUAGE, Locale.getDefault().getLanguage()).apply();
+                        Toast.makeText(HomeActivity.this, shared.getString(Constants.DEFAULT_LANGUAGE,""), Toast.LENGTH_SHORT).show();
                     }
 
                     private void changeLocale(Locale language) {
@@ -307,7 +308,6 @@ public class HomeActivity extends AppCompatActivity
                         Intent intent = getIntent();
                         finish();
                         startActivity(intent);
-                        Toast.makeText(HomeActivity.this, shared.getString(Constants.DEFAULT_LANGUAGE,""), Toast.LENGTH_SHORT).show();
                         dialog.dismiss();
                     }
 
