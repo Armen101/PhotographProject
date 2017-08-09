@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:textColor="@color/color_yellow"
-        android:text="Top 5 photographers"
+        android:text="@string/Top_5_photographers"
         android:textSize="28sp" />
 
     <android.support.v7.widget.RecyclerView

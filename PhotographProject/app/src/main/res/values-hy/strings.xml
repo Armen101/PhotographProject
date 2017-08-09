@@ -56,10 +56,17 @@
     <string name="about_app">Հավելվածը հնարավորություն է ընձեռնում լուսանկարիչներին ցուցադրել իրենց պորտֆոլիոն և գտնել ավելի շատ հաճախորդներ:</string>
     <string name="owner">Սեփականատեր</string>
     <string name="tigran_vanyan">Տիգրան Վանյան</string>
-    <string name="members">Անդամնեռ</string>
+    <string name="members">Անդամներ</string>
     <string name="_2017_vtc_android_team">\@2017 ՎՏԿ Անդրոիդ Թիմ</string>
     <string name="forgot_password">Մոռացե՞լ եք գաղտնաբառը</string>
     <string name="full_name1">ամբողջական անուն</string>
     <string name="email1">էլ. հասցե</string>
     <string name="_0">0</string>
+    <string name="Rating">Վարկանիշ</string>
+    <string name="to_order">պատվիրել</string>
+    <string name="my_phone">հեռախոսահամար</string>
+    <string name="send">ուղարկել</string>
+    <string name="Top_5_photographers">Լավագույն 5 լուսանկարիչները</string>
+    <string name="Uploading">Վերբեռնում...</string>
+    <string name="Uploading1">Վերբեռնում...</string>
 </resources>

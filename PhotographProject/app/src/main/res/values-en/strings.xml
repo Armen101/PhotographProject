@@ -63,5 +63,12 @@
     <string name="email1">email</string>
     <string name="my_photo">my photo</string>
     <string name="_0">0</string>
+    <string name="Rating">Rating</string>
+    <string name="to_order">to order</string>
+    <string name="my_phone">phone</string>
+    <string name="send">send</string>
+    <string name="Top_5_photographers">Top 5 photographers</string>
+    <string name="Uploading">Uploading ...</string>
+    <string name="Uploading1">Uploading ...</string>
 
 </resources>

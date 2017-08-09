@@ -46,7 +46,7 @@
     <string name="russian">Русский</string>
     <string name="armenain">Армянский</string>
     <string name="full_name">полное имя</string>
-    <string name="photo_title">Photo title</string>
+    <string name="photo_title">Имя фото</string>
     <string name="map">Карта</string>
     <string name="settings">Настройки</string>
     <string name="posts">Публикации</string>
@@ -62,4 +62,11 @@
     <string name="full_name1">полное имя</string>
     <string name="email1">эл. адрес</string>
     <string name="_0">0</string>
+    <string name="Rating">Рейтинг</string>
+    <string name="to_order">заказать</string>
+    <string name="my_phone">телефон</string>
+    <string name="send">отправить</string>
+    <string name="Top_5_photographers">Топ 5 фотографов</string>
+    <string name="Uploading">Загрузка ...</string>
+    <string name="Uploading1">Загрузка ...</string>
 </resources>

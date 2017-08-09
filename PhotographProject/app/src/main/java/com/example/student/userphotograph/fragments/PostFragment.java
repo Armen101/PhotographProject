@@ -108,7 +108,7 @@ public class PostFragment extends Fragment implements View.OnClickListener {
                     @Override
                     public void onClick(View v) {
                         if (db.isLiked(postId)) {
-                            Toast.makeText(getActivity(), "has already liked", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), "has already been liked", Toast.LENGTH_SHORT).show();
                         } else {
                             db.addPostLikes(postId);
                             updateNumLikes(model.getUid());
@@ -199,7 +199,7 @@ public class PostFragment extends Fragment implements View.OnClickListener {
 
     private AlertDialog.Builder initDialog() {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
-        dialogBuilder.setTitle("Uploading ...");
+        dialogBuilder.setTitle(R.string.Uploading1);
         dialogBuilder.setView(getDialogLayout());
         return dialogBuilder;
     }

@@ -259,7 +259,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
                 mDatabaseRef.child(ADDRESS).setValue(mAddress.getText().toString());
                 mDatabaseRef.child(CAMERA_INFO).setValue(mCameraInfo.getText().toString());
                 mDatabaseRef.child(PHONE).setValue(mPhone.getText().toString());
-                Toast.makeText(getContext(), "Successfull saveing dates", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Successful saving dates", Toast.LENGTH_SHORT).show();
                 break;
             }
             case R.id.st_avatar: {
@@ -277,7 +277,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
 
     private AlertDialog.Builder initDialog() {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
-        dialogBuilder.setTitle("Uploading ...");
+        dialogBuilder.setTitle(R.string.Uploading);
         dialogBuilder.setView(getDialogLayout());
         return dialogBuilder;
     }
